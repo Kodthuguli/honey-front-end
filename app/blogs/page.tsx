@@ -1,63 +1,123 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { api } from "@/lib/api";
 
 export default function BlogsPage() {
-  // Temporary static list — API later
-  const blogs = [
-    {
-      slug: "benefits-of-pure-forest-honey",
-      title: "Benefits of Pure Forest Honey",
-      excerpt: "Pure forest honey is packed with antioxidants and natural enzymes...",
-      thumbnail: "/blog1.jpg",
-      date: "Jan 20, 2025",
-    },
-    {
-      slug: "identify-pure-honey",
-      title: "How to Identify Pure Honey at Home",
-      excerpt: "Simple ways to check whether honey is pure or adulterated...",
-      thumbnail: "/blog2.jpg",
-      date: "Jan 15, 2025",
-    },
-  ];
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await api.get("/blogs");
+        const data = res.data;
+
+        if (Array.isArray(data)) {
+          setBlogs(data);
+        } else {
+          setBlogs([data]);
+        }
+      } catch (err) {
+        console.error("Failed to load blogs:", err);
+        setBlogs([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+        <p className="text-[#6F4E37]">Loading blogs...</p>
+      </div>
+    );
+  }
+
+  if (blogs.length === 0) {
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-20 text-center">
+        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
+          Blog & Articles
+        </h1>
+
+        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
+
+        <p className="mt-6 text-[#6F4E37]">
+          No articles available right now.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold text-center text-[#2c3e1f] mb-4">
-        Blog & Articles
-      </h1>
-      <p className="text-center text-gray-600 max-w-2xl mx-auto">
-        Learn about purity, natural living, and traditional wellness.
-      </p>
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
 
-      {/* GRID */}
-      <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-10">
+      {/* Heading */}
+      <div className="text-center">
+        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
+          Blog & Articles
+        </h1>
+
+        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
+
+        <p className="mt-4 text-[#6F4E37] max-w-2xl mx-auto">
+          Learn about purity, natural living, and traditional wellness.
+        </p>
+      </div>
+
+      {/* Blog Grid */}
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12">
         {blogs.map((b) => (
           <Link
             key={b.slug}
             href={`/blogs/${b.slug}`}
-            className="block bg-white rounded-xl shadow hover:shadow-md transition border border-gray-100"
+            className="
+              group
+              block
+              bg-[#F4E6D5]
+              border border-[#C6A77D]
+              rounded-xl
+              shadow-sm
+              hover:shadow-md
+              transition
+            "
           >
-            {/* Image */}
-            <img
-              src={b.thumbnail}
-              alt={b.title}
-              className="rounded-t-xl object-cover w-full h-60"
-            />
+            <div className="overflow-hidden rounded-t-xl">
+              <img
+                src={b.thumbnailUrl || "/placeholder.jpg"}
+                alt={b.title}
+                className="
+                  object-cover w-full h-60
+                  group-hover:scale-105
+                  transition duration-500
+                "
+              />
+            </div>
 
-            {/* Content */}
-            <div className="p-5">
-              <p className="text-sm text-gray-500">{b.date}</p>
+            <div className="p-6">
 
-              <h3 className="text-xl font-semibold text-[#2c3e1f] mt-2">
+              <p className="text-sm text-[#6F4E37]">
+                {new Date(b.createdAt).toLocaleDateString("en-IN")}
+              </p>
+
+              <h3 className="text-2xl font-serif text-[#3A1F16] mt-3">
                 {b.title}
               </h3>
 
-              <p className="text-gray-600 mt-2 text-sm">{b.excerpt}</p>
+              <p className="text-[#6F4E37] mt-3 text-sm leading-relaxed">
+                {b.excerpt || "No excerpt available..."}
+              </p>
 
-              <span className="mt-4 inline-block text-[#88b04b] font-medium hover:underline">
+              <span className="mt-6 inline-block text-[#C4622D] font-medium group-hover:underline">
                 Read More →
               </span>
+
             </div>
           </Link>
         ))}

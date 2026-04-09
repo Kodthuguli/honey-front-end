@@ -1,54 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { api } from "@/lib/api";
 
 export default function FAQPage() {
-  const faqs = [
-    {
-      question: "Is your honey 100% pure?",
-      answer:
-        "Yes! Our honey is raw, unfiltered, chemical-free, and sourced directly from natural habitats.",
-    },
-    {
-      question: "Do you add sugar or preservatives?",
-      answer:
-        "No. We do not add sugar, preservatives, or any artificial ingredients.",
-    },
-    {
-      question: "Can children consume this honey?",
-      answer:
-        "Yes, but avoid giving honey to infants below 1 year as a safety guideline.",
-    },
-    {
-      question: "Do your products expire?",
-      answer:
-        "Honey has a naturally long shelf life. Store in a cool, dry place away from sunlight.",
-    },
-    {
-      question: "Is delivery available?",
-      answer:
-        "Yes, we deliver across India via courier/parcel services.",
-    },
-  ];
-
+  const [faqs, setFaqs] = useState<any[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const [question, setQuestion] = useState("");
   const [askedBy, setAskedBy] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [loadingFaqs, setLoadingFaqs] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const fetchFaqs = async () => {
+    try {
+      setLoadingFaqs(true);
+      const res = await api.get("/faqs");
+      setFaqs(Array.isArray(res.data) ? res.data : []);
+    } catch {
+      setFaqs([]);
+    } finally {
+      setLoadingFaqs(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFaqs();
+  }, []);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   const handleSubmit = async () => {
-    if (!question.trim()) return alert("Please enter your question");
+    if (!question.trim()) {
+      return alert("Please enter your question");
+    }
 
     try {
-      setLoading(true);
+      setSubmitting(true);
 
-      await axios.post("http://localhost:3001/api/v1/faqs/ask", {
+      await api.post("/faqs/ask", {
         question,
         askedBy,
       });
@@ -59,84 +54,140 @@ export default function FAQPage() {
     } catch {
       alert("Something went wrong. Please try again.");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold text-center text-[#2c3e1f]">
-        Frequently Asked Questions
-      </h1>
+    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20">
 
-      <p className="text-center text-gray-600 mt-2 mb-10">
-        Everything you need to know about our natural products.
-      </p>
+      {/* Title */}
+      <div className="text-center">
+        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
+          Frequently Asked Questions
+        </h1>
 
-      {/* FAQ LIST */}
-      <div className="space-y-4">
-        {faqs.map((faq, index) => (
-          <div
-            key={index}
-            className="border rounded-lg bg-[#fdfbf7] shadow-sm"
-          >
-            <button
-              onClick={() => toggleFAQ(index)}
-              className="w-full text-left px-5 py-4 font-medium text-[#2c3e1f] flex justify-between"
-            >
-              {faq.question}
-              <span>{openIndex === index ? "-" : "+"}</span>
-            </button>
+        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
 
-            {openIndex === index && (
-              <div className="px-5 pb-4 text-gray-700">
-                {faq.answer}
-              </div>
-            )}
-          </div>
-        ))}
+        <p className="mt-4 text-[#6F4E37] max-w-2xl mx-auto">
+          Everything you need to know about our natural products.
+        </p>
       </div>
 
-      {/* ASK QUESTION FORM */}
-      <div className="mt-16 p-6 bg-[#fdfbf7] border rounded-xl shadow">
-        <h2 className="text-2xl font-bold text-[#2c3e1f] text-center">
-          Still have a question?
-        </h2>
-        <p className="text-center text-gray-600 mt-1 mb-6">
-          Ask us anything — we’ll reply soon!
-        </p>
+      {/* FAQ LIST */}
+      <div className="mt-14 space-y-5">
+        {loadingFaqs ? (
+          <p className="text-center text-[#6F4E37]">Loading FAQs...</p>
+        ) : faqs.length === 0 ? (
+          <p className="text-center text-[#6F4E37]">
+            No FAQs available right now.
+          </p>
+        ) : (
+          faqs.map((faq, index) => (
+            <div
+              key={faq._id}
+              className="bg-[#F4E6D5] border border-[#C6A77D] rounded-lg shadow-sm"
+            >
+              <button
+                onClick={() => toggleFAQ(index)}
+                className="
+                  w-full text-left px-6 py-4
+                  font-medium text-[#3A1F16]
+                  flex justify-between items-center
+                "
+              >
+                {faq.question}
+                <span className="text-[#C4622D] text-xl">
+                  {openIndex === index ? "−" : "+"}
+                </span>
+              </button>
+
+              {openIndex === index && (
+                <div className="px-6 pb-5 text-[#6F4E37] leading-relaxed">
+                  {faq.answer || "Pending response..."}
+                </div>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ASK QUESTION */}
+      <div className="mt-20 p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
+        <div className="text-center">
+          <h2 className="text-2xl font-serif text-[#3A1F16]">
+            Still have a question?
+          </h2>
+
+          <div className="mt-3 mx-auto h-[1px] w-20 bg-[#C6A77D]" />
+
+          <p className="mt-4 text-[#6F4E37]">
+            Ask us anything — we’ll reply soon!
+          </p>
+        </div>
 
         {!submitted ? (
-          <>
+          <div className="mt-8 space-y-5">
+
             <input
               type="text"
               placeholder="Your name (optional)"
               value={askedBy}
               onChange={(e) => setAskedBy(e.target.value)}
-              className="w-full border rounded-lg p-3 mb-4"
+              className="
+                w-full
+                bg-[#E9DCCB]
+                border border-[#C6A77D]
+                rounded-md
+                px-4 py-3
+                text-[#3A1F16]
+                focus:outline-none
+                focus:ring-2 focus:ring-[#C4622D]
+              "
             />
 
             <textarea
               placeholder="Type your question here..."
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              className="w-full border rounded-lg p-3 h-28"
+              className="
+                w-full
+                bg-[#E9DCCB]
+                border border-[#C6A77D]
+                rounded-md
+                px-4 py-3
+                text-[#3A1F16]
+                h-28
+                focus:outline-none
+                focus:ring-2 focus:ring-[#C4622D]
+              "
             />
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
-              className="mt-4 w-full bg-[#88b04b] text-white py-3 rounded-lg font-medium hover:bg-[#76963f] transition"
+              disabled={submitting}
+              className="
+                w-full
+                bg-[#C4622D]
+                text-white
+                py-3
+                rounded-md
+                font-medium
+                hover:bg-[#552619]
+                transition
+              "
             >
-              {loading ? "Submitting..." : "Submit Question"}
+              {submitting ? "Submitting..." : "Submit Question"}
             </button>
-          </>
+
+          </div>
         ) : (
-          <div className="text-center text-green-600 font-medium">
+          <div className="text-center text-[#C4622D] font-medium mt-8">
             ✅ Thank you! Your question has been submitted.
           </div>
         )}
       </div>
+
     </div>
   );
 }

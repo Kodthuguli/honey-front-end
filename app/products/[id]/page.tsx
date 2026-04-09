@@ -1,93 +1,123 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import BuyNowModal from "@/components/checkout/BuyNowModal";
+import { api } from "@/lib/api";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
 
-  const products = [
-    {
-      id: "1",
-      name: "Pure Forest Honey",
-      price: 350,
-      image: "/honey1.png",
-      description:
-        "Raw, unfiltered honey sourced directly from forest regions. Rich in antioxidants and nutrients.",
-      benefits: [
-        "Boosts immunity",
-        "Aids digestion",
-        "Natural sweetener",
-        "Rich in antioxidants",
-      ],
-    },
-    {
-      id: "2",
-      name: "Natural Coconut Oil",
-      price: 280,
-      image: "/honey2.png",
-      description:
-        "Cold-pressed coconut oil ideal for cooking, skincare, and hair nourishment.",
-      benefits: [
-        "Supports heart health",
-        "Strengthens hair",
-        "Improves skin hydration",
-      ],
-    },
-  ];
+  const [product, setProduct] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const product = products.find((p) => p.id === id);
+  const [selectedVariant, setSelectedVariant] = useState<any>(null);
   const [qty, setQty] = useState(1);
+
   const [showModal, setShowModal] = useState(false);
 
-  if (!product)
+  const fetchProduct = async () => {
+    try {
+      const res = await api.get(`/products/${id}`);
+      setProduct(res.data);
+
+      if (res.data.variants?.length > 0) {
+        setSelectedVariant(res.data.variants[0]);
+      }
+    } catch {
+      console.error("Failed to load product");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
     return (
-      <div className="text-center py-20 text-gray-600">
+      <div className="text-center py-24 text-[#6F4E37]">
+        Loading product...
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="text-center py-24 text-[#6F4E37]">
         Product not found.
       </div>
     );
+  }
 
-  const total = product.price * qty;
+  const price = selectedVariant ? selectedVariant.price : product.price;
+  const total = price * qty;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-14 items-start">
+
+        {/* IMAGE */}
         <img
-          src={product.image}
+          src={product.images?.[0]}
           alt={product.name}
-          className="rounded-xl shadow-lg object-cover w-full h-96"
+          className="rounded-lg shadow-md object-cover w-full h-[420px]"
         />
 
+        {/* DETAILS */}
         <div>
-          <h1 className="text-4xl font-bold text-[#2c3e1f]">
+          <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
             {product.name}
           </h1>
 
-          <p className="text-lg text-gray-600 mt-3">
+          <div className="mt-3 h-[1px] w-20 bg-[#C6A77D]" />
+
+          <p className="text-[#6F4E37] mt-6 leading-relaxed">
             {product.description}
           </p>
 
-          <p className="text-3xl font-bold text-[#88b04b] mt-6">
-            ₹{product.price}
+          {/* PRICE */}
+          <p className="text-3xl font-semibold text-[#C4622D] mt-8">
+            ₹{price}
           </p>
 
-          <div className="mt-6">
-            <p className="font-medium mb-2">Quantity</p>
-            <div className="flex items-center gap-3">
+          {/* Quantity */}
+          <div className="mt-8">
+            <p className="font-medium text-[#3A1F16] mb-3">Quantity</p>
+
+            <div className="flex items-center gap-4">
               <button
-                className="px-3 py-1 bg-gray-200 rounded"
+                className="
+                  px-4 py-2
+                  bg-[#F4E6D5]
+                  border border-[#C6A77D]
+                  rounded-md
+                  text-[#3A1F16]
+                  hover:bg-[#E9DCCB]
+                  transition
+                "
                 onClick={() => setQty(Math.max(1, qty - 1))}
               >
-                -
+                −
               </button>
 
-              <span className="text-lg font-semibold">{qty}</span>
+              <span className="text-lg font-semibold text-[#3A1F16]">
+                {qty}
+              </span>
 
               <button
-                className="px-3 py-1 bg-gray-200 rounded"
+                className="
+                  px-4 py-2
+                  bg-[#F4E6D5]
+                  border border-[#C6A77D]
+                  rounded-md
+                  text-[#3A1F16]
+                  hover:bg-[#E9DCCB]
+                  transition
+                "
                 onClick={() => setQty(qty + 1)}
               >
                 +
@@ -95,36 +125,59 @@ export default function ProductDetailsPage() {
             </div>
           </div>
 
-          <p className="mt-4 text-xl font-semibold text-[#2c3e1f]">
+          {/* Total */}
+          <p className="mt-6 text-xl font-semibold text-[#3A1F16]">
             Total: ₹{total}
           </p>
 
+          {/* Buy Button */}
           <button
             onClick={() => setShowModal(true)}
-            className="block mt-6 w-full text-center bg-[#88b04b] text-white py-3 rounded-lg text-lg font-medium hover:bg-[#76963f] transition"
+            className="
+              mt-8
+              w-full
+              bg-[#C4622D]
+              text-white
+              py-3
+              rounded-md
+              text-lg
+              hover:bg-[#552619]
+              transition
+            "
           >
             Buy Now
           </button>
         </div>
       </div>
 
-      <div className="mt-16">
-        <h2 className="text-2xl font-bold text-[#2c3e1f]">
-          Benefits
-        </h2>
-        <ul className="list-disc mt-4 ml-6 text-gray-700 space-y-2">
-          {product.benefits.map((b, i) => (
-            <li key={i}>{b}</li>
-          ))}
-        </ul>
-      </div>
+      {/* Benefits */}
+      {product.benefits?.length > 0 && (
+        <div className="mt-24">
+          <h2 className="text-2xl font-serif text-[#3A1F16]">
+            Benefits
+          </h2>
 
-      {/* ✅ Buy Now Modal */}
+          <div className="mt-3 h-[1px] w-20 bg-[#C6A77D]" />
+
+          <ul className="list-disc mt-6 ml-6 text-[#6F4E37] space-y-3">
+            {product.benefits.map((b: string, i: number) => (
+              <li key={i}>{b}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Buy Now Modal */}
       {showModal && (
         <BuyNowModal
           isOpen={showModal}
           onClose={() => setShowModal(false)}
-          product={{ ...product, price: product.price }}
+          product={{
+            ...product,
+            price,
+            qty,
+            variant: selectedVariant?.label,
+          }}
         />
       )}
     </div>

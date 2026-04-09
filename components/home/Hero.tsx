@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Hero() {
-  const sellerNumber = "91XXXXXXXXXX"; // <- replace with your WhatsApp number (e.g. 919876543210)
+  const sellerNumber = "91XXXXXXXXXX";
   const waText = encodeURIComponent(
     `Hi, I'm interested in your products. Please share more details.`
   );
@@ -13,79 +13,50 @@ export default function Hero() {
   return (
     <section
       aria-label="Hero"
-      className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden"
+      className="
+        relative w-full
+        min-h-[80vh] sm:min-h-[85vh] lg:min-h-[90vh]
+        bg-cover bg-center bg-no-repeat
+        flex items-center
+      "
       style={{
-        backgroundImage: `url('/hero-bg.png')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundImage: "url('/hero-honey.png')",
       }}
     >
-      {/* dark overlay for contrast */}
-      <div className="absolute inset-0 bg-black/40" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: "easeOut" }}
-        className="relative z-10 text-center px-6 max-w-5xl"
-      >
-        {/* Tagline */}
-        <h1
-          className="text-white font-semibold drop-shadow-lg leading-tight"
-          style={{ fontSize: "clamp(2rem, 4vw, 3.75rem)" }}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="max-w-2xl"
         >
-          <span className="block">Pure · Natural · Authentic</span>
-        </h1>
+          <h1 className="font-serif text-[#3A1F16] leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+            Pure Forest Honey
+          </h1>
 
-        {/* Subtext */}
-        <p className="mt-4 text-white/90 max-w-2xl mx-auto text-md md:text-lg">
-          Hand-harvested forest honey — chemical free, full of natural goodness.
-          Direct from our apiaries to your table.
-        </p>
+          <p className="mt-4 text-lg text-[#5C4033]">
+            From Nature to Your Home
+          </p>
 
-        {/* Buttons */}
-        <div className="mt-8 flex items-center justify-center gap-4 flex-wrap">
-          {/* Solid Honey Button */}
-          <Link href="/products" className="inline-block">
-            <button
-              aria-label="Explore Products"
-              className="px-6 py-3 rounded-full font-medium shadow-sm"
-              style={{
-                backgroundColor: "#D4A017", // Honey gold
-                color: "#0B0B00",
-                boxShadow: "0 6px 18px rgba(212,160,23,0.18)",
-              }}
-            >
-              Explore Products
-            </button>
-          </Link>
+          <p className="mt-4 text-[#6F4E37] text-base sm:text-lg">
+            Discover the purest honey, collected from the depths of the forest and packed with nature’s goodness.
+          </p>
 
-          {/* Outline WhatsApp Button */}
-          <a href={waLink} target="_blank" rel="noreferrer" className="inline-block">
-            <button
-              aria-label="Order on WhatsApp"
-              className="px-6 py-3 rounded-full font-medium border-2"
-              style={{
-                borderColor: "rgba(255,255,255,0.9)",
-                color: "#FFFFFF",
-                backgroundColor: "transparent",
-              }}
-            >
-              WhatsApp Order
-            </button>
-          </a>
-        </div>
-      </motion.div>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link href="/products">
+              <button className="px-6 py-3 bg-[#C4622D] hover:bg-[#552619] text-white rounded-md shadow transition">
+                Shop Now
+              </button>
+            </Link>
 
-      {/* subtle decorative element bottom-left (honey accent) */}
-      <div
-        aria-hidden
-        className="absolute left-6 bottom-6 w-28 h-28 rounded-full blur-2xl opacity-30"
-        style={{
-          background:
-            "radial-gradient(circle at 30% 30%, rgba(212,160,23,0.9) 0%, rgba(212,160,23,0.55) 20%, rgba(212,160,23,0.15) 50%, transparent 70%)",
-        }}
-      />
+            <a href={waLink} target="_blank" rel="noreferrer">
+              <button className="px-6 py-3 border border-[#3A1F16] text-[#3A1F16] hover:bg-[#3A1F16] hover:text-white rounded-md transition">
+                WhatsApp Order
+              </button>
+            </a>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

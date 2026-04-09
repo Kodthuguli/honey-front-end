@@ -1,62 +1,112 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { api } from "@/lib/api";
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
 
-  // Temporary static blog list
-  const blogs = [
-    {
-      slug: "benefits-of-pure-forest-honey",
-      title: "Benefits of Pure Forest Honey",
-      date: "Jan 20, 2025",
-      author: "Admin",
-      thumbnail: "/blog1.jpg",
-      tags: ["Honey", "Health", "Natural"],
-      content: `
-        Pure forest honey is packed with antioxidants and enzymes that support immunity,
-        digestion, and overall wellness...
+  const [blog, setBlog] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-        ✅ Boosts immunity
-        ✅ Helps digestion
-        ✅ Natural energy source
-      `,
-    },
-  ];
+  useEffect(() => {
+    if (!slug) return;
 
-  const blog = blogs.find((b) => b.slug === slug);
+    const fetchBlog = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get(`/blogs/${slug}`);
+        setBlog(res.data);
+      } catch (err) {
+        console.error("Blog not found:", err);
+        setError("Blog not found");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!blog) {
+    fetchBlog();
+  }, [slug]);
+
+  if (loading) {
     return (
-      <div className="text-center py-20 text-gray-600">
-        Blog not found.
+      <div className="text-center py-24 text-[#6F4E37]">
+        Loading blog...
+      </div>
+    );
+  }
+
+  if (error || !blog) {
+    return (
+      <div className="text-center py-24 text-[#6F4E37]">
+        {error || "Blog not found."}
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
-      <Link href="/blogs" className="text-[#88b04b] font-medium hover:underline">
+    <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20">
+
+      {/* Back Link */}
+      <Link
+        href="/blogs"
+        className="text-[#C4622D] font-medium hover:underline"
+      >
         ← Back to Blogs
       </Link>
 
-      <h1 className="text-4xl font-bold text-[#2c3e1f] mt-4">{blog.title}</h1>
+      {/* Title */}
+      <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16] mt-6 leading-tight">
+        {blog.title}
+      </h1>
 
-      <p className="text-gray-500 mt-2">
-        {blog.date} • {blog.author}
+      {/* Divider */}
+      <div className="mt-4 h-[1px] w-20 bg-[#C6A77D]" />
+
+      {/* Meta */}
+      <p className="text-[#6F4E37] mt-4">
+        {blog.author || "Admin"} •{" "}
+        {new Date(blog.createdAt).toLocaleDateString("en-IN")}
       </p>
 
-      <img
-        src={blog.thumbnail}
-        alt={blog.title}
-        className="w-full h-80 object-cover rounded-xl shadow mt-6"
-      />
-
-      <div className="mt-8 text-gray-700 leading-7 whitespace-pre-line">
-        {blog.content}
+      {/* Banner */}
+      <div className="mt-8 overflow-hidden rounded-xl">
+        <img
+          src={blog.thumbnailUrl || "/placeholder.jpg"}
+          alt={blog.title}
+          className="w-full h-80 object-cover shadow-sm"
+        />
       </div>
+
+      {/* Content */}
+      <div className="mt-10 text-[#3A1F16] leading-8 whitespace-pre-line text-lg">
+        {blog.content || "No content available."}
+      </div>
+
+      {/* Tags */}
+      {blog.tags?.length > 0 && (
+        <div className="mt-10 flex gap-3 flex-wrap">
+          {blog.tags.map((t: string, i: number) => (
+            <span
+              key={i}
+              className="
+                bg-[#F4E6D5]
+                border border-[#C6A77D]
+                text-[#3A1F16]
+                px-4 py-1
+                rounded-full
+                text-sm
+              "
+            >
+              #{t}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
