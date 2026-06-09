@@ -15,17 +15,18 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-inter  text-[#3A1F16]"
-      style={{
-          backgroundColor: "#e2b38a",
-          backgroundImage: "url('/textures/natural-paper.png')",
+      <body
+        className="font-inter text-[#3A1F16]"
+        style={{
+          backgroundImage: "url('/bg-texture.png')",
           backgroundRepeat: "repeat",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          backgroundColor: "#F5EDD8",
         }}
       >
         <Navbar />
-        
-        <main className="pt-[73px] md:pt-[80px] min-h-screen">{children}</main>
-
+        <main className="pt-[64px] min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

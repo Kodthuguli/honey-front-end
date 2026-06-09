@@ -1,180 +1,324 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/products", label: "Products" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Contact" },
-  { href: "/blogs", label: "Blog" },
-];
+import {
+  Search,
+  User,
+  ShoppingCart,
+  Menu,
+  X,
+} from "lucide-react";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const pathname = usePathname();
+
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { href: "/faq", label: "FAQ" },
+    { label: "Shop", href: "/products" },
+    { label: "Blog", href: "/blogs" },
+    { label: "Contact", href: "/contact" },
+  ];
 
   return (
     <>
-      {/* NAVBAR */}
+      {/* HEADER */}
       <header
-        className="fixed top-0 left-0 z-50 w-full border-b border-[#D7C2A3] backdrop-blur-md"
+        className="
+          fixed top-0 left-0 right-0 z-50
+          border-b border-[#EADFCF]
+          bg-[#F7F1E7]/95
+          backdrop-blur-md
+        "
         style={{
-          backgroundColor: "#e2b38aee",
-          backgroundImage: "url('/textures/paper-texture.png')",
-          backgroundSize: "cover",
+          backgroundColor: "#F7F1E7",
+          // backgroundImage: "url('/textures/paper-texture.png')",
+          backgroundRepeat: "repeat",
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <div className="max-w-[1440px] mx-auto px-5 lg:px-10">
+          <div className="h-[78px] flex items-center justify-between">
 
-          {/* LOGO */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3">
-            <Image
-              src="/logo.png"
-              alt="Vanamrith"
-              width={64}
-              height={64}
-              className="h-12 sm:h-14 md:h-16 w-auto"
-              priority
-            />
+            {/* LOGO */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 lg:gap-4"
+            >
+              <img
+                src="/logo.png"
+                alt="Vanamrith"
+                className="
+                  w-[58px] h-[58px]
+                  lg:w-[72px] lg:h-[72px]
+                  object-contain
+                "
+              />
 
-            <span className="hidden sm:flex flex-col font-['Cinzel'] leading-tight items-center sm:pt-[14px]">
-  <span className="text-[18px] md:text-[22px] tracking-[0.25em] text-[#4B2E2B]">
-    VANAMRITH
-  </span>
+              <div className="leading-none">
+                <h1
+                  className="
+                    text-[20px]
+                    lg:text-[30px]
+                    font-serif
+                    tracking-[1px]
+                    text-[#2B140A]
+                    leading-none
+                  "
+                >
+                  VANAMRITH
+                </h1>
 
-  <svg
-    className="mt-1 w-full"
-    height="14"
-    viewBox="0 0 120 14"
-    preserveAspectRatio="none"
-    fill="none"
-  >
-    <polyline
-      points="0,4 50,4 60,10 70,4 120,4"
-      stroke="#C6A77D"
-      strokeWidth="1"
-    />
-  </svg>
-</span>
-          </Link>
+                <p
+                  className="
+                    mt-1
+                    text-[9px]
+                    lg:text-[12px]
+                    tracking-[3px]
+                    uppercase
+                    text-[#D38A10]
+                    font-medium
+                  "
+                >
+                  Taste By Nature
+                </p>
+              </div>
+            </Link>
 
-          {/* DESKTOP NAV */}
-          <nav className="hidden md:flex gap-8 font-medium text-[#3A1F16]">
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
+            {/* DESKTOP NAV */}
+            <nav className="hidden lg:flex items-center gap-12">
+              {navItems.map((item) => {
+                const active = pathname === item.href;
 
-              return (
-                <Link key={link.href} href={link.href} className="relative group">
-                  <span
-                    className={`transition-colors ${
-                      active ? "text-[#C4622D]" : "group-hover:text-[#C4622D]"
-                    }`}
-                  >
-                    {link.label}
-                  </span>
-
-                  {/* Underline */}
-                  <span
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
                     className={`
-                      absolute left-0 -bottom-1 h-[2px] bg-[#C4622D]
-                      transition-all duration-300
-                      ${active ? "w-full" : "w-0 group-hover:w-full"}
+                      relative
+                      text-[18px]
+                      font-medium
+                      transition
+                      ${
+                        active
+                          ? "text-[#D38A10]"
+                          : "text-[#2B140A] hover:text-[#D38A10]"
+                      }
                     `}
-                  />
-                </Link>
-              );
-            })}
-          </nav>
+                  >
+                    {item.label}
 
-          {/* HAMBURGER */}
-          <button
-            onClick={() => setOpen(true)}
-            className="md:hidden p-2 rounded-md hover:bg-[#E6D3B3]"
-            aria-label="Open menu"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24">
-              <path d="M3 6h18" stroke="#3A1F16" strokeWidth="2" />
-              <path d="M3 12h18" stroke="#3A1F16" strokeWidth="2" />
-              <path d="M3 18h18" stroke="#3A1F16" strokeWidth="2" />
-            </svg>
-          </button>
+                    {active && (
+                      <span
+                        className="
+                          absolute
+                          left-0
+                          -bottom-3
+                          w-full
+                          h-[2px]
+                          bg-[#D38A10]
+                          rounded-full
+                        "
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* RIGHT SECTION */}
+            <div className="flex items-center gap-5 lg:gap-7">
+
+              {/* DESKTOP ICONS */}
+              {/* <div className="hidden lg:flex items-center gap-7">
+                <button className="text-[#2B140A]">
+                  <Search className="w-7 h-7 stroke-[1.7]" />
+                </button>
+
+                <button className="text-[#2B140A]">
+                  <User className="w-7 h-7 stroke-[1.7]" />
+                </button>
+
+                <button className="relative text-[#2B140A]">
+                  <ShoppingCart className="w-7 h-7 stroke-[1.7]" />
+
+                  <span
+                    className="
+                      absolute
+                      -top-2
+                      -right-2
+                      w-5 h-5
+                      rounded-full
+                      bg-[#D38A10]
+                      text-white
+                      text-[10px]
+                      font-semibold
+                      flex items-center justify-center
+                    "
+                  >
+                    2
+                  </span>
+                </button>
+              </div> */}
+
+              {/* MOBILE ICONS */}
+              <div className="flex lg:hidden items-center gap-4">
+
+                {/* <button className="text-[#2B140A]">
+                  <Search className="w-6 h-6 stroke-[1.7]" />
+                </button>
+
+                <button className="text-[#2B140A]">
+                  <User className="w-6 h-6 stroke-[1.7]" />
+                </button>
+
+                <button className="relative text-[#2B140A]">
+                  <ShoppingCart className="w-6 h-6 stroke-[1.7]" />
+
+                  <span
+                    className="
+                      absolute
+                      -top-2
+                      -right-2
+                      w-5 h-5
+                      rounded-full
+                      bg-[#D38A10]
+                      text-white
+                      text-[10px]
+                      font-semibold
+                      flex items-center justify-center
+                    "
+                  >
+                    2
+                  </span>
+                </button> */}
+
+                {/* HAMBURGER */}
+                <button
+                  onClick={() => setMobileMenuOpen(true)}
+                  className="text-[#2B140A]"
+                >
+                  <Menu className="w-8 h-8 stroke-[1.7]" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* MOBILE DRAWER */}
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* OVERLAY */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
-            />
+      {/* MOBILE OVERLAY */}
+      <div
+        className={`
+          fixed inset-0 z-[60]
+          bg-black/40
+          transition-opacity duration-300
+          ${
+            mobileMenuOpen
+              ? "opacity-100 visible"
+              : "opacity-0 invisible"
+          }
+        `}
+        onClick={() => setMobileMenuOpen(false)}
+      />
 
-            {/* DRAWER */}
-            <motion.div
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ duration: 0.35 }}
-              className="fixed top-0 left-0 h-full w-72 bg-[#F5EFE6] border-r border-[#E6D3B3] shadow-xl z-50"
-            >
-              {/* HEADER */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[#E6D3B3]">
+      {/* MOBILE SIDEBAR */}
+      <div
+        className={`
+          fixed top-0 right-0 z-[70]
+          h-full w-[82%]
+          max-w-[340px]
+          bg-[#F7F1E7]
+          border-l border-[#EADFCF]
+          shadow-2xl
+          transition-transform duration-300 ease-in-out
+          ${
+            mobileMenuOpen
+              ? "translate-x-0"
+              : "translate-x-full"
+          }
+        `}
+        style={{
+          backgroundImage: "url('/textures/paper-texture.png')",
+          backgroundRepeat: "repeat",
+        }}
+      >
+        {/* TOP */}
+        <div
+          className="
+            h-[78px]
+            px-5
+            border-b border-[#EADFCF]
+            flex items-center justify-between
+          "
+        >
+          <h2
+            className="
+              text-[22px]
+              font-serif
+              text-[#2B140A]
+            "
+          >
+            Menu
+          </h2>
 
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="/logo.png"
-                    alt="Vanamrith"
-                    width={36}
-                    height={36}
-                  />
-                  <span className="font-semibold text-[#3A1F16]">
-                    Vanamrith
-                  </span>
-                </div>
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-[#2B140A]"
+          >
+            <X className="w-7 h-7 stroke-[1.7]" />
+          </button>
+        </div>
 
-                <button
-                  onClick={() => setOpen(false)}
-                  className="text-xl text-[#3A1F16]"
-                >
-                  ✕
-                </button>
-              </div>
+        {/* NAV ITEMS */}
+        <div className="px-6 py-8 flex flex-col">
 
-              {/* LINKS */}
-              <nav className="flex flex-col px-6 py-6 space-y-5 text-lg font-medium text-[#3A1F16]">
+          {navItems.map((item) => {
+            const active = pathname === item.href;
 
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={`transition ${
-                      pathname === link.href
-                        ? "text-[#C4622D]"
-                        : "hover:text-[#C4622D]"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`
+                  py-5
+                  border-b border-[#EADFCF]
+                  text-[20px]
+                  font-medium
+                  transition
+                  ${
+                    active
+                      ? "text-[#D38A10]"
+                      : "text-[#2B140A]"
+                  }
+                `}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
 
-              </nav>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          {/* CTA */}
+          <button
+            className="
+              mt-10
+              h-[56px]
+              rounded-xl
+              bg-[#D38A10]
+              text-white
+              text-[16px]
+              font-semibold
+              tracking-wide
+            "
+          >
+            SHOP NOW
+          </button>
+        </div>
+      </div>
     </>
   );
 }

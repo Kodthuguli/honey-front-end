@@ -6,107 +6,555 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/lib/api";
 
+import {
+  CalendarDays,
+  Share2,
+  ShieldCheck,
+  HeartPulse,
+  Zap,
+  ChevronDown,
+} from "lucide-react";
+
 export default function BlogDetailPage() {
+
   const { slug } = useParams();
 
   const [blog, setBlog] = useState<any>(null);
+
   const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState("");
 
+  const [expanded, setExpanded] = useState(false);
+
   useEffect(() => {
+
     if (!slug) return;
 
     const fetchBlog = async () => {
+
       try {
+
         setLoading(true);
+
         const res = await api.get(`/blogs/${slug}`);
+
         setBlog(res.data);
+
       } catch (err) {
+
         console.error("Blog not found:", err);
+
         setError("Blog not found");
+
       } finally {
+
         setLoading(false);
+
       }
     };
 
     fetchBlog();
+
   }, [slug]);
 
+
   if (loading) {
+
     return (
+
       <div className="text-center py-24 text-[#6F4E37]">
         Loading blog...
       </div>
+
     );
   }
 
+
   if (error || !blog) {
+
     return (
+
       <div className="text-center py-24 text-[#6F4E37]">
         {error || "Blog not found."}
       </div>
+
     );
   }
 
+
+  const benefits = [
+
+    {
+      icon: <ShieldCheck size={34} />,
+      title: "Boosts Immunity",
+      desc:
+        "Raw honey is rich in antioxidants and antimicrobial properties that help fight infections and strengthen the immune system.",
+      quote:
+        "Regular consumption of raw honey can help your body build a strong defense against common illnesses.",
+    },
+
+    {
+      icon: <HeartPulse size={34} />,
+      title: "Aids Digestion",
+      desc:
+        "Raw honey helps stimulate the production of digestive juices, which improves digestion and promotes gut health.",
+    },
+
+    {
+      icon: <Zap size={34} />,
+      title: "Natural Energy Booster",
+      desc:
+        "Packed with natural sugars like fructose and glucose, raw honey provides an instant and sustainable energy boost without any crash.",
+    },
+
+  ];
+
+
   return (
-    <div className="max-w-4xl mx-auto px-6 lg:px-8 py-20">
 
-      {/* Back Link */}
-      <Link
-        href="/blogs"
-        className="text-[#C4622D] font-medium hover:underline"
+    <div className="bg-[#FBF7F2] min-h-screen overflow-hidden relative">
+
+      {/* DECOR */}
+      <div
+        className="
+          hidden lg:block
+          absolute
+          right-0
+          bottom-[260px]
+          opacity-40
+          pointer-events-none
+        "
       >
-        ← Back to Blogs
-      </Link>
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16] mt-6 leading-tight">
-        {blog.title}
-      </h1>
-
-      {/* Divider */}
-      <div className="mt-4 h-[1px] w-20 bg-[#C6A77D]" />
-
-      {/* Meta */}
-      <p className="text-[#6F4E37] mt-4">
-        {blog.author || "Admin"} •{" "}
-        {new Date(blog.createdAt).toLocaleDateString("en-IN")}
-      </p>
-
-      {/* Banner */}
-      <div className="mt-8 overflow-hidden rounded-xl">
         <img
-          src={blog.thumbnailUrl || "/placeholder.jpg"}
-          alt={blog.title}
-          className="w-full h-80 object-cover shadow-sm"
+          src="/leaf-line.png"
+          alt=""
+          className="w-[220px]"
         />
+
       </div>
 
-      {/* Content */}
-      <div className="mt-10 text-[#3A1F16] leading-8 whitespace-pre-line text-lg">
-        {blog.content || "No content available."}
-      </div>
 
-      {/* Tags */}
-      {blog.tags?.length > 0 && (
-        <div className="mt-10 flex gap-3 flex-wrap">
-          {blog.tags.map((t: string, i: number) => (
-            <span
-              key={i}
+      <div
+        className="
+          max-w-[1180px]
+          mx-auto
+          px-4 md:px-6 lg:px-8
+          pt-8 md:pt-10
+          pb-16
+        "
+      >
+
+        {/* BREADCRUMB */}
+        <div
+          className="
+            flex items-center gap-2
+            text-[13px] md:text-sm
+            text-[#7A6658]
+          "
+        >
+
+          <Link href="/">
+            Home
+          </Link>
+
+          <span>›</span>
+
+          <Link href="/blogs">
+            Blog
+          </Link>
+
+          <span>›</span>
+
+          <span className="text-[#D06F1D] font-medium">
+            {blog.category || "Health & Wellness"}
+          </span>
+
+        </div>
+
+
+        {/* CATEGORY */}
+        <div
+          className="
+            mt-6
+            inline-flex
+            px-3 py-1.5
+            rounded-full
+            bg-[#FFF1E3]
+            text-[#D06F1D]
+            text-[12px]
+            font-semibold
+          "
+        >
+          {blog.category || "Health & Wellness"}
+        </div>
+
+
+        {/* TITLE */}
+        <h1
+          className="
+            mt-5
+            text-[44px]
+            md:text-[66px]
+            leading-[1.05]
+            font-serif
+            text-[#24130D]
+            max-w-[780px]
+          "
+        >
+          {blog.title ||
+            "Top 7 Health Benefits of Raw Honey"}
+        </h1>
+
+
+        {/* SUBTITLE */}
+        <p
+          className="
+            mt-5
+            text-[#4E3A30]
+            text-[18px]
+            leading-9
+            max-w-[760px]
+          "
+        >
+          {blog.excerpt ||
+            "Discover how raw honey can improve immunity, aid digestion and boost overall well-being."}
+        </p>
+
+
+        {/* META */}
+        <div
+          className="
+            mt-7
+            flex flex-wrap items-center
+            gap-5 md:gap-7
+            text-[#4E3A30]
+          "
+        >
+
+          <div className="flex items-center gap-2">
+
+            <CalendarDays
+              size={18}
+              className="text-[#D06F1D]"
+            />
+
+            <span className="text-[15px]">
+              {new Date(
+                blog.createdAt
+              ).toLocaleDateString("en-IN")}
+            </span>
+
+          </div>
+
+
+          <div className="flex items-center gap-2">
+
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D06F1D]" />
+
+            <span className="text-[15px]">
+              {blog.readTime || "5 min read"}
+            </span>
+
+          </div>
+
+
+          <button
+            className="
+              flex items-center gap-2
+              hover:text-[#D06F1D]
+              transition
+            "
+          >
+
+            <Share2
+              size={17}
+              className="text-[#D06F1D]"
+            />
+
+            <span className="text-[15px]">
+              Share
+            </span>
+
+          </button>
+
+        </div>
+
+
+        {/* HERO IMAGE */}
+        <div
+          className="
+            mt-8 md:mt-10
+            rounded-[22px] md:rounded-[28px]
+            overflow-hidden
+          "
+        >
+
+          <img
+            src={
+              blog.thumbnailUrl ||
+              "/placeholder.jpg"
+            }
+            alt={blog.title}
+            className="
+              w-full
+              h-[260px]
+              sm:h-[380px]
+              md:h-[620px]
+              object-cover
+            "
+          />
+
+        </div>
+
+
+        {/* INTRO */}
+        <div className="mt-8 md:mt-10">
+
+          <p
+            className="
+              text-[#3F3027]
+              text-[16px] md:text-[18px]
+              leading-9
+              max-w-[980px]
+            "
+          >
+            Raw honey is more than just a natural
+            sweetener. It’s a powerhouse of nutrients,
+            antioxidants, and enzymes that can support
+            your health in many wonderful ways. Unlike
+            processed honey, raw honey retains all its
+            natural goodness.
+          </p>
+
+          <p
+            className="
+              mt-6
+              font-semibold
+              text-[#24130D]
+              text-[18px]
+              md:text-[22px]
+            "
+          >
+            Here are the top 7 health benefits of
+            including raw honey in your daily routine.
+          </p>
+
+        </div>
+
+
+        {/* BENEFITS */}
+        <div className="mt-10 space-y-8">
+
+          {(expanded
+            ? benefits
+            : benefits.slice(0, 3)
+          ).map((item, index) => (
+
+            <div
+              key={index}
               className="
-                bg-[#F4E6D5]
-                border border-[#C6A77D]
-                text-[#3A1F16]
-                px-4 py-1
-                rounded-full
-                text-sm
+                border-b border-[#E8D9C7]
+                pb-8
               "
             >
-              #{t}
-            </span>
+
+              <div
+                className="
+                  flex
+                  gap-5 md:gap-7
+                  items-start
+                "
+              >
+
+                {/* ICON */}
+                <div
+                  className="
+                    w-[76px]
+                    h-[76px]
+                    md:w-[96px]
+                    md:h-[96px]
+                    rounded-[18px]
+                    border border-[#E8D9C7]
+                    bg-[#FFFDF9]
+                    flex items-center justify-center
+                    text-[#D06F1D]
+                    shrink-0
+                  "
+                >
+                  {item.icon}
+                </div>
+
+
+                {/* CONTENT */}
+                <div className="flex-1">
+
+                  <h3
+                    className="
+                      text-[28px]
+                      md:text-[38px]
+                      font-semibold
+                      text-[#24130D]
+                    "
+                  >
+                    {index + 1}. {item.title}
+                  </h3>
+
+                  <p
+                    className="
+                      mt-3
+                      text-[#4E3A30]
+                      text-[16px] md:text-[18px]
+                      leading-8
+                      max-w-[850px]
+                    "
+                  >
+                    {item.desc}
+                  </p>
+
+
+                  {/* QUOTE */}
+                  {item.quote && (
+
+                    <div
+                      className="
+                        mt-5
+                        bg-[#FFF7EF]
+                        border border-[#F1D9C0]
+                        rounded-[18px]
+                        px-5 md:px-7
+                        py-5
+                        flex gap-4
+                        max-w-[760px]
+                      "
+                    >
+
+                      <span
+                        className="
+                          text-[#D06F1D]
+                          text-[40px]
+                          leading-none
+                          font-serif
+                        "
+                      >
+                        “
+                      </span>
+
+                      <p
+                        className="
+                          text-[#4E3A30]
+                          text-[15px] md:text-[17px]
+                          leading-8
+                        "
+                      >
+                        {item.quote}
+                      </p>
+
+                    </div>
+
+                  )}
+
+                </div>
+
+              </div>
+
+            </div>
+
           ))}
+
         </div>
-      )}
+
+
+        {/* BUTTON */}
+        <div className="mt-10 text-center">
+
+          <button
+            onClick={() =>
+              setExpanded(!expanded)
+            }
+            className="
+              inline-flex items-center gap-3
+              h-[56px]
+              px-10
+              rounded-[14px]
+              bg-[#D06F1D]
+              text-white
+              font-semibold
+              text-[16px]
+              hover:opacity-90
+              transition
+            "
+          >
+
+            {expanded
+              ? "Show Less"
+              : "Read More Benefits"}
+
+            <ChevronDown
+              size={18}
+              className={`transition ${
+                expanded ? "rotate-180" : ""
+              }`}
+            />
+
+          </button>
+
+        </div>
+
+
+        {/* TAGS */}
+        <div
+          className="
+            mt-12
+            pt-7
+            border-t border-[#E8D9C7]
+            flex flex-wrap items-center gap-3
+          "
+        >
+
+          <span
+            className="
+              text-[#24130D]
+              font-semibold
+              text-[18px]
+              mr-2
+            "
+          >
+            Tags:
+          </span>
+
+          {(blog.tags?.length > 0
+            ? blog.tags
+            : [
+                "Raw Honey",
+                "Health",
+                "Immunity",
+                "Natural Wellness",
+              ]
+          ).map((tag: string, index: number) => (
+
+            <span
+              key={index}
+              className="
+                px-5 py-2.5
+                rounded-[12px]
+                border border-[#E8D9C7]
+                bg-[#FFFDF9]
+                text-[#6A5445]
+                text-[14px]
+              "
+            >
+              {tag}
+            </span>
+
+          ))}
+
+        </div>
+
+      </div>
+
     </div>
+
   );
 }

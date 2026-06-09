@@ -4,19 +4,38 @@
 import { useState } from "react";
 import { api } from "@/lib/api";
 
+import {
+  MapPin,
+  Mail,
+  Phone,
+  Clock3,
+  Send,
+} from "lucide-react";
+
 export default function ContactPage() {
+
   const [name, setName] = useState("");
+
   const [phone, setPhone] = useState("");
+
   const [email, setEmail] = useState("");
+
+  const [subject, setSubject] = useState("");
+
   const [message, setMessage] = useState("");
+
   const [submitted, setSubmitted] = useState(false);
+
   const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
 
-    if (!name || !phone || !message) {
+    if (!name || !phone || !message || !subject) {
+
       setError("Please fill all required fields");
+
       return;
     }
 
@@ -24,167 +43,633 @@ export default function ContactPage() {
     const phoneRegex = /^[6-9]\d{9}$/;
 
     if (!phoneRegex.test(phone)) {
+
       setError("Please enter a valid 10-digit mobile number");
+
       return;
     }
 
     setError("");
+
     setLoading(true);
 
     try {
+
       await api.post("/contact", {
         name,
         phone,
         email,
+        subject,
         message,
       });
 
       setSubmitted(true);
+
       setName("");
+
       setPhone("");
+
       setEmail("");
+
+      setSubject("");
+
       setMessage("");
 
       setTimeout(() => setSubmitted(false), 4000);
+
     } catch {
+
       setError("Something went wrong. Please try again.");
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
+  const contactData = [
+
+    {
+      icon: <MapPin size={30} />,
+      title: "Visit Us",
+      desc: (
+        <>
+          Vanamrith Naturals Pvt. Ltd.
+          <br />
+          123 Green Valley Road, Coorg,
+          <br />
+          Karnataka – 571201, India
+        </>
+      ),
+    },
+
+    {
+      icon: <Mail size={30} />,
+      title: "Email Us",
+      desc: (
+        <>
+          hello@vanamrith.com
+          <br />
+          support@vanamrith.com
+        </>
+      ),
+    },
+
+    {
+      icon: <Phone size={30} />,
+      title: "Call Us",
+      desc: (
+        <>
+          +91 98765 43210
+          <br />
+          ( Mon – Sat : 9:00 AM – 6:00 PM )
+        </>
+      ),
+    },
+
+    {
+      icon: <Clock3 size={30} />,
+      title: "Business Hours",
+      desc: (
+        <>
+          Monday – Saturday
+          <br />
+          9:00 AM – 6:00 PM
+        </>
+      ),
+    },
+
+  ];
+
+
   return (
-    <div className="max-w-6xl mx-auto px-6 lg:px-8 py-20">
 
-      {/* Title */}
-      <div className="text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
-          Contact Us
-        </h1>
+    <div className="bg-[#FBF7F2] min-h-screen overflow-hidden">
 
-        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
+      {/* HERO */}
+      <section
+        className="
+          relative
+          border-b border-[#F0E2D1]
+        "
+      >
 
-        <p className="mt-4 text-[#6F4E37]">
-          Have a question or want to order? We’re here to help.
-        </p>
-      </div>
+        <div
+          className="
+            max-w-[1280px]
+            mx-auto
+            px-4 md:px-6 lg:px-8
+            pt-10 md:pt-14
+            pb-0
+          "
+        >
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-14 mt-16">
+          <div
+            className="
+              grid
+              grid-cols-1
+              lg:grid-cols-2
+              gap-10
+              items-center
+            "
+          >
 
-        {/* LEFT SIDE */}
-        <div className="space-y-8">
+            {/* LEFT */}
+            <div className="pb-8 lg:pb-14">
 
-          <div className="p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
-            <h3 className="text-xl font-serif text-[#3A1F16]">WhatsApp</h3>
-
-            <p className="text-[#6F4E37] mt-2">
-              Order or ask anything instantly.
-            </p>
-
-            <a
-              href="https://wa.me/919483151437"
-              target="_blank"
-              className="inline-block mt-4 bg-[#C4622D] text-white px-6 py-2 rounded-md hover:bg-[#552619] transition"
-            >
-              Chat on WhatsApp
-            </a>
-          </div>
-
-          <div className="p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
-            <h3 className="text-xl font-serif text-[#3A1F16]">Phone</h3>
-
-            <p className="text-[#6F4E37] mt-2 font-medium">
-              +91 94831 51437
-            </p>
-          </div>
-
-          <div className="p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
-            <h3 className="text-xl font-serif text-[#3A1F16]">Email</h3>
-
-            <p className="text-[#6F4E37] mt-2 font-medium">
-              support@vanamrith.com
-            </p>
-          </div>
-
-        </div>
-
-        {/* RIGHT SIDE FORM */}
-        <div className="p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
-
-          <h3 className="text-xl font-serif text-[#3A1F16] mb-6">
-            Send us a message
-          </h3>
-
-          {!submitted ? (
-            <>
-              {error && (
-                <p className="text-[#C4622D] text-sm mb-4">{error}</p>
-              )}
-
-              {/* NAME */}
-              <input
-                type="text"
-                placeholder="Your Name *"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#E9DCCB] border border-[#C6A77D] rounded-md px-4 py-3 mb-4 text-[#3A1F16] focus:outline-none focus:ring-2 focus:ring-[#C4622D]"
-              />
-
-              {/* PHONE */}
-              <input
-                type="tel"
-                placeholder="Phone Number *"
-                value={phone}
-                maxLength={10}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, "");
-                  setPhone(value);
-                }}
-                className="w-full bg-[#E9DCCB] border border-[#C6A77D] rounded-md px-4 py-3 mb-4 text-[#3A1F16] focus:outline-none focus:ring-2 focus:ring-[#C4622D]"
-              />
-
-              {/* EMAIL */}
-              <input
-                type="email"
-                placeholder="Email (Optional)"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#E9DCCB] border border-[#C6A77D] rounded-md px-4 py-3 mb-4 text-[#3A1F16] focus:outline-none focus:ring-2 focus:ring-[#C4622D]"
-              />
-
-              {/* MESSAGE */}
-              <textarea
-                placeholder="Your Message *"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                className="w-full bg-[#E9DCCB] border border-[#C6A77D] rounded-md px-4 py-3 h-32 text-[#3A1F16] focus:outline-none focus:ring-2 focus:ring-[#C4622D]"
-              />
-
-              <button
-                onClick={handleSubmit}
-                disabled={loading}
-                className="mt-6 w-full bg-[#C4622D] text-white py-3 rounded-md font-medium hover:bg-[#552619] transition disabled:opacity-50"
+              <p
+                className="
+                  text-[#D06F1D]
+                  uppercase
+                  tracking-[0.15em]
+                  font-semibold
+                  text-sm
+                "
               >
-                {loading ? "Sending..." : "Send Message"}
-              </button>
-            </>
-          ) : (
-            <div className="text-center text-[#C4622D] font-medium">
-              ✅ Thank you! We will contact you soon.
+                Get In Touch
+              </p>
+
+              <div className="flex items-center gap-4 mt-3">
+
+                <div
+                  className="
+                    w-[110px]
+                    h-[1px]
+                    bg-[#E0A15C]
+                  "
+                />
+
+                <img
+                  src="/bee.png"
+                  alt="bee"
+                  className="w-10"
+                />
+
+              </div>
+
+
+              <h1
+                className="
+                  mt-5
+                  text-[52px]
+                  md:text-[72px]
+                  leading-[1.02]
+                  font-serif
+                  text-[#24130D]
+                  max-w-[520px]
+                "
+              >
+                We’d Love to
+                <br />
+                Hear from You
+              </h1>
+
+
+              <div
+                className="
+                  mt-6
+                  w-[80px]
+                  h-[3px]
+                  bg-[#D06F1D]
+                "
+              />
+
+
+              <p
+                className="
+                  mt-6
+                  text-[#4E3A30]
+                  text-[18px]
+                  leading-9
+                  max-w-[520px]
+                "
+              >
+                Have a question about our honey,
+                need help with an order, or want
+                to collaborate with us? We’re here
+                for you!
+              </p>
+
             </div>
-          )}
+
+
+            {/* RIGHT IMAGE */}
+            <div
+              className="
+                relative
+                flex justify-center lg:justify-end
+              "
+            >
+
+              <img
+                src="/contact-honey.png"
+                alt="Vanamrith Honey"
+                className="
+                  w-full
+                  max-w-[760px]
+                  object-contain
+                "
+              />
+
+            </div>
+
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
-      {/* Map */}
-      <div className="mt-20">
-        <div className="w-full h-64 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl flex items-center justify-center text-[#6F4E37]">
-          Map coming soon
+
+      {/* MAIN */}
+      <section
+        className="
+          max-w-[1280px]
+          mx-auto
+          px-4 md:px-6 lg:px-8
+          py-10 md:py-14
+        "
+      >
+
+        <div
+          className="
+            grid
+            grid-cols-1
+            lg:grid-cols-[360px_1fr]
+            gap-6 md:gap-8
+            items-start
+          "
+        >
+
+          {/* LEFT INFO */}
+          <div className="space-y-5">
+
+            {/* CARD */}
+            <div
+              className="
+                bg-[#FFFDF9]
+                border border-[#E8D9C7]
+                rounded-[22px]
+                overflow-hidden
+              "
+            >
+
+              {contactData.map((item, index) => (
+
+                <div
+                  key={index}
+                  className={`
+                    flex items-start gap-5
+                    px-5 md:px-6
+                    py-6
+                    ${
+                      index !== contactData.length - 1
+                        ? "border-b border-[#E8D9C7]"
+                        : ""
+                    }
+                  `}
+                >
+
+                  {/* ICON */}
+                  <div
+                    className="
+                      w-[72px]
+                      h-[72px]
+                      rounded-full
+                      border border-[#E8D9C7]
+                      flex items-center justify-center
+                      text-[#D06F1D]
+                      shrink-0
+                      bg-[#FFFDFC]
+                    "
+                  >
+                    {item.icon}
+                  </div>
+
+
+                  {/* TEXT */}
+                  <div>
+
+                    <h3
+                      className="
+                        text-[18px]
+                        font-semibold
+                        text-[#24130D]
+                      "
+                    >
+                      {item.title}
+                    </h3>
+
+                    <div
+                      className="
+                        mt-2
+                        text-[#4E3A30]
+                        leading-8
+                        text-[16px]
+                      "
+                    >
+                      {item.desc}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+
+
+            {/* BOTTOM NOTE */}
+            <div
+              className="
+                relative
+                bg-[#FFFDF9]
+                border border-[#E8D9C7]
+                rounded-[18px]
+                px-5 py-5
+                flex items-center gap-4
+                overflow-hidden
+              "
+            >
+
+              <img
+                src="/bee-small.png"
+                alt=""
+                className="w-12 shrink-0"
+              />
+
+              <p
+                className="
+                  text-[#4E3A30]
+                  text-[15px]
+                  leading-7
+                  max-w-[250px]
+                "
+              >
+                We value your trust and strive
+                to respond to all inquiries within
+                24 hours.
+              </p>
+
+              <div
+                className="
+                  absolute
+                  right-0
+                  bottom-0
+                  opacity-40
+                "
+              >
+
+                <img
+                  src="/hex-pattern.png"
+                  alt=""
+                  className="w-[120px]"
+                />
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          {/* FORM */}
+          <div
+            className="
+              bg-[#FFFDF9]
+              border border-[#E8D9C7]
+              rounded-[22px]
+              p-6 md:p-8 lg:p-10
+            "
+          >
+
+            <h2
+              className="
+                text-[34px]
+                md:text-[42px]
+                font-semibold
+                text-[#24130D]
+              "
+            >
+              Send Us a Message
+            </h2>
+
+            <p
+              className="
+                mt-3
+                text-[#6F4E37]
+                text-[16px]
+              "
+            >
+              Fill out the form below and we’ll
+              get back to you soon.
+            </p>
+
+
+            {!submitted ? (
+
+              <>
+
+                {error && (
+
+                  <p
+                    className="
+                      mt-5
+                      text-[#D06F1D]
+                      text-sm
+                    "
+                  >
+                    {error}
+                  </p>
+
+                )}
+
+
+                {/* FORM GRID */}
+                <div
+                  className="
+                    mt-8
+                    grid
+                    grid-cols-1
+                    md:grid-cols-2
+                    gap-4 md:gap-5
+                  "
+                >
+
+                  {/* NAME */}
+                  <input
+                    type="text"
+                    placeholder="Your Name *"
+                    value={name}
+                    onChange={(e) =>
+                      setName(e.target.value)
+                    }
+                    className="
+                      h-[62px]
+                      rounded-[14px]
+                      border border-[#E8D9C7]
+                      bg-[#FFFDFC]
+                      px-5
+                      text-[#24130D]
+                      outline-none
+                      focus:border-[#D06F1D]
+                    "
+                  />
+
+
+                  {/* EMAIL */}
+                  <input
+                    type="email"
+                    placeholder="Email Address *"
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(e.target.value)
+                    }
+                    className="
+                      h-[62px]
+                      rounded-[14px]
+                      border border-[#E8D9C7]
+                      bg-[#FFFDFC]
+                      px-5
+                      text-[#24130D]
+                      outline-none
+                      focus:border-[#D06F1D]
+                    "
+                  />
+
+
+                  {/* PHONE */}
+                  <input
+                    type="tel"
+                    placeholder="Phone Number"
+                    value={phone}
+                    maxLength={10}
+                    onChange={(e) => {
+
+                      const value =
+                        e.target.value.replace(
+                          /\D/g,
+                          ""
+                        );
+
+                      setPhone(value);
+                    }}
+                    className="
+                      h-[62px]
+                      rounded-[14px]
+                      border border-[#E8D9C7]
+                      bg-[#FFFDFC]
+                      px-5
+                      text-[#24130D]
+                      outline-none
+                      focus:border-[#D06F1D]
+                    "
+                  />
+
+
+                  {/* SUBJECT */}
+                  <input
+                    type="text"
+                    placeholder="Subject *"
+                    value={subject}
+                    onChange={(e) =>
+                      setSubject(e.target.value)
+                    }
+                    className="
+                      h-[62px]
+                      rounded-[14px]
+                      border border-[#E8D9C7]
+                      bg-[#FFFDFC]
+                      px-5
+                      text-[#24130D]
+                      outline-none
+                      focus:border-[#D06F1D]
+                    "
+                  />
+
+                </div>
+
+
+                {/* MESSAGE */}
+                <textarea
+                  placeholder="Message *"
+                  value={message}
+                  onChange={(e) =>
+                    setMessage(e.target.value)
+                  }
+                  className="
+                    mt-5
+                    w-full
+                    h-[180px]
+                    md:h-[210px]
+                    rounded-[14px]
+                    border border-[#E8D9C7]
+                    bg-[#FFFDFC]
+                    px-5 py-5
+                    text-[#24130D]
+                    outline-none
+                    resize-none
+                    focus:border-[#D06F1D]
+                  "
+                />
+
+
+                {/* BUTTON */}
+                <button
+                  onClick={handleSubmit}
+                  disabled={loading}
+                  className="
+                    mt-7
+                    w-full md:w-[340px]
+                    h-[62px]
+                    rounded-[14px]
+                    bg-[#D06F1D]
+                    text-white
+                    font-semibold
+                    text-[18px]
+                    flex items-center justify-center gap-3
+                    hover:opacity-90
+                    transition
+                    disabled:opacity-50
+                  "
+                >
+
+                  {loading
+                    ? "Sending..."
+                    : "Send Message"}
+
+                  {!loading && (
+                    <Send size={18} />
+                  )}
+
+                </button>
+
+              </>
+
+            ) : (
+
+              <div
+                className="
+                  mt-10
+                  text-[#D06F1D]
+                  text-lg
+                  font-medium
+                "
+              >
+                ✅ Thank you! We will contact you
+                soon.
+              </div>
+
+            )}
+
+          </div>
+
         </div>
-      </div>
+
+      </section>
 
     </div>
+
   );
 }

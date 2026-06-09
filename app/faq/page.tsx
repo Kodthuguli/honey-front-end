@@ -6,7 +6,7 @@ import { api } from "@/lib/api";
 
 export default function FAQPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const [question, setQuestion] = useState("");
   const [askedBy, setAskedBy] = useState("");
@@ -18,7 +18,9 @@ export default function FAQPage() {
   const fetchFaqs = async () => {
     try {
       setLoadingFaqs(true);
+
       const res = await api.get("/faqs");
+
       setFaqs(Array.isArray(res.data) ? res.data : []);
     } catch {
       setFaqs([]);
@@ -59,134 +61,420 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 lg:px-8 py-20">
+    <div className="relative overflow-hidden">
 
-      {/* Title */}
-      <div className="text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
-          Frequently Asked Questions
-        </h1>
+      {/* LEFT FLOWERS */}
+      <img
+        src="/patterns/leaves-left.svg"
+        alt=""
+        className="
+          hidden lg:block
+          absolute
+          left-0
+          top-[180px]
+          w-[180px]
+          opacity-[0.12]
+          pointer-events-none
+        "
+      />
 
-        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
+      {/* RIGHT HONEYCOMB */}
+      <img
+        src="/patterns/honeycomb.svg"
+        alt=""
+        className="
+          hidden lg:block
+          absolute
+          right-0
+          top-[120px]
+          w-[180px]
+          opacity-[0.10]
+          pointer-events-none
+        "
+      />
 
-        <p className="mt-4 text-[#6F4E37] max-w-2xl mx-auto">
-          Everything you need to know about our natural products.
-        </p>
-      </div>
+      {/* HERO */}
+      <section className="relative overflow-hidden">
 
-      {/* FAQ LIST */}
-      <div className="mt-14 space-y-5">
-        {loadingFaqs ? (
-          <p className="text-center text-[#6F4E37]">Loading FAQs...</p>
-        ) : faqs.length === 0 ? (
-          <p className="text-center text-[#6F4E37]">
-            No FAQs available right now.
-          </p>
-        ) : (
-          faqs.map((faq, index) => (
-            <div
-              key={faq._id}
-              className="bg-[#F4E6D5] border border-[#C6A77D] rounded-lg shadow-sm"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
+        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-10 pt-10 md:pt-14">
+
+          <div
+            className="
+              grid
+              grid-cols-[52%_48%]
+              lg:grid-cols-2
+              gap-5
+              lg:gap-12
+              items-center
+            "
+          >
+
+            {/* LEFT */}
+            <div>
+
+              <p
                 className="
-                  w-full text-left px-6 py-4
-                  font-medium text-[#3A1F16]
-                  flex justify-between items-center
+                  uppercase
+                  tracking-[3px]
+                  md:tracking-[4px]
+                  text-[#D8891C]
+                  text-[10px]
+                  md:text-sm
+                  font-semibold
                 "
               >
-                {faq.question}
-                <span className="text-[#C4622D] text-xl">
-                  {openIndex === index ? "−" : "+"}
-                </span>
-              </button>
+                ✿ Pure Honey. Pure Trust.
+              </p>
 
-              {openIndex === index && (
-                <div className="px-6 pb-5 text-[#6F4E37] leading-relaxed">
-                  {faq.answer || "Pending response..."}
+              <h1
+                className="
+                  mt-4 md:mt-6
+                  font-serif
+                  leading-[1]
+                  text-[52px]
+                  sm:text-[72px]
+                  md:text-[95px]
+                  lg:text-[110px]
+                  text-[#2E1B12]
+                "
+              >
+                Frequently
+                <br />
+                Asked Questions
+              </h1>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3 md:gap-4 mt-5 md:mt-6">
+                <div className="w-10 md:w-20 h-[1px] bg-[#D7B98E]" />
+                <div className="text-[#D8891C] text-xs md:text-base">
+                  ✿
                 </div>
-              )}
+                <div className="w-10 md:w-20 h-[1px] bg-[#D7B98E]" />
+              </div>
+
+              <p
+                className="
+                  mt-6 md:mt-8
+                  text-[#5F4637]
+                  text-[14px]
+                  sm:text-[16px]
+                  md:text-lg
+                  leading-[2]
+                  max-w-xl
+                "
+              >
+                Everything you need to know about our honey,
+                sourcing, purity, and delivery.
+              </p>
+
             </div>
-          ))
-        )}
-      </div>
 
-      {/* ASK QUESTION */}
-      <div className="mt-20 p-8 bg-[#F4E6D5] border border-[#C6A77D] rounded-xl shadow-sm">
-        <div className="text-center">
-          <h2 className="text-2xl font-serif text-[#3A1F16]">
-            Still have a question?
-          </h2>
+            {/* RIGHT */}
+            <div className="relative flex justify-center">
 
-          <div className="mt-3 mx-auto h-[1px] w-20 bg-[#C6A77D]" />
+              {/* Bee */}
+              <img
+                src="/bee.png"
+                alt=""
+                className="
+                  absolute
+                  top-2 md:top-8
+                  left-2 md:left-10
+                  w-5 md:w-10
+                  animate-float
+                  z-20
+                "
+              />
 
-          <p className="mt-4 text-[#6F4E37]">
-            Ask us anything — we’ll reply soon!
-          </p>
+              {/* Product */}
+              <img
+                src="/about-hero.png"
+                alt="Honey"
+                className="
+                  w-full
+                  max-w-[250px]
+                  sm:max-w-[360px]
+                  md:max-w-[520px]
+                  lg:max-w-[650px]
+                  object-contain
+                "
+              />
+
+            </div>
+
+          </div>
+
         </div>
 
-        {!submitted ? (
-          <div className="mt-8 space-y-5">
+      </section>
 
-            <input
-              type="text"
-              placeholder="Your name (optional)"
-              value={askedBy}
-              onChange={(e) => setAskedBy(e.target.value)}
+      {/* FAQ LIST */}
+      <section className="relative pb-10 md:pb-16">
+
+        <div className="max-w-[1200px] mx-auto px-5 md:px-8 lg:px-10">
+
+          <div className="mt-6 md:mt-10 space-y-4">
+
+            {loadingFaqs ? (
+              <div className="text-center py-10 text-[#6F4E37]">
+                Loading FAQs...
+              </div>
+            ) : faqs.length === 0 ? (
+              <div className="text-center py-10 text-[#6F4E37]">
+                No FAQs available right now.
+              </div>
+            ) : (
+              faqs.map((faq, index) => (
+                <div
+                  key={faq._id}
+                  className="
+                    bg-[#FBF7F1]
+                    border
+                    border-[#E7D7BD]
+                    rounded-[18px]
+                    overflow-hidden
+                    shadow-[0_4px_12px_rgba(0,0,0,0.03)]
+                  "
+                >
+
+                  {/* QUESTION */}
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="
+                      w-full
+                      flex
+                      items-center
+                      justify-between
+                      gap-5
+                      px-5 md:px-8
+                      py-5
+                      text-left
+                    "
+                  >
+
+                    <div
+                      className="
+                        flex
+                        items-start
+                        gap-3
+                        text-[#2E1B12]
+                        font-medium
+                        text-[15px]
+                        md:text-[18px]
+                      "
+                    >
+                      <span>{index + 1}.</span>
+
+                      <span>{faq.question}</span>
+                    </div>
+
+                    <span
+                      className="
+                        text-[#D8891C]
+                        text-3xl
+                        leading-none
+                        shrink-0
+                      "
+                    >
+                      {openIndex === index ? "−" : "+"}
+                    </span>
+
+                  </button>
+
+                  {/* ANSWER */}
+                  {openIndex === index && (
+                    <div className="px-5 md:px-8 pb-6">
+
+                      <div
+                        className="
+                          bg-[#F8F2E9]
+                          rounded-[14px]
+                          px-5 md:px-7
+                          py-5
+                          text-[#5F4637]
+                          text-[14px]
+                          md:text-[17px]
+                          leading-[2]
+                        "
+                      >
+                        {faq.answer || "Pending response..."}
+                      </div>
+
+                    </div>
+                  )}
+
+                </div>
+              ))
+            )}
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ASK QUESTION */}
+      <section className="pb-14 md:pb-20">
+
+        <div className="max-w-[1200px] mx-auto px-5 md:px-8 lg:px-10">
+
+          <div
+            className="
+              relative
+              overflow-hidden
+              rounded-[28px]
+              border border-[#E7D7BD]
+              bg-gradient-to-br
+              from-[#F8F2E7]
+              to-[#F2E5D2]
+              p-5
+              md:p-10
+            "
+          >
+
+            {/* Decorative Leaves */}
+            <img
+              src="/patterns/leaves-right.svg"
+              alt=""
               className="
-                w-full
-                bg-[#E9DCCB]
-                border border-[#C6A77D]
-                rounded-md
-                px-4 py-3
-                text-[#3A1F16]
-                focus:outline-none
-                focus:ring-2 focus:ring-[#C4622D]
+                hidden lg:block
+                absolute
+                top-0
+                right-0
+                w-[180px]
+                opacity-[0.12]
               "
             />
 
-            <textarea
-              placeholder="Type your question here..."
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
+            <div
               className="
-                w-full
-                bg-[#E9DCCB]
-                border border-[#C6A77D]
-                rounded-md
-                px-4 py-3
-                text-[#3A1F16]
-                h-28
-                focus:outline-none
-                focus:ring-2 focus:ring-[#C4622D]
-              "
-            />
-
-            <button
-              onClick={handleSubmit}
-              disabled={submitting}
-              className="
-                w-full
-                bg-[#C4622D]
-                text-white
-                py-3
-                rounded-md
-                font-medium
-                hover:bg-[#552619]
-                transition
+                grid
+                grid-cols-1
+                md:grid-cols-[230px_1fr]
+                gap-8
+                items-end
               "
             >
-              {submitting ? "Submitting..." : "Submit Question"}
-            </button>
+
+              {/* LEFT IMAGE */}
+              <div className="flex items-end justify-center md:justify-start">
+
+                <img
+                  src="/doubt.png"
+                  alt="Honey"
+                  className="
+                    w-[180px]
+                    md:w-[220px]
+                    object-contain
+                  "
+                />
+
+              </div>
+
+              {/* FORM */}
+              <div>
+
+                <h2
+                  className="
+                    font-serif
+                    text-[36px]
+                    md:text-[52px]
+                    leading-none
+                    text-[#2E1B12]
+                  "
+                >
+                  Still have a question?
+                </h2>
+
+                <p
+                  className="
+                    mt-3
+                    text-[#5F4637]
+                    text-[16px]
+                    md:text-[20px]
+                  "
+                >
+                  Ask us anything — we’ll reply soon!
+                </p>
+
+                {!submitted ? (
+                  <div className="mt-6 space-y-4">
+
+                    <input
+                      type="text"
+                      placeholder="Your name (optional)"
+                      value={askedBy}
+                      onChange={(e) => setAskedBy(e.target.value)}
+                      className="
+                        w-full
+                        h-[54px]
+                        px-5
+                        rounded-[10px]
+                        border border-[#D9C6A8]
+                        bg-[#FFFDF9]
+                        text-[#3A1F16]
+                        outline-none
+                        focus:border-[#D8891C]
+                      "
+                    />
+
+                    <textarea
+                      placeholder="Type your question here..."
+                      value={question}
+                      onChange={(e) => setQuestion(e.target.value)}
+                      className="
+                        w-full
+                        h-[140px]
+                        px-5
+                        py-4
+                        rounded-[10px]
+                        border border-[#D9C6A8]
+                        bg-[#FFFDF9]
+                        text-[#3A1F16]
+                        outline-none
+                        resize-none
+                        focus:border-[#D8891C]
+                      "
+                    />
+
+                    <button
+                      onClick={handleSubmit}
+                      disabled={submitting}
+                      className="
+                        w-full
+                        h-[54px]
+                        rounded-[10px]
+                        bg-gradient-to-r
+                        from-[#C96E2A]
+                        to-[#D9782E]
+                        text-white
+                        font-semibold
+                        text-[16px]
+                        hover:opacity-95
+                        transition
+                      "
+                    >
+                      {submitting
+                        ? "Submitting..."
+                        : "Submit Question"}
+                    </button>
+
+                  </div>
+                ) : (
+                  <div className="mt-8 text-[#C96E2A] font-medium">
+                    ✅ Thank you! Your question has been submitted.
+                  </div>
+                )}
+
+              </div>
+
+            </div>
 
           </div>
-        ) : (
-          <div className="text-center text-[#C4622D] font-medium mt-8">
-            ✅ Thank you! Your question has been submitted.
-          </div>
-        )}
-      </div>
+
+        </div>
+
+      </section>
 
     </div>
   );
