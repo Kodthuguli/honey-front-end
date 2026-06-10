@@ -95,47 +95,83 @@ export default function ProductsPage() {
     fetchProducts(true);
   }, [page, search, category, sort]);
 
- const handleAddToCart = (product:any) => {
+const handleAddToCart = (product:any) => {
 
 
-  const variant =
-    product.variants?.[0];
-
-
-  addToCart({
-
-    productId:
-      product._id,
-
-
-    name:
-      product.name,
-
-
-    image:
-      product.images?.[0] || "",
-
-
-    size:
-      variant?.label ||
-      "Default",
-
-
-    price:
-      variant?.price ||
-      product.price,
-
-
-    qty:1,
-
-
-  });
+const variant =
+product.variants?.[0];
 
 
 
-  alert(
-    "Product added to cart"
-  );
+const stock =
+variant
+?
+variant.stock
+:
+product.stock;
+
+
+
+if(
+stock <= 0
+){
+
+alert(
+"Product is out of stock"
+);
+
+return;
+
+}
+
+
+
+
+addToCart({
+
+productId:
+product._id,
+
+
+name:
+product.name,
+
+
+image:
+product.images?.[0] || "",
+
+
+
+size:
+
+variant?.title ||
+
+variant?.label ||
+
+"Default",
+
+
+
+price:
+
+variant?.price ||
+
+product.price,
+
+
+
+qty:1,
+
+
+});
+
+
+
+
+alert(
+"Product added to cart"
+);
+
 
 
 };
@@ -523,11 +559,53 @@ export default function ProductsPage() {
 
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-7">
 
-                {products.map((p) => {
+               {products.map((p) => {
 
-                  const variant = p.variants?.[0];
 
-                  return (
+const variant =
+p.variants?.[0];
+
+
+
+const stock =
+
+p.variants?.length > 0
+
+?
+
+p.variants.reduce(
+
+(
+total:number,
+v:any
+)=>
+
+total + (v.stock || 0),
+
+0
+
+)
+
+:
+
+p.stock;
+
+
+
+
+const outOfStock =
+stock <= 0;
+
+
+
+const lowStock =
+stock > 0 &&
+stock <= 5;
+
+
+
+
+return (
 
                     <div
                       key={p._id}
@@ -614,28 +692,97 @@ export default function ProductsPage() {
                           ₹{variant?.price ?? p.price}
                         </p>
 
+                        <div className="mt-2">
+
+
+{
+outOfStock
+?
+(
+
+<p className="text-red-600 text-sm font-medium">
+
+Out of Stock
+
+</p>
+
+)
+
+:
+
+lowStock
+?
+
+(
+
+<p className="text-orange-600 text-sm font-medium">
+
+Only {stock} left
+
+</p>
+
+)
+
+:
+
+(
+
+<p className="text-green-700 text-sm font-medium">
+
+In Stock
+
+</p>
+
+)
+
+}
+
+
+</div>
+
                         {/* BUTTONS */}
                         <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
 
                           <button
-                            onClick={() => handleAddToCart(p)}
-                            className="
-                              flex-1
-                              h-[42px]
-                              lg:h-[48px]
-                              rounded-[10px]
-                              bg-[#D06F1D]
-                              text-white
-                              text-[13px]
-                              lg:text-sm
-                              font-medium
-                              hover:bg-[#B85E13]
-                              transition
-                              whitespace-nowrap
-                              px-3
-                            "
-                          >
-                            Add to Cart
+
+disabled={outOfStock}
+
+onClick={() =>
+handleAddToCart(p)
+}
+
+
+className={`
+flex-1
+h-[42px]
+lg:h-[48px]
+rounded-[10px]
+
+${
+outOfStock
+?
+"bg-gray-400 cursor-not-allowed"
+:
+"bg-[#D06F1D] hover:bg-[#B85E13]"
+}
+
+text-white
+text-[13px]
+lg:text-sm
+font-medium
+transition
+whitespace-nowrap
+px-3
+`}
+
+>
+                            {
+outOfStock
+?
+"Out of Stock"
+:
+"Add to Cart"
+}
                           </button>
 
                           <Link

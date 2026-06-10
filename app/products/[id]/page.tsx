@@ -27,7 +27,43 @@ export default function ProductDetailsPage() {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  const [selectedVariant, setSelectedVariant] = useState<any>(null);
+const [selectedVariant, setSelectedVariant] =
+useState<any>(null);
+
+
+
+/*
+ SUPPORTS BOTH:
+
+ 1. Variant products
+    variants[].stock
+
+ 2. Normal products
+    product.stock
+*/
+
+
+const currentStock =
+Number(
+
+selectedVariant
+?
+selectedVariant.stock
+:
+product?.stock ?? 0
+
+);
+
+
+
+const isOutOfStock =
+currentStock <= 0;
+
+
+
+const lowStock =
+currentStock > 0 &&
+currentStock <= 5;
   const [qty, setQty] = useState(1);
 
   const [showModal, setShowModal] = useState(false);
@@ -78,7 +114,34 @@ export default function ProductDetailsPage() {
     });
   };
 
-  const handleAddToCart = () => {
+ const handleAddToCart = () => {
+
+
+if(
+isOutOfStock
+){
+
+alert(
+"Selected product is out of stock"
+);
+
+return;
+
+}
+
+
+
+if(
+qty > currentStock
+){
+
+alert(
+`Only ${currentStock} item available`
+);
+
+return;
+
+}
 
 
   if (!product) return;
@@ -99,8 +162,9 @@ export default function ProductDetailsPage() {
 
 
     size:
-      selectedVariant?.label ||
-      "Default",
+selectedVariant?.title ||
+selectedVariant?.label ||
+"Default",
 
 
     price:
@@ -400,13 +464,50 @@ export default function ProductDetailsPage() {
 
               <div className="flex items-center gap-2">
 
-                <div className="w-2.5 h-2.5 rounded-full bg-[#5AA647]" />
 
-                <span className="text-[#4E3A30] text-sm">
-                  In Stock
-                </span>
+<div
+className={`
+w-2.5
+h-2.5
+rounded-full
 
-              </div>
+${
+isOutOfStock
+?
+"bg-red-500"
+:
+lowStock
+?
+"bg-orange-500"
+:
+"bg-[#5AA647]"
+}
+
+`}
+/>
+
+
+
+<span className="text-[#4E3A30] text-sm">
+
+
+{
+isOutOfStock
+?
+"Out of Stock"
+:
+lowStock
+?
+`Only ${currentStock} left`
+:
+"In Stock"
+}
+
+
+</span>
+
+
+</div>
 
             </div>
 
@@ -471,14 +572,31 @@ export default function ProductDetailsPage() {
                 {(product.variants?.length > 0
                   ? product.variants
                   : [
-                      { label: "250g", price: 482 },
-                      { label: "500g", price: 580 },
-                      { label: "1kg", price: 1080 },
+                      [
+ {
+  label:"250g",
+  price:482,
+  stock:product.stock
+ },
+ {
+  label:"500g",
+  price:580,
+  stock:product.stock
+ },
+ {
+  label:"1kg",
+  price:1080,
+  stock:product.stock
+ }
+]
                     ]
                 ).map((v: any, index: number) => (
 
                   <button
                     key={index}
+                    disabled={
+v.stock <= 0
+}
                     onClick={() => setSelectedVariant(v)}
                     className={`
                       px-4 md:px-5
@@ -488,14 +606,33 @@ export default function ProductDetailsPage() {
                       text-[15px]
                       font-semibold
                       transition
+
+${
+v.stock <= 0
+?
+"opacity-50 cursor-not-allowed"
+:
+""
+}
                       ${
-                        selectedVariant?.label === v.label
+                        (
+selectedVariant?.title ||
+selectedVariant?.label
+)
+===
+(
+v.title ||
+v.label
+)
                           ? "bg-[#D06F1D] text-white border-[#D06F1D]"
                           : "bg-white border-[#E8D9C7] text-[#4E3A30]"
                       }
                     `}
                   >
-                    {v.label}
+                    {
+v.title ||
+v.label
+}
                   </button>
 
                 ))}
@@ -560,16 +697,37 @@ export default function ProductDetailsPage() {
                   </div>
 
                   <button
-                    onClick={() => setQty(qty + 1)}
-                    className="
-                      w-[56px]
-                      h-full
-                      text-[#D06F1D]
-                      text-2xl
-                    "
-                  >
-                    +
-                  </button>
+
+disabled={
+qty >= currentStock
+}
+
+onClick={() =>
+setQty(qty + 1)
+}
+
+
+className={`
+w-[56px]
+h-full
+text-[#D06F1D]
+text-2xl
+
+${
+qty >= currentStock
+?
+"opacity-40 cursor-not-allowed"
+:
+""
+}
+
+`}
+
+>
+
++
+
+</button>
 
                 </div>
 
@@ -585,29 +743,48 @@ export default function ProductDetailsPage() {
                 >
 
                   <button
-                    onClick={handleAddToCart}
-                    className="
-                      flex-1
-                      h-[50px]
-                      md:h-[56px]
-                      rounded-[14px]
-                      bg-[#D06F1D]
-                      text-white
-                      font-semibold
-                      text-[15px]
-                      flex items-center justify-center gap-2
-                    "
-                  >
+
+disabled={isOutOfStock}
+
+onClick={handleAddToCart}
+
+className={`
+flex-1
+h-[50px]
+md:h-[56px]
+rounded-[14px]
+
+${
+isOutOfStock
+?
+"bg-gray-400 cursor-not-allowed"
+:
+"bg-[#D06F1D]"
+}
+
+text-white
+font-semibold
+text-[15px]
+flex items-center justify-center gap-2
+`}
+>
 
                     <ShoppingCart size={18} />
 
-                    Add to Cart
+                    {
+isOutOfStock
+?
+"Out of Stock"
+:
+"Add to Cart"
+}
 
                   </button>
 
                   <button
+                    disabled={isOutOfStock}
                     onClick={() => setShowModal(true)}
-                    className="
+                    className={`
                       flex-1
                       h-[50px]
                       md:h-[56px]
@@ -617,7 +794,8 @@ export default function ProductDetailsPage() {
                       font-semibold
                       text-[15px]
                       bg-white
-                    "
+                      ${isOutOfStock ? "opacity-50 cursor-not-allowed" : ""}
+                    `}
                   >
                     Buy Now
                   </button>
@@ -947,7 +1125,9 @@ export default function ProductDetailsPage() {
             ...product,
             price,
             qty,
-            variant: selectedVariant?.label,
+            variant:
+selectedVariant?.title ||
+selectedVariant?.label,
           }}
         />
 

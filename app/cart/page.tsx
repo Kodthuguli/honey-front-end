@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
 
 import { useCartStore } from "@/store/cartStore";
 import BuyNowModal from "@/components/checkout/BuyNowModal";
+import { api } from "@/lib/api";
 
 import {
   Trash2,
@@ -21,6 +25,9 @@ export default function CartPage() {
 
   const [checkoutOpen,setCheckoutOpen] =
   useState(false);
+
+  const [stockIssues,setStockIssues] =
+useState<any>({});
 
 
 
@@ -40,7 +47,140 @@ export default function CartPage() {
 
   } = useCartStore();
 
+  useEffect(()=>{
 
+
+const checkCartStock =
+async()=>{
+
+
+const issues:any = {};
+
+
+
+for(
+const item of items
+){
+
+
+try{
+
+
+const res =
+await api.get(
+`/products/${item.productId}`
+);
+
+
+
+const product =
+res.data;
+
+
+
+const variant =
+product.variants?.find(
+(v:any)=>
+
+(v.title || v.label)
+===
+item.size
+
+);
+
+
+
+const stock =
+variant
+?
+variant.stock
+:
+product.stock;
+
+
+
+
+if(
+stock <= 0
+){
+
+
+issues[
+item.productId +
+item.size
+]
+=
+"Out of stock";
+
+
+}
+
+
+
+else if(
+item.qty > stock
+){
+
+
+issues[
+item.productId +
+item.size
+]
+=
+`Only ${stock} available`;
+
+
+
+}
+
+
+
+
+}
+catch{
+
+
+issues[
+item.productId +
+item.size
+]
+=
+"Product unavailable";
+
+
+}
+
+
+}
+
+
+
+
+setStockIssues(
+issues
+);
+
+
+
+};
+
+
+
+
+if(
+items.length > 0
+){
+
+checkCartStock();
+
+}
+
+
+
+},[items]);
+
+const hasStockIssue =
+Object.keys(stockIssues).length > 0;
 
 
 
@@ -271,7 +411,27 @@ Size:
 
 </p>
 
+{
+stockIssues[
+item.productId+
+item.size
+]
+&&
+(
 
+<p className="text-red-600 text-sm mt-2">
+
+{
+stockIssues[
+item.productId+
+item.size
+]
+}
+
+</p>
+
+)
+}
 
 
 
@@ -376,6 +536,15 @@ justify-center
 
 <button
 
+
+disabled={
+!!stockIssues[
+item.productId+
+item.size
+]
+}
+
+
 onClick={()=>
 increaseQty(
 item.productId,
@@ -384,14 +553,26 @@ item.size
 }
 
 
-className="
+className={`
 w-10
 h-10
 text-[#D06F1D]
 flex
 items-center
 justify-center
-"
+
+${
+stockIssues[
+item.productId+
+item.size
+]
+?
+"opacity-40 cursor-not-allowed"
+:
+""
+}
+
+`}
 
 >
 
@@ -577,23 +758,43 @@ bold
 
 <button
 
+
+disabled={
+hasStockIssue
+}
+
+
 onClick={()=>
 setCheckoutOpen(true)
 }
 
-className="
+className={`
 mt-8
 w-full
 h-[54px]
 rounded-[14px]
-bg-[#D06F1D]
 text-white
 font-semibold
-"
+
+${
+hasStockIssue
+?
+"bg-gray-400 cursor-not-allowed"
+:
+"bg-[#D06F1D]"
+}
+
+`}
 
 >
 
-Checkout
+{
+hasStockIssue
+?
+"Update Cart"
+:
+"Checkout"
+}
 
 </button>
 

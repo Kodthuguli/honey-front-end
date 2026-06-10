@@ -688,13 +688,46 @@ razorpay.open();
 
 
 }
-catch(error){
+catch(error:any){
+
 
 console.error(error);
 
-router.push(
-`/order-failed?order=${currentOrder?.orderNumber || ""}`
+
+
+const message =
+error?.response?.data?.message;
+
+
+
+
+// INVENTORY ERROR
+
+if(message){
+
+
+alert(
+message
 );
+
+
+return;
+
+
+}
+
+
+
+
+// REAL PAYMENT ERROR
+
+router.push(
+
+`/order-failed?order=${currentOrder?.orderNumber || ""}`
+
+);
+
+
 
 }
 finally{
