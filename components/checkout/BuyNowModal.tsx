@@ -74,6 +74,9 @@ useState("");
 const [phone,setPhone] =
 useState("");
 
+const [email,setEmail] =
+useState("");
+
 const [fullAddress,setFullAddress] =
 useState("");
 
@@ -143,14 +146,25 @@ const validateForm = ()=>{
 
 
 if(
+
 (!isCartOrder && !selectedVariant)
+
 ||
+
 !name ||
+
 !phone ||
+
+!email ||
+
 !fullAddress ||
+
 !city ||
+
 !state ||
+
 !pincode
+
 ){
 
 alert(
@@ -184,8 +198,13 @@ paymentMethod,
 
 
 customer:{
+
 name,
+
 phone,
+
+email,
+
 },
 
 
@@ -310,6 +329,9 @@ ${name}
 
 Phone:
 ${phone}
+
+Email:
+${email}
 
 
 Address:
@@ -623,6 +645,9 @@ prefill:{
 name,
 
 
+email,
+
+
 contact:
 phone,
 
@@ -901,6 +926,16 @@ selectedVariant?.label===v.label
 <InputField label="Name" value={name} setValue={setName}/>
 
 <InputField label="Phone" value={phone} setValue={setPhone}/>
+
+<InputField
+
+label="Email"
+
+value={email}
+
+setValue={setEmail}
+
+/>
 
 <InputField label="Address Line" value={fullAddress} setValue={setFullAddress}/>
 
