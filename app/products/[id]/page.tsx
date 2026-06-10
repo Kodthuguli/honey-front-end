@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import BuyNowModal from "@/components/checkout/BuyNowModal";
 import { api } from "@/lib/api";
+import { useCartStore } from "@/store/cartStore";
 
 import {
   ChevronDown,
@@ -18,6 +19,8 @@ import {
 export default function ProductDetailsPage() {
 
   const { id } = useParams();
+
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const thumbContainerRef = useRef<HTMLDivElement>(null);
 
@@ -74,6 +77,49 @@ export default function ProductDetailsPage() {
       behavior: "smooth",
     });
   };
+
+  const handleAddToCart = () => {
+
+
+  if (!product) return;
+
+
+  addToCart({
+
+    productId:
+      product._id,
+
+
+    name:
+      product.name,
+
+
+    image:
+      product.images?.[0] || "",
+
+
+    size:
+      selectedVariant?.label ||
+      "Default",
+
+
+    price:
+      selectedVariant?.price ||
+      product.price,
+
+
+    qty,
+
+  });
+
+
+
+  alert(
+    "Product added to cart"
+  );
+
+
+};
 
   if (loading) {
 
@@ -539,6 +585,7 @@ export default function ProductDetailsPage() {
                 >
 
                   <button
+                    onClick={handleAddToCart}
                     className="
                       flex-1
                       h-[50px]

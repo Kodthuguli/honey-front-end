@@ -10,9 +10,22 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { useCartStore } from "@/store/cartStore";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const items = useCartStore(
+  (state) => state.items
+);
+
+
+const cartCount =
+  items.reduce(
+    (total, item) =>
+      total + item.qty,
+    0
+  );
 
   const pathname = usePathname();
 
@@ -134,68 +147,89 @@ export default function Navbar() {
             <div className="flex items-center gap-5 lg:gap-7">
 
               {/* DESKTOP ICONS */}
-              {/* <div className="hidden lg:flex items-center gap-7">
-                <button className="text-[#2B140A]">
-                  <Search className="w-7 h-7 stroke-[1.7]" />
-                </button>
+<div className="hidden lg:flex items-center gap-7">
 
-                <button className="text-[#2B140A]">
-                  <User className="w-7 h-7 stroke-[1.7]" />
-                </button>
 
-                <button className="relative text-[#2B140A]">
-                  <ShoppingCart className="w-7 h-7 stroke-[1.7]" />
+  <Link
+    href="/cart"
+    className="relative text-[#2B140A]"
+  >
 
-                  <span
-                    className="
-                      absolute
-                      -top-2
-                      -right-2
-                      w-5 h-5
-                      rounded-full
-                      bg-[#D38A10]
-                      text-white
-                      text-[10px]
-                      font-semibold
-                      flex items-center justify-center
-                    "
-                  >
-                    2
-                  </span>
-                </button>
-              </div> */}
+    <ShoppingCart className="w-7 h-7 stroke-[1.7]" />
+
+
+    {cartCount > 0 && (
+
+      <span
+        className="
+          absolute
+          -top-2
+          -right-2
+          w-5
+          h-5
+          rounded-full
+          bg-[#D38A10]
+          text-white
+          text-[10px]
+          font-semibold
+          flex
+          items-center
+          justify-center
+        "
+      >
+
+        {cartCount}
+
+      </span>
+
+    )}
+
+  </Link>
+
+
+</div>
 
               {/* MOBILE ICONS */}
               <div className="flex lg:hidden items-center gap-4">
 
-                {/* <button className="text-[#2B140A]">
-                  <Search className="w-6 h-6 stroke-[1.7]" />
-                </button>
+               <Link
+  href="/cart"
+  className="relative text-[#2B140A]"
+>
 
-                <button className="text-[#2B140A]">
-                  <User className="w-6 h-6 stroke-[1.7]" />
-                </button>
 
-                <button className="relative text-[#2B140A]">
-                  <ShoppingCart className="w-6 h-6 stroke-[1.7]" />
+  <ShoppingCart className="w-6 h-6 stroke-[1.7]" />
 
-                  <span
-                    className="
-                      absolute
-                      -top-2
-                      -right-2
-                      w-5 h-5
-                      rounded-full
-                      bg-[#D38A10]
-                      text-white
-                      text-[10px]
-                      font-semibold
-                      flex items-center justify-center
-                    "
-                  >
-                    2
-                  </span>
-                </button> */}
+
+
+  {cartCount > 0 && (
+
+    <span
+      className="
+        absolute
+        -top-2
+        -right-2
+        w-5
+        h-5
+        rounded-full
+        bg-[#D38A10]
+        text-white
+        text-[10px]
+        font-semibold
+        flex
+        items-center
+        justify-center
+      "
+    >
+
+      {cartCount}
+
+    </span>
+
+  )}
+
+
+</Link>
 
                 {/* HAMBURGER */}
                 <button

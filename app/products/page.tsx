@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
 
-import BuyNowModal from "@/components/checkout/BuyNowModal";
+import { useCartStore } from "@/store/cartStore";
 import ProductSkeleton from "@/components/ui/ProductSkeleton";
 import DataNotFound from "@/components/ui/DataNotFound";
 
@@ -22,6 +22,8 @@ import {
 
 export default function ProductsPage() {
 
+  const addToCart = useCartStore((state) => state.addToCart);
+
   const [products, setProducts] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(6);
@@ -33,9 +35,6 @@ export default function ProductsPage() {
 
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any[]>([]);
-
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [showModal, setShowModal] = useState(false);
 
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -96,10 +95,50 @@ export default function ProductsPage() {
     fetchProducts(true);
   }, [page, search, category, sort]);
 
-  const handleBuyNow = (product: any) => {
-    setSelectedProduct(product);
-    setShowModal(true);
-  };
+ const handleAddToCart = (product:any) => {
+
+
+  const variant =
+    product.variants?.[0];
+
+
+  addToCart({
+
+    productId:
+      product._id,
+
+
+    name:
+      product.name,
+
+
+    image:
+      product.images?.[0] || "",
+
+
+    size:
+      variant?.label ||
+      "Default",
+
+
+    price:
+      variant?.price ||
+      product.price,
+
+
+    qty:1,
+
+
+  });
+
+
+
+  alert(
+    "Product added to cart"
+  );
+
+
+};
 
   const resetFilters = () => {
     setSearch("");
@@ -579,7 +618,7 @@ export default function ProductsPage() {
                         <div className="mt-4 flex flex-col sm:flex-row gap-2.5">
 
                           <button
-                            onClick={() => handleBuyNow(p)}
+                            onClick={() => handleAddToCart(p)}
                             className="
                               flex-1
                               h-[42px]
@@ -917,18 +956,6 @@ export default function ProductsPage() {
         </div>
 
       )}
-
-      {/* MODAL */}
-      {selectedProduct && (
-
-        <BuyNowModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          product={selectedProduct}
-        />
-
-      )}
-
     </div>
 
   );
