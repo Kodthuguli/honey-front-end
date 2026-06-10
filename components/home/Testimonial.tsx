@@ -3,23 +3,52 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const testimonials = [
-  {
-    name: "Ananya Sharma",
-    text: "VANAMRITH honey is truly the purest I have ever tasted. You can feel the difference in every drop!",
-  },
-  {
-    name: "Rahul Verma",
-    text: "We love how natural and unprocessed it is. Perfect for our family’s everyday wellness.",
-  },
-  {
-    name: "Priya Nair",
-    text: "From taste to quality, everything about VANAMRITH honey is exceptional. Highly recommended!",
-  },
-];
+import { api } from "@/lib/api";
+
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
+
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [testimonials,setTestimonials] = useState<any[]>([]);
+
+  useEffect(()=>{
+    const loadTestimonials = async()=>{
+      try{
+      const res =
+      await api.get(
+      "/testimonials"
+      );
+
+
+      setTestimonials(
+      res.data
+      );
+
+
+      }
+      catch(error){
+
+
+      console.log(
+      "Testimonials loading failed",
+      error
+      );
+
+
+      }
+
+
+      };
+
+
+
+      loadTestimonials();
+
+
+
+},[]);
 
   const visibleDesktop = 3;
   const visibleMobile = 1;
@@ -57,6 +86,14 @@ export default function Testimonials() {
 
     return () => clearInterval(interval);
   }, [desktopSlides, mobileSlides]);
+
+  if(
+testimonials.length===0
+){
+
+return null;
+
+}
 
   return (
     <section className="relative overflow-hidden py-20 lg:py-28">
@@ -220,7 +257,7 @@ export default function Testimonials() {
                       leading-[2]
                     "
                   >
-                    {item.text}
+                    {item.message}
                   </p>
 
                   {/* NAME */}
@@ -359,7 +396,7 @@ export default function Testimonials() {
                             leading-[2]
                           "
                         >
-                          {item.text}
+                          {item.message}
                         </p>
 
                         {/* NAME */}
