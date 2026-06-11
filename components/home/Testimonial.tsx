@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { api } from "@/lib/api";
@@ -99,24 +100,62 @@ return null;
     <section className="relative overflow-hidden py-20 lg:py-28">
       {/* SIDE DECOR */}
       <div className="absolute left-0 top-[220px] hidden lg:block opacity-20">
-        <img src="/flower-left.png" alt="" className="w-[130px]" />
+        {/* <Image
+
+src="/flower-left.png"
+
+alt=""
+
+width={130}
+
+height={130}
+
+/> */}
       </div>
 
       <div className="absolute right-0 bottom-[180px] hidden lg:block opacity-20">
-        <img src="/hex-right.png" alt="" className="w-[170px]" />
+       {/* <Image
+
+src="/hex-right.png"
+
+alt=""
+
+width={170}
+
+height={170}
+
+/> */}
       </div>
 
       {/* MOBILE DECOR */}
       <div className="absolute left-0 top-[240px] lg:hidden opacity-20">
-        <img src="/flower-left.png" alt="" className="w-[80px]" />
+        {/* <Image
+
+src="/flower-left.png"
+
+alt=""
+
+width={80}
+
+height={80}
+
+/> */}
       </div>
 
       <div className="absolute right-0 top-[120px] lg:hidden">
-        <img
-          src="/honeycomb-top.png"
-          alt=""
-          className="w-[110px] opacity-90"
-        />
+        {/* <Image
+
+src="/honeycomb-top.png"
+
+alt=""
+
+width={110}
+
+height={110}
+
+className="opacity-90"
+
+/> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -284,11 +323,17 @@ return null;
 
                   {/* FLOWER */}
                   <div className="absolute right-0 bottom-0 opacity-20">
-                    <img
-                      src="/flower-corner.png"
-                      alt=""
-                      className="w-[100px]"
-                    />
+                    {/* <Image
+
+src="/flower-corner.png"
+
+alt=""
+
+width={100}
+
+height={100}
+
+/> */}
                   </div>
                 </div>
               </div>
@@ -423,11 +468,17 @@ return null;
 
                         {/* FLOWER */}
                         <div className="absolute right-0 bottom-0 opacity-20">
-                          <img
-                            src="/flower-corner.png"
-                            alt=""
-                            className="w-[140px]"
-                          />
+                          {/* <Image
+
+src="/flower-corner.png"
+
+alt=""
+
+width={140}
+
+height={140}
+
+/> */}
                         </div>
                       </motion.div>
                     ))}

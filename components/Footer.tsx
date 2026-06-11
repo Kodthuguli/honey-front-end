@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   FaInstagram,
   FaFacebookF,
@@ -38,28 +39,50 @@ export default function Footer() {
     >
 
       {/* RIGHT LEAVES */}
-      <img
-        src="/footer-right-leaves.png"
-        alt=""
-        className="
-          absolute right-0 top-8
-          w-24 lg:w-40
-          opacity-70
-          pointer-events-none
-        "
-      />
+      {/* <Image
+
+src="/footer-right-leaves.png"
+
+alt=""
+
+width={160}
+
+height={160}
+
+className="
+absolute
+right-0
+top-8
+w-24
+lg:w-40
+opacity-70
+pointer-events-none
+"
+
+/> */}
 
       {/* HONEYCOMB LEFT */}
-      <img
-        src="/hex-pattern.png"
-        alt=""
-        className="
-          absolute left-0 top-20
-          w-28 lg:w-44
-          opacity-40
-          pointer-events-none
-        "
-      />
+      {/* <Image
+
+src="/hex-pattern.png"
+
+alt=""
+
+width={176}
+
+height={176}
+
+className="
+absolute
+left-0
+top-20
+w-28
+lg:w-44
+opacity-40
+pointer-events-none
+"
+
+/> */}
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
 
@@ -77,11 +100,23 @@ export default function Footer() {
           {/* BRAND */}
           <div className="col-span-2 lg:col-span-1">
 
-            <img
-              src="/logo.png"
-              alt="Vanamrith"
-              className="w-[200px] lg:w-[230px]"
-            />
+           <Image
+
+src="/logo.png"
+
+alt="Vanamrith"
+
+width={230}
+
+height={120}
+
+className="
+w-[200px]
+lg:w-[230px]
+h-auto
+"
+
+/>
 
             <p
               className="
@@ -294,29 +329,45 @@ export default function Footer() {
         {/* BEE PATH */}
         <div className="relative h-28 hidden lg:block">
 
-          <img
-            src="/bee.png"
-            alt=""
-            className="
-              absolute
-              right-[300px]
-              top-8
-              w-14
-            "
-          />
+          <Image
 
-          <img
-            src="/bee-path.png"
-            alt=""
-            className="
-              absolute
-              left-1/2
-              -translate-x-1/2
-              top-5
-              w-[340px]
-              opacity-80
-            "
-          />
+src="/bee.png"
+
+alt=""
+
+width={56}
+
+height={56}
+
+className="
+absolute
+right-[300px]
+top-8
+w-14
+"
+
+/>
+
+          {/* <Image
+
+src="/bee-path.png"
+
+alt=""
+
+width={340}
+
+height={120}
+
+className="
+absolute
+left-1/2
+-translate-x-1/2
+top-5
+w-[340px]
+opacity-80
+"
+
+/> */}
         </div>
       </div>
 
@@ -362,11 +413,22 @@ export default function Footer() {
       {/* LEFT */}
       <div className="flex items-center gap-4">
 
-        <img
-          src="/logo.png"
-          alt=""
-          className="w-10 h-10"
-        />
+        <Image
+
+src="/logo.png"
+
+alt="Vanamrith"
+
+width={40}
+
+height={40}
+
+className="
+w-10
+h-10
+"
+
+/>
 
         <div>
           <p
@@ -411,34 +473,67 @@ lg:border-l-[#4B3429]
       </div>
 
       {/* PAYMENT */}
-      {/* <div className="flex items-center gap-3 whitespace-nowrap">
+      <div className="flex items-center gap-3 whitespace-nowrap">
 
-        {[
-          "/visa.png",
-          "/mastercard.png",
-          "/upi.png",
-          "/razorpay.png",
-        ].map((img, i) => (
-          <div
-            key={i}
-            className="
-              h-11 w-[88px]
-              rounded-lg
-              border border-[#3A261D]
-              bg-[#241710]
-              flex items-center justify-center
-              shrink-0
-            "
-          >
-            <img
-              src={img}
-              alt=""
-              className="h-5 object-contain"
-            />
-          </div>
-        ))}
+  {[
+    {
+      src: "/visa.png",
+      alt: "Visa",
+    },
+    {
+      src: "/mastercard.png",
+      alt: "Mastercard",
+    },
+    {
+      src: "/upi.png",
+      alt: "UPI",
+    },
+    {
+      src: "/razorpay.png",
+      alt: "Razorpay",
+    },
+  ].map((item, i) => (
 
-      </div> */}
+    <div
+      key={i}
+      className="
+        h-12
+        w-[92px]
+        rounded-xl
+        border
+        border-[#E8D9C7]
+        bg-white
+        flex
+        items-center
+        justify-center
+        shrink-0
+        shadow-sm
+      "
+    >
+
+      <Image
+
+        src={item.src}
+
+        alt={item.alt}
+
+        width={70}
+
+        height={32}
+
+        className="
+          max-h-7
+          w-auto
+          object-contain
+        "
+
+      />
+
+    </div>
+
+  ))}
+
+</div>
 
     </div>
   </div>

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import BuyNowModal from "@/components/checkout/BuyNowModal";
-import { api } from "@/lib/api";
+import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
 
 import {
@@ -312,11 +312,17 @@ selectedVariant?.label ||
                     `}
                   >
 
-                    <img
-                      src={img}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
+                   <div className="relative w-full h-full">
+
+<Image
+  src={img}
+  alt={product.name}
+  fill
+  sizes="80px"
+  className="object-cover"
+/>
+
+</div>
 
                   </button>
 
@@ -361,17 +367,43 @@ selectedVariant?.label ||
                 "
               >
 
-                <img
-                  src={activeImage}
-                  alt={product.name}
-                  className="
-                    w-full
-                    h-[300px]
-                    sm:h-[360px]
-                    md:h-[470px]
-                    object-cover
-                  "
-                />
+                <div
+className="
+relative
+w-full
+h-[300px]
+sm:h-[360px]
+md:h-[470px]
+"
+>
+
+<Image
+
+src={
+activeImage ||
+"/placeholder.png"
+}
+
+alt={
+product.name
+}
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 100vw,
+50vw
+"
+
+className="
+object-cover
+"
+
+/>
+
+</div>
 
               </div>
 
@@ -1084,15 +1116,23 @@ isOutOfStock
               "
             >
 
-              <img
-                src="/guarantee.png"
-                alt="Guarantee"
-                className="
-                  w-[58px]
-                  md:w-[72px]
-                  shrink-0
-                "
-              />
+              <Image
+
+src="/guarantee.png"
+
+alt="Guarantee"
+
+width={72}
+
+height={72}
+
+className="
+w-[58px]
+md:w-[72px]
+shrink-0
+"
+
+/>
 
               <div>
 

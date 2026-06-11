@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   ShieldCheck,
   Droplets,
@@ -62,19 +63,59 @@ export default function WhyChooseUs() {
     <section className="relative overflow-hidden pt-20 lg:pt-28">
       {/* Decorations */}
       <div className="absolute left-0 top-0 opacity-20 hidden lg:block">
-        <img src="/hex-left.png" alt="" className="w-[120px]" />
+        {/* <Image
+
+src="/hex-left.png"
+
+alt=""
+
+width={120}
+
+height={120}
+
+/> */}
       </div>
 
       <div className="absolute right-0 top-40 opacity-20 hidden xl:block">
-        <img src="/flower-right.png" alt="" className="w-[90px]" />
+        {/* <Image
+
+src="/flower-right.png"
+
+alt=""
+
+width={90}
+
+height={90}
+
+/> */}
       </div>
 
       <div className="absolute left-[80px] top-[70px] hidden lg:block">
-        <img src="/bee1.png" alt="" className="w-10" />
+       {/* <Image
+
+src="/bee.png"
+
+alt=""
+
+width={40}
+
+height={40}
+
+/> */}
       </div>
 
       <div className="absolute right-[120px] top-[220px] hidden lg:block">
-        <img src="/bee2.png" alt="" className="w-10" />
+       {/* <Image
+
+src="/bee.png"
+
+alt=""
+
+width={40}
+
+height={40}
+
+/> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -288,17 +329,24 @@ export default function WhyChooseUs() {
                 lg:min-h-[720px]
               "
             >
-              <img
-                src="/why-choose-us.png"
-                alt="Why Choose Us"
-                className="
-                  absolute
-                  inset-0
-                  w-full
-                  h-full
-                  object-cover
-                "
-              />
+              <Image
+
+src="/why-choose-us.png"
+
+alt="Pure natural honey harvesting - Vanamrith"
+
+fill
+
+sizes="
+(max-width:768px) 100vw,
+50vw
+"
+
+className="
+object-cover
+"
+
+/>
             </div>
 
             {/* BADGE */}

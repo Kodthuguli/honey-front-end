@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { api } from "@/lib/api";
 
 type Product = {
@@ -39,15 +40,30 @@ export default function FeaturedProducts() {
     <section className="relative overflow-hidden pt-20 lg:pt-28">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-[140px] hidden lg:block opacity-20">
-        <img src="/flower-left.png" alt="" className="w-[120px]" />
+        {/* <Image
+
+src="/flower-left.png"
+
+alt=""
+
+width={120}
+
+height={120}
+
+/> */}
       </div>
 
       <div className="absolute right-0 top-0 hidden lg:block opacity-20">
-        <img src="/hex-right.png" alt="" className="w-[220px]" />
+        {/* <Image
+          src="/hex-right.png"
+          alt=""
+          width={220}
+          height={220}
+        /> */}
       </div>
 
       <div className="absolute left-[40px] top-[90px] hidden lg:block">
-        <img src="/bee1.png" alt="" className="w-12" />
+        {/* <Image src="/bee1.png" alt="" width={48} height={48} /> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -160,20 +176,45 @@ export default function FeaturedProducts() {
                 >
                   {/* IMAGE */}
                   <div className="relative overflow-hidden rounded-[22px] m-2">
-                    <div className="aspect-[0.92] overflow-hidden rounded-[22px]">
-                      <img
-                        src={p.images?.[0] || "/placeholder.png"}
-                        alt={p.name}
-                        className="
-                          w-full
-                          h-full
-                          object-cover
-                          hover:scale-105
-                          transition
-                          duration-700
-                        "
-                      />
-                    </div>
+                    <div
+className="
+relative
+aspect-[0.92]
+overflow-hidden
+rounded-[22px]
+"
+>
+
+
+<Image
+
+src={
+p.images?.[0] ||
+"/placeholder.png"
+}
+
+alt={
+p.name
+}
+
+fill
+
+sizes="
+(max-width:1024px) 100vw,
+25vw
+"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
+
+
+</div>
                   </div>
 
                   {/* CONTENT */}
@@ -307,17 +348,38 @@ export default function FeaturedProducts() {
                       </span>
                     </div>
 
-                    <div className="h-full">
-                      <img
-                        src={p.images?.[0] || "/placeholder.png"}
-                        alt={p.name}
-                        className="
-                          w-full
-                          h-full
-                          object-cover
-                        "
-                      />
-                    </div>
+                    <div
+className="
+relative
+h-full
+min-h-[260px]
+"
+>
+
+
+<Image
+
+src={
+p.images?.[0] ||
+"/placeholder.png"
+}
+
+alt={
+p.name
+}
+
+fill
+
+sizes="50vw"
+
+className="
+object-cover
+"
+
+/>
+
+
+</div>
                   </div>
 
                   {/* RIGHT CONTENT */}

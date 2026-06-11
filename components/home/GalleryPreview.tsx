@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { api } from "@/lib/api";
@@ -61,19 +62,49 @@ export default function GalleryPreview() {
     <section className="relative overflow-hidden pt-20 lg:pt-28">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-[240px] hidden lg:block opacity-20">
-        <img src="/flower-left.png" alt="" className="w-[120px]" />
+        {/* <Image
+
+src="/flower-left.png"
+
+alt=""
+
+width={120}
+
+height={120}
+
+/> */}
       </div>
 
       <div className="absolute right-0 top-0 hidden lg:block opacity-20">
-        <img src="/hex-right.png" alt="" className="w-[220px]" />
+       {/* <Image
+
+src="/hex-right.png"
+
+alt=""
+
+width={220}
+
+height={220}
+
+/> */}
       </div>
 
       <div className="absolute right-0 bottom-[180px] hidden lg:block opacity-20">
-        <img src="/leaf-right.png" alt="" className="w-[120px]" />
+        {/* <Image
+
+src="/leaf-right.png"
+
+alt=""
+
+width={120}
+
+height={120}
+
+/> */}
       </div>
 
       <div className="absolute left-[70px] top-[90px] hidden lg:block">
-        <img src="/bee1.png" alt="" className="w-12" />
+        {/* <Image src="/bee1.png" alt="" width={48} height={48} /> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -167,25 +198,32 @@ export default function GalleryPreview() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="
-              row-span-2
-              overflow-hidden
-              rounded-[28px]
-              h-[620px]
-            "
+           className="
+relative
+row-span-2
+overflow-hidden
+rounded-[28px]
+h-[620px]
+"
           >
-            <img
-              src={images[0]}
-              alt="Gallery 1"
-              className="
-                w-full
-                h-full
-                object-cover
-                hover:scale-105
-                transition
-                duration-700
-              "
-            />
+            <Image
+
+src={images[0]}
+
+alt="Vanamrith honey gallery"
+
+fill
+
+sizes="33vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
 
           {/* TOP MIDDLE */}
@@ -196,22 +234,29 @@ export default function GalleryPreview() {
             viewport={{ once: true }}
             className="
               overflow-hidden
+              relative
               rounded-[28px]
               h-[300px]
             "
           >
-            <img
-              src={images[1]}
-              alt="Gallery 2"
-              className="
-                w-full
-                h-full
-                object-cover
-                hover:scale-105
-                transition
-                duration-700
-              "
-            />
+            <Image
+
+src={images[1]}
+
+alt="Vanamrith gallery"
+
+fill
+
+sizes="25vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
 
           {/* TOP RIGHT */}
@@ -222,22 +267,29 @@ export default function GalleryPreview() {
             viewport={{ once: true }}
             className="
               overflow-hidden
+              relative
               rounded-[28px]
               h-[300px]
             "
           >
-            <img
-              src={images[2]}
-              alt="Gallery 3"
-              className="
-                w-full
-                h-full
-                object-cover
-                hover:scale-105
-                transition
-                duration-700
-              "
-            />
+            <Image
+
+src={images[2]}
+
+alt="Vanamrith gallery"
+
+fill
+
+sizes="25vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
 
           {/* BOTTOM MIDDLE */}
@@ -248,22 +300,29 @@ export default function GalleryPreview() {
             viewport={{ once: true }}
             className="
               overflow-hidden
+              relative
               rounded-[28px]
               h-[300px]
             "
           >
-            <img
-              src={images[3]}
-              alt="Gallery 4"
-              className="
-                w-full
-                h-full
-                object-cover
-                hover:scale-105
-                transition
-                duration-700
-              "
-            />
+            <Image
+
+src={images[3]}
+
+alt="Vanamrith gallery"
+
+fill
+
+sizes="25vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
 
           {/* BOTTOM RIGHT */}
@@ -274,22 +333,29 @@ export default function GalleryPreview() {
             viewport={{ once: true }}
             className="
               overflow-hidden
+              relative
               rounded-[28px]
               h-[300px]
             "
           >
-            <img
-              src={images[4] || images[0]}
-              alt="Gallery 5"
-              className="
-                w-full
-                h-full
-                object-cover
-                hover:scale-105
-                transition
-                duration-700
-              "
-            />
+            <Image
+
+src={images[4] || images[0]}
+
+alt="Vanamrith gallery"
+
+fill
+
+sizes="25vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
         </div>
 
@@ -303,19 +369,29 @@ export default function GalleryPreview() {
             viewport={{ once: true }}
             className="
               overflow-hidden
+              relative
               rounded-[24px]
               h-[340px]
             "
           >
-            <img
-              src={images[0]}
-              alt="Gallery 1"
-              className="
-                w-full
-                h-full
-                object-cover
-              "
-            />
+            <Image
+
+src={images[0]}
+
+alt="Vanamrith gallery"
+
+fill
+
+sizes="25vw"
+
+className="
+object-cover
+hover:scale-105
+transition
+duration-700
+"
+
+/>
           </motion.div>
 
           {/* SMALL GRID */}
@@ -330,19 +406,26 @@ export default function GalleryPreview() {
                   viewport={{ once: true }}
                   className="
                     overflow-hidden
+                    relative
                     rounded-[20px]
                     h-[180px]
                   "
                 >
-                  <img
-                    src={img}
-                    alt={`Gallery ${i + 2}`}
-                    className="
-                      w-full
-                      h-full
-                      object-cover
-                    "
-                  />
+                  <Image
+
+src={img}
+
+alt={`Vanamrith gallery ${i+2}`}
+
+fill
+
+sizes="50vw"
+
+className="
+object-cover
+"
+
+/>
                 </motion.div>
               )
             )}

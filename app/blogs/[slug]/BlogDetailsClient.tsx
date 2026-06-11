@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import {
   CalendarDays,
@@ -69,11 +70,17 @@ export default function BlogDetailsClient({
         "
       >
 
-        <img
-          src="/leaf-line.png"
-          alt=""
-          className="w-[220px]"
-        />
+       {/* <Image
+
+src="/leaf-line.png"
+
+alt=""
+
+width={220}
+
+height={220}
+
+/> */}
 
       </div>
 
@@ -226,29 +233,48 @@ export default function BlogDetailsClient({
 
         {/* HERO IMAGE */}
         <div
-          className="
-            mt-8 md:mt-10
-            rounded-[22px] md:rounded-[28px]
-            overflow-hidden
-          "
-        >
+className="
+relative
+mt-8
+md:mt-10
+h-[260px]
+sm:h-[380px]
+md:h-[620px]
+rounded-[22px]
+md:rounded-[28px]
+overflow-hidden
+"
+>
 
-          <img
-            src={
-              blog.thumbnailUrl ||
-              "/placeholder.jpg"
-            }
-            alt={blog.title}
-            className="
-              w-full
-              h-[260px]
-              sm:h-[380px]
-              md:h-[620px]
-              object-cover
-            "
-          />
 
-        </div>
+<Image
+
+src={
+blog.thumbnailUrl ||
+"/placeholder.jpg"
+}
+
+alt={
+blog.title
+}
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 100vw,
+1180px
+"
+
+className="
+object-cover
+"
+
+/>
+
+
+</div>
 
 
         {/* INTRO */}

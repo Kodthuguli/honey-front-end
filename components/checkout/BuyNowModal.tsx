@@ -5,6 +5,7 @@ import { useState } from "react";
 import { api } from "@/lib/api";
 import { loadRazorpayScript } from "@/lib/razorpay";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 
 
@@ -825,11 +826,43 @@ className="flex gap-4 bg-[#E9DCCB] border border-[#C6A77D] rounded-lg p-4"
 >
 
 
-<img
-src={item.image || "/placeholder.png"}
-className="w-20 h-20 rounded-lg object-cover"
-alt=""
+<div
+className="
+relative
+w-20
+h-20
+shrink-0
+rounded-lg
+overflow-hidden
+bg-white
+"
+>
+
+
+<Image
+
+src={
+item.image ||
+"/placeholder.png"
+}
+
+alt={
+item.name ||
+"Vanamrith product"
+}
+
+fill
+
+sizes="80px"
+
+className="
+object-cover
+"
+
 />
+
+
+</div>
 
 
 <div>

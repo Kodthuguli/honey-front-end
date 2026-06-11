@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { api } from "@/lib/api";
+import Image from "next/image";
 
 import {
   MapPin,
@@ -200,11 +201,19 @@ export default function ContactPage() {
                   "
                 />
 
-                <img
-                  src="/bee.png"
-                  alt="bee"
-                  className="w-10"
-                />
+                {/* <Image
+
+src="/bee.png"
+
+alt="bee"
+
+width={40}
+
+height={40}
+
+className="w-10"
+
+/> */}
 
               </div>
 
@@ -262,15 +271,40 @@ export default function ContactPage() {
               "
             >
 
-              <img
-                src="/contact-honey.png"
-                alt="Vanamrith Honey"
-                className="
-                  w-full
-                  max-w-[760px]
-                  object-contain
-                "
-              />
+              <div
+className="
+relative
+w-full
+max-w-[760px]
+h-[360px]
+md:h-[560px]
+"
+>
+
+
+<Image
+
+src="/contact-honey.png"
+
+alt="Contact Vanamrith honey"
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 100vw,
+50vw
+"
+
+className="
+object-contain
+"
+
+/>
+
+
+</div>
 
             </div>
 
@@ -393,11 +427,22 @@ export default function ContactPage() {
               "
             >
 
-              <img
-                src="/bee-small.png"
-                alt=""
-                className="w-12 shrink-0"
-              />
+             {/* <Image
+
+src="/bee-small.png"
+
+alt=""
+
+width={48}
+
+height={48}
+
+className="
+w-12
+shrink-0
+"
+
+/> */}
 
               <p
                 className="
@@ -421,11 +466,17 @@ export default function ContactPage() {
                 "
               >
 
-                <img
-                  src="/hex-pattern.png"
-                  alt=""
-                  className="w-[120px]"
-                />
+                {/* <Image
+
+src="/hex-pattern.png"
+
+alt=""
+
+width={120}
+
+height={120}
+
+/> */}
 
               </div>
 

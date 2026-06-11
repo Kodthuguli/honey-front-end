@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Search,
@@ -62,15 +63,27 @@ const cartCount =
               href="/"
               className="flex items-center gap-3 lg:gap-4"
             >
-              <img
-                src="/logo.png"
-                alt="Vanamrith"
-                className="
-                  w-[58px] h-[58px]
-                  lg:w-[72px] lg:h-[72px]
-                  object-contain
-                "
-              />
+              <Image
+
+src="/logo.png"
+
+alt="Vanamrith"
+
+width={72}
+
+height={72}
+
+priority
+
+className="
+w-[58px]
+h-[58px]
+lg:w-[72px]
+lg:h-[72px]
+object-contain
+"
+
+/>
 
               <div className="leading-none">
                 <h1

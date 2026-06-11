@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Leaf,
@@ -34,21 +35,32 @@ export default function Hero() {
         "
       >
         {/* BACKGROUND IMAGE */}
-        <div className="absolute inset-0">
-          <img
-            src="/hero-bg.png"
-            alt="Honey Background"
-            className="
-              w-full
-              h-full
-              object-cover
-              object-[68%_center]
-              sm:object-center
-              select-none
-              pointer-events-none
-            "
-          />
-        </div>
+        {/* BACKGROUND IMAGE */}
+<div className="absolute inset-0">
+
+  <Image
+
+    src="/hero-bg.png"
+
+    alt="Vanamrith pure forest honey"
+
+    fill
+
+    priority
+
+    sizes="100vw"
+
+    className="
+      object-cover
+      object-[68%_center]
+      sm:object-center
+      select-none
+      pointer-events-none
+    "
+
+  />
+
+</div>
 
         {/* CONTENT */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">

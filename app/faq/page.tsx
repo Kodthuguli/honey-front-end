@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
+import Image from "next/image";
 
 export default function FAQPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
@@ -64,34 +65,48 @@ export default function FAQPage() {
     <div className="relative overflow-hidden">
 
       {/* LEFT FLOWERS */}
-      <img
-        src="/patterns/leaves-left.svg"
-        alt=""
-        className="
-          hidden lg:block
-          absolute
-          left-0
-          top-[180px]
-          w-[180px]
-          opacity-[0.12]
-          pointer-events-none
-        "
-      />
+     {/* <Image
+
+src="/patterns/leaves-left.svg"
+
+alt=""
+
+width={180}
+
+height={180}
+
+className="
+hidden lg:block
+absolute
+left-0
+top-[180px]
+opacity-[0.12]
+pointer-events-none
+"
+
+/> */}
 
       {/* RIGHT HONEYCOMB */}
-      <img
-        src="/patterns/honeycomb.svg"
-        alt=""
-        className="
-          hidden lg:block
-          absolute
-          right-0
-          top-[120px]
-          w-[180px]
-          opacity-[0.10]
-          pointer-events-none
-        "
-      />
+      {/* <Image
+
+src="/patterns/honeycomb.svg"
+
+alt=""
+
+width={180}
+
+height={180}
+
+className="
+hidden lg:block
+absolute
+right-0
+top-[120px]
+opacity-[0.10]
+pointer-events-none
+"
+
+/> */}
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -173,32 +188,65 @@ export default function FAQPage() {
             <div className="relative flex justify-center">
 
               {/* Bee */}
-              <img
-                src="/bee.png"
-                alt=""
-                className="
-                  absolute
-                  top-2 md:top-8
-                  left-2 md:left-10
-                  w-5 md:w-10
-                  animate-float
-                  z-20
-                "
-              />
+             {/* <Image
+
+src="/bee.png"
+
+alt=""
+
+width={40}
+
+height={40}
+
+className="
+absolute
+top-2 md:top-8
+left-2 md:left-10
+w-5 md:w-10
+animate-float
+z-20
+"
+
+/> */}
 
               {/* Product */}
-              <img
-                src="/about-hero.png"
-                alt="Honey"
-                className="
-                  w-full
-                  max-w-[250px]
-                  sm:max-w-[360px]
-                  md:max-w-[520px]
-                  lg:max-w-[650px]
-                  object-contain
-                "
-              />
+              <div
+className="
+relative
+w-full
+max-w-[250px]
+sm:max-w-[360px]
+md:max-w-[520px]
+lg:max-w-[650px]
+h-[300px]
+md:h-[560px]
+"
+>
+
+
+<Image
+
+src="/about-hero.png"
+
+alt="Vanamrith honey FAQ"
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 48vw,
+50vw
+"
+
+className="
+object-contain
+"
+
+/>
+
+
+</div>
 
             </div>
 
@@ -333,18 +381,25 @@ export default function FAQPage() {
           >
 
             {/* Decorative Leaves */}
-            <img
-              src="/patterns/leaves-right.svg"
-              alt=""
-              className="
-                hidden lg:block
-                absolute
-                top-0
-                right-0
-                w-[180px]
-                opacity-[0.12]
-              "
-            />
+           {/* <Image
+
+src="/patterns/leaves-right.svg"
+
+alt=""
+
+width={180}
+
+height={180}
+
+className="
+hidden lg:block
+absolute
+top-0
+right-0
+opacity-[0.12]
+"
+
+/> */}
 
             <div
               className="
@@ -359,15 +414,23 @@ export default function FAQPage() {
               {/* LEFT IMAGE */}
               <div className="flex items-end justify-center md:justify-start">
 
-                <img
-                  src="/doubt.png"
-                  alt="Honey"
-                  className="
-                    w-[180px]
-                    md:w-[220px]
-                    object-contain
-                  "
-                />
+                <Image
+
+src="/doubt.png"
+
+alt="Ask Vanamrith question"
+
+width={220}
+
+height={220}
+
+className="
+w-[180px]
+md:w-[220px]
+object-contain
+"
+
+/>
 
               </div>
 

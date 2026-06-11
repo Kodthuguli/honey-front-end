@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { api } from "@/lib/api";
 
 import {
@@ -198,16 +199,38 @@ export default function BlogsPage() {
             {/* RIGHT */}
             <div className="relative">
 
-              <img
-                src="/blog-hero.png"
-                alt="Blog"
-                className="
-                  w-full
-                  max-w-[720px]
-                  mx-auto
-                  object-contain
-                "
-              />
+              <div
+className="
+relative
+w-full
+max-w-[720px]
+h-[420px]
+mx-auto
+"
+>
+
+<Image
+
+src="/blog-hero.png"
+
+alt="Vanamrith honey blog"
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 100vw,
+50vw
+"
+
+className="
+object-contain
+"
+
+/>
+
+</div>
 
             </div>
 
@@ -437,20 +460,38 @@ export default function BlogsPage() {
                     "
                   >
 
-                    <img
-                      src={
-                        post.thumbnailUrl ||
-                        "/placeholder.jpg"
-                      }
-                      alt={post.title}
-                      className="
-                        w-[76px]
-                        h-[76px]
-                        rounded-[12px]
-                        object-cover
-                        shrink-0
-                      "
-                    />
+                    <div
+className="
+relative
+w-[76px]
+h-[76px]
+shrink-0
+"
+>
+
+<Image
+
+src={
+post.thumbnailUrl ||
+"/placeholder.jpg"
+}
+
+alt={
+post.title
+}
+
+fill
+
+sizes="76px"
+
+className="
+rounded-[12px]
+object-cover
+"
+
+/>
+
+</div>
 
                     <div>
 
@@ -535,24 +576,40 @@ export default function BlogsPage() {
                     >
 
                       {/* IMAGE */}
-                      <div className="w-[42%] shrink-0">
+                      <div
+className="
+relative
+w-[42%]
+min-h-[145px]
+shrink-0
+"
+>
 
-                        <img
-                          src={
-                            b.thumbnailUrl ||
-                            "/placeholder.jpg"
-                          }
-                          alt={b.title}
-                          className="
-                            w-full
-                            h-full
-                            min-h-[145px]
-                            object-cover
-                            rounded-[14px]
-                          "
-                        />
 
-                      </div>
+<Image
+
+src={
+b.thumbnailUrl ||
+"/placeholder.jpg"
+}
+
+alt={
+b.title
+}
+
+fill
+
+sizes="50vw"
+
+className="
+object-cover
+rounded-[14px]
+"
+
+/>
+
+
+</div>
 
 
                       {/* CONTENT */}
@@ -677,22 +734,41 @@ export default function BlogsPage() {
                     >
 
                       {/* IMAGE */}
-                      <div className="relative overflow-hidden">
+                      <div
+className="
+relative
+overflow-hidden
+h-[220px]
+"
+>
 
-                        <img
-                          src={
-                            b.thumbnailUrl ||
-                            "/placeholder.jpg"
-                          }
-                          alt={b.title}
-                          className="
-                            w-full
-                            h-[220px]
-                            object-cover
-                            group-hover:scale-105
-                            transition duration-700
-                          "
-                        />
+
+<Image
+
+src={
+b.thumbnailUrl ||
+"/placeholder.jpg"
+}
+
+alt={
+b.title
+}
+
+fill
+
+sizes="
+(max-width:1200px) 50vw,
+33vw
+"
+
+className="
+object-cover
+group-hover:scale-105
+transition
+duration-700
+"
+
+/>
 
                         <div
                           className="

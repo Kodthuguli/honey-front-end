@@ -12,6 +12,7 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 import { api } from "@/lib/api";
 import { Filter, X } from "lucide-react";
+import Image from "next/image";
 
 export default function GalleryPage() {
   const [gallery, setGallery] = useState<any[]>([]);
@@ -183,18 +184,48 @@ export default function GalleryPage() {
                       }
                     }}
                   >
-                    <img
-                      loading="lazy"
-                      src={imgSrc}
-                      alt={item.title}
-                      className="
-                        rounded-lg shadow-sm
-                        object-cover h-52 w-full
-                        group-hover:shadow-md
-                        group-hover:scale-[1.02]
-                        transition duration-500
-                      "
-                    />
+                    <div
+className="
+relative
+w-full
+h-52
+overflow-hidden
+rounded-lg
+shadow-sm
+"
+>
+
+
+<Image
+
+src={
+imgSrc ||
+"/placeholder.png"
+}
+
+alt={
+item.title ||
+"Vanamrith gallery"
+}
+
+fill
+
+sizes="
+(max-width:768px) 50vw,
+33vw
+"
+
+className="
+object-cover
+group-hover:scale-[1.02]
+transition
+duration-500
+"
+
+/>
+
+
+</div>
 
                     <p className="mt-3 text-center text-[#6F4E37]">
                       {item.title}

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 const features = [
@@ -32,19 +33,39 @@ export default function OurStory() {
     <section className="relative overflow-hidden pt-20 lg:pt-28">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-0 hidden lg:block opacity-20">
-        <img src="/hex-left.png" alt="" className="w-[220px]" />
+        {/* <Image
+src="/hex-left.png"
+alt=""
+width={220}
+height={220}
+/> */}
       </div>
 
       <div className="absolute left-0 top-[260px] hidden lg:block opacity-20">
-        <img src="/flower-left.png" alt="" className="w-[120px]" />
+       {/* <Image
+src="/flower-left.png"
+alt=""
+width={120}
+height={120}
+/> */}
       </div>
 
       <div className="absolute right-0 top-0 hidden lg:block opacity-20">
-        <img src="/leaf-right.png" alt="" className="w-[170px]" />
+        {/* <Image
+src="/leaf-right.png"
+alt=""
+width={170}
+height={170}
+/> */}
       </div>
 
       <div className="absolute left-[220px] top-[180px] hidden lg:block">
-        <img src="/bee1.png" alt="" className="w-12" />
+      {/* <Image
+src="/bee1.png"
+alt=""
+width={170}
+height={170}
+/> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -137,11 +158,31 @@ export default function OurStory() {
             className="mt-10"
           >
             <div className="overflow-hidden rounded-[28px]">
-              <img
-                src="/our-story.png"
-                alt="Our Story"
-                className="w-full h-[470px] object-cover"
-              />
+              <div
+className="
+relative
+w-full
+h-[470px]
+"
+>
+
+<Image
+
+src="/our-story.png"
+
+alt="Vanamrith natural honey story"
+
+fill
+
+sizes="100vw"
+
+className="
+object-cover
+"
+
+/>
+
+</div>
             </div>
           </motion.div>
 
@@ -173,11 +214,17 @@ export default function OurStory() {
                       shrink-0
                     "
                   >
-                    <img
-                      src={item.icon}
-                      alt={item.title}
-                      className="w-10 h-10 object-contain"
-                    />
+                    <Image
+
+src={item.icon}
+
+alt={item.title}
+
+width={40}
+
+height={40}
+
+/>
                   </div>
 
                   {/* CONTENT */}
@@ -334,15 +381,31 @@ export default function OurStory() {
                     "120px 40px 40px 120px / 120px 40px 40px 120px",
                 }}
               >
-                <img
-                  src="/our-story.png"
-                  alt="Our Story"
-                  className="
-                    w-full
-                    h-[620px]
-                    object-cover
-                  "
-                />
+                <div
+className="
+relative
+w-full
+h-[620px]
+"
+>
+
+<Image
+
+src="/our-story.png"
+
+alt="Vanamrith pure honey journey"
+
+fill
+
+sizes="50vw"
+
+className="
+object-cover
+"
+
+/>
+
+</div>
               </div>
             </motion.div>
           </div>
@@ -407,11 +470,17 @@ export default function OurStory() {
                       shrink-0
                     "
                   >
-                    <img
-                      src={item.icon}
-                      alt={item.title}
-                      className="w-11 h-11 object-contain"
-                    />
+                    <Image
+
+src={item.icon}
+
+alt={item.title}
+
+width={40}
+
+height={40}
+
+/>
                   </div>
 
                   {/* TEXT */}

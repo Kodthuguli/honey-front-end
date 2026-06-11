@@ -6,22 +6,32 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
     <div className="relative overflow-hidden  text-[#3A1F16]">
 
       {/* TOP RIGHT LEAVES */}
-      <img
-        src="/patterns/leaves.svg"
-        alt=""
-        className="
-          absolute top-0 right-0
-          w-[180px] lg:w-[260px]
-          opacity-[0.12]
-          pointer-events-none
-        "
-      />
+      {/* <Image
+
+src="/patterns/leaves.svg"
+
+alt=""
+
+width={260}
+
+height={260}
+
+className="
+absolute top-0 right-0
+w-[180px]
+lg:w-[260px]
+opacity-[0.12]
+pointer-events-none
+"
+
+/> */}
 
       {/* HERO */}
 <section className="relative overflow-hidden">
@@ -102,46 +112,85 @@ export default function AboutPage() {
       <div className="relative flex justify-center">
 
         {/* Bees */}
-        <img
-          src="/bee.png"
-          alt=""
-          className="
-            absolute
-            top-2 md:top-8
-            left-0 md:left-10
-            w-4 md:w-10
-            animate-float
-            z-20
-          "
-        />
+       {/* <Image
 
-        <img
-          src="/bee.png"
-          alt=""
-          className="
-            absolute
-            bottom-10
-            right-0
-            w-4 md:w-8
-            animate-float
-            z-20
-          "
-        />
+src="/bee.png"
+
+alt=""
+
+width={40}
+
+height={40}
+
+className="
+absolute
+top-2 md:top-8
+left-0 md:left-10
+w-4 md:w-10
+animate-float
+z-20
+"
+
+/> */}
+
+       {/* <Image
+
+src="/bee.png"
+
+alt=""
+
+width={40}
+
+height={40}
+
+className="
+absolute
+top-2 md:top-8
+left-0 md:left-10
+w-4 md:w-10
+animate-float
+z-20
+"
+
+/> */}
 
         {/* Product */}
-        <img
-          src="/about-hero.png"
-          alt="Honey"
-          className="
-            w-full
-            max-w-[180px]
-            sm:max-w-[260px]
-            md:max-w-[420px]
-            lg:max-w-[860px]
-            object-contain
-            relative z-10
-          "
-        />
+       <div
+className="
+relative
+z-10
+w-full
+max-w-[180px]
+sm:max-w-[260px]
+md:max-w-[420px]
+lg:max-w-[860px]
+h-[260px]
+md:h-[520px]
+"
+>
+
+<Image
+
+src="/about-hero.png"
+
+alt="Vanamrith pure honey"
+
+fill
+
+priority
+
+sizes="
+(max-width:768px) 45vw,
+50vw
+"
+
+className="
+object-contain
+"
+
+/>
+
+</div>
 
       </div>
 
@@ -185,20 +234,40 @@ export default function AboutPage() {
             {/* IMAGE */}
             <div className="relative">
 
-              <img
-                src="/farm.png"
-                alt="Farm"
-                className="
-                  w-full
-                  h-[260px]
-                  sm:h-[320px]
-                  md:h-[520px]
-                  rounded-[22px]
-                  md:rounded-[34px]
-                  object-cover
-                  shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-                "
-              />
+              <div
+className="
+relative
+w-full
+h-[260px]
+sm:h-[320px]
+md:h-[520px]
+rounded-[22px]
+md:rounded-[34px]
+overflow-hidden
+shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+"
+>
+
+<Image
+
+src="/farm.png"
+
+alt="Vanamrith honey farm"
+
+fill
+
+sizes="
+(max-width:768px) 45vw,
+50vw
+"
+
+className="
+object-cover
+"
+
+/>
+
+</div>
 
               {/* Badge */}
               <div
@@ -565,19 +634,41 @@ export default function AboutPage() {
             purest honey to your family.
           </p>
 
-          <img
-            src="/team.png"
-            alt="Team"
-            className="
-              mt-10
-              mx-auto
-              w-full
-              max-w-[980px]
-              rounded-[30px]
-              object-cover
-              shadow-[0_10px_30px_rgba(0,0,0,0.06)]
-            "
-          />
+         <div
+className="
+relative
+mt-10
+mx-auto
+w-full
+max-w-[980px]
+h-[260px]
+md:h-[520px]
+rounded-[30px]
+overflow-hidden
+shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+"
+>
+
+<Image
+
+src="/team.png"
+
+alt="Vanamrith team"
+
+fill
+
+sizes="
+(max-width:768px) 100vw,
+980px
+"
+
+className="
+object-cover
+"
+
+/>
+
+</div>
 
         </div>
 

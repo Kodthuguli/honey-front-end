@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { api } from "@/lib/api";
 
 import { useCartStore } from "@/store/cartStore";
@@ -191,11 +192,31 @@ alert(
       <section className="relative overflow-hidden border-b border-[#EFE1CF]">
 
         <div className="absolute top-0 left-0 w-[220px] opacity-20">
-          <img src="/hex-pattern.png" alt="" />
+          {/* <Image
+
+src="/hex-pattern.png"
+
+alt=""
+
+width={220}
+
+height={220}
+
+/> */}
         </div>
 
         <div className="absolute top-0 right-0 w-[220px] opacity-20">
-          <img src="/leaf-border.png" alt="" />
+          {/* <Image
+
+src="/leaf-border.png"
+
+alt=""
+
+width={220}
+
+height={220}
+
+/> */}
         </div>
 
         <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-10 lg:pt-16 pb-8">
@@ -242,11 +263,32 @@ alert(
             {/* RIGHT */}
             <div className="relative flex justify-center lg:justify-end">
 
-              <img
-                src="/shop-hero.png"
-                alt="Honey"
-                className="w-full max-w-[620px]"
-              />
+              <div
+className="
+relative
+w-full
+max-w-[620px]
+h-[420px]
+"
+>
+
+<Image
+
+src="/shop-hero.png"
+
+alt="Vanamrith Honey Products"
+
+fill
+
+priority
+
+className="
+object-contain
+"
+
+/>
+
+</div>
 
             </div>
 
@@ -350,11 +392,25 @@ alert(
                   "
                 />
 
-                <img
-                  src="/search.svg"
-                  alt=""
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-5 opacity-70"
-                />
+                <Image
+
+src="/search.png"
+
+alt="Search"
+
+width={20}
+
+height={20}
+
+className="
+absolute
+right-4
+top-1/2
+-translate-y-1/2
+opacity-70
+"
+
+/>
 
               </div>
 
@@ -621,18 +677,40 @@ return (
                     >
 
                       {/* IMAGE */}
-                      <div className="relative bg-white">
+                      <div
+className="
+relative
+bg-white
+w-full
+h-[190px]
+lg:h-[280px]
+"
+>
 
-                        <img
-                          src={p.images?.[0]}
-                          alt={p.name}
-                          className="
-                            w-full
-                            h-[190px]
-                            lg:h-[280px]
-                            object-cover
-                          "
-                        />
+
+<Image
+
+src={
+p.images?.[0] ||
+"/placeholder.png"
+}
+
+alt={
+p.name
+}
+
+fill
+
+sizes="
+(max-width:768px) 50vw,
+33vw
+"
+
+className="
+object-cover
+"
+
+/>
 
                         <button
                           className="

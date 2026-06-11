@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { useCartStore } from "@/store/cartStore";
 import BuyNowModal from "@/components/checkout/BuyNowModal";
@@ -360,22 +361,42 @@ gap-5
 
 
 
-<img
-
-src={item.image || "/placeholder.png"}
-
-alt={item.name}
-
-
+<div
 className="
+relative
 w-[110px]
 h-[110px]
+shrink-0
 rounded-[16px]
-object-cover
+overflow-hidden
 bg-white
+"
+>
+
+
+<Image
+
+src={
+item.image ||
+"/placeholder.png"
+}
+
+alt={
+item.name
+}
+
+fill
+
+sizes="110px"
+
+className="
+object-cover
 "
 
 />
+
+
+</div>
 
 
 
