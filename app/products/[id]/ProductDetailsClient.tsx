@@ -975,130 +975,140 @@ isOutOfStock
 
               {activeTab === "Description" && (
 
-                <div className="grid md:grid-cols-2 gap-5">
+<div className="grid md:grid-cols-2 gap-5">
 
-                  <div>
+<div>
 
-                    <p className="text-[#4E3A30] leading-[1.8] text-[13px]">
-                      Our forest honey is collected from untouched regions where bees naturally gather nectar from wildflowers and medicinal plants.
-                    </p>
+{product.details?.descriptionPoints?.map(
+(item:string,index:number)=>(
 
-                    <p className="text-[#4E3A30] leading-[1.8] text-[13px] mt-3">
-                      It remains raw and unprocessed to preserve nutrients, aroma, texture, and natural richness exactly as nature intended.
-                    </p>
+<p
+key={index}
+className="
+text-[#4E3A30]
+leading-[1.8]
+text-[13px]
+mt-3
+"
+>
 
-                  </div>
+{item}
 
-                  <div className="space-y-3">
+</p>
 
-                    {[
-                      "Supports immunity naturally",
-                      "Rich in antioxidants",
-                      "Improves digestion",
-                      "Naturally boosts energy",
-                    ].map((item, index) => (
+)
+)}
 
-                      <div
-                        key={index}
-                        className="flex items-start gap-3"
-                      >
+</div>
 
-                        <div className="w-2 h-2 rounded-full bg-[#D06F1D] mt-2" />
 
-                        <p className="text-[#4E3A30] text-[13px] leading-6">
-                          {item}
-                        </p>
+<div className="space-y-3">
 
-                      </div>
+{product.benefits
+?.slice(0,4)
+.map(
+(item:string,index:number)=>(
 
-                    ))}
 
-                  </div>
+<div
+key={index}
+className="flex items-start gap-3"
+>
 
-                </div>
+<div className="w-2 h-2 rounded-full bg-[#D06F1D] mt-2" />
 
-              )}
+<p className="text-[#4E3A30] text-[13px] leading-6">
+
+{item}
+
+</p>
+
+</div>
+
+
+)
+)}
+
+</div>
+
+</div>
+
+)}
 
               {activeTab === "Benefits" && (
 
-                <div className="grid md:grid-cols-2 gap-4">
+<div className="grid md:grid-cols-2 gap-4">
 
-                  {[
-                    "Boosts immunity naturally",
-                    "Improves digestion",
-                    "Rich in antioxidants",
-                    "Provides natural energy",
-                    "Supports wellness",
-                    "Chemical-free purity",
-                  ].map((item, index) => (
+{product.benefits?.map(
+(item:string,index:number)=>(
 
-                    <div
-                      key={index}
-                      className="flex items-center gap-3"
-                    >
+<div
+key={index}
+className="flex items-center gap-3"
+>
 
-                      <div className="w-2 h-2 rounded-full bg-[#D06F1D]" />
+<div className="w-2 h-2 rounded-full bg-[#D06F1D]" />
 
-                      <p className="text-[#4E3A30] text-[13px]">
-                        {item}
-                      </p>
+<p className="text-[#4E3A30] text-[13px]">
 
-                    </div>
+{item}
 
-                  ))}
+</p>
 
-                </div>
+</div>
 
-              )}
+)
+)}
+
+</div>
+
+)}
 
               {activeTab === "Ingredients" && (
 
-                <div className="space-y-3">
+<div className="space-y-3">
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • 100% Pure Raw Honey
-                  </p>
+{product.ingredients?.map(
+(item:string,index:number)=>(
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • No Sugar Added
-                  </p>
+<p
+key={index}
+className="text-[#4E3A30] text-[13px]"
+>
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • No Preservatives
-                  </p>
+• {item}
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • No Artificial Flavours
-                  </p>
+</p>
 
-                </div>
+)
+)}
 
-              )}
+</div>
 
-              {activeTab === "How to Use" && (
+)}
 
-                <div className="space-y-3">
+             {activeTab === "How to Use" && (
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • Consume 1-2 spoons daily.
-                  </p>
+<div className="space-y-3">
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • Mix with warm water or milk.
-                  </p>
+{product.howToUse?.map(
+(item:string,index:number)=>(
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • Use as a natural sweetener.
-                  </p>
+<p
+key={index}
+className="text-[#4E3A30] text-[13px]"
+>
 
-                  <p className="text-[#4E3A30] text-[13px]">
-                    • Store in a cool dry place.
-                  </p>
+• {item}
 
-                </div>
+</p>
 
-              )}
+)
+)}
 
+</div>
+
+)}
             </div>
 
 

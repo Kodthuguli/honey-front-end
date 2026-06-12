@@ -8,9 +8,6 @@ import Image from "next/image";
 import {
   CalendarDays,
   Share2,
-  ShieldCheck,
-  HeartPulse,
-  Zap,
   ChevronDown,
 } from "lucide-react";
 
@@ -24,34 +21,70 @@ export default function BlogDetailsClient({
 
   const [expanded, setExpanded] = useState(false);
 
+  const handleShare =
+async()=>{
 
 
-  const benefits = [
+const shareData = {
 
-    {
-      icon: <ShieldCheck size={34} />,
-      title: "Boosts Immunity",
-      desc:
-        "Raw honey is rich in antioxidants and antimicrobial properties that help fight infections and strengthen the immune system.",
-      quote:
-        "Regular consumption of raw honey can help your body build a strong defense against common illnesses.",
-    },
+title:
+blog.title,
 
-    {
-      icon: <HeartPulse size={34} />,
-      title: "Aids Digestion",
-      desc:
-        "Raw honey helps stimulate the production of digestive juices, which improves digestion and promotes gut health.",
-    },
+text:
+blog.excerpt || blog.title,
 
-    {
-      icon: <Zap size={34} />,
-      title: "Natural Energy Booster",
-      desc:
-        "Packed with natural sugars like fructose and glucose, raw honey provides an instant and sustainable energy boost without any crash.",
-    },
+url:
+window.location.href,
 
-  ];
+};
+
+
+
+try{
+
+
+if(
+navigator.share
+){
+
+
+await navigator.share(
+shareData
+);
+
+
+}
+
+else{
+
+
+await navigator.clipboard.writeText(
+window.location.href
+);
+
+
+alert(
+"Blog link copied!"
+);
+
+
+}
+
+
+}
+catch(error){
+
+
+console.log(
+"Share cancelled",
+error
+);
+
+
+}
+
+
+};
 
 
   return (
@@ -210,12 +243,21 @@ height={220}
 
 
           <button
-            className="
-              flex items-center gap-2
-              hover:text-[#D06F1D]
-              transition
-            "
-          >
+
+onClick={
+handleShare
+}
+
+className="
+flex
+items-center
+gap-2
+hover:text-[#D06F1D]
+transition
+cursor-pointer
+"
+
+>
 
             <Share2
               size={17}
@@ -281,20 +323,19 @@ object-cover
         <div className="mt-8 md:mt-10">
 
           <p
-            className="
-              text-[#3F3027]
-              text-[16px] md:text-[18px]
-              leading-9
-              max-w-[980px]
-            "
-          >
-            Raw honey is more than just a natural
-            sweetener. It’s a powerhouse of nutrients,
-            antioxidants, and enzymes that can support
-            your health in many wonderful ways. Unlike
-            processed honey, raw honey retains all its
-            natural goodness.
-          </p>
+className="
+text-[#3F3027]
+text-[16px] md:text-[18px]
+leading-9
+max-w-[980px]
+"
+>
+
+{
+blog.introDescription
+}
+
+</p>
 
           <p
             className="
@@ -305,8 +346,9 @@ object-cover
               md:text-[22px]
             "
           >
-            Here are the top 7 health benefits of
-            including raw honey in your daily routine.
+            {
+blog.introHighlight
+}
           </p>
 
         </div>
@@ -316,9 +358,11 @@ object-cover
         <div className="mt-10 space-y-8">
 
           {(expanded
-            ? benefits
-            : benefits.slice(0, 3)
-          ).map((item, index) => (
+?
+blog.sections
+:
+blog.sections?.slice(0,3)
+)?.map((item:any,index:number)=>(
 
             <div
               key={index}
@@ -338,21 +382,49 @@ object-cover
 
                 {/* ICON */}
                 <div
-                  className="
-                    w-[76px]
-                    h-[76px]
-                    md:w-[96px]
-                    md:h-[96px]
-                    rounded-[18px]
-                    border border-[#E8D9C7]
-                    bg-[#FFFDF9]
-                    flex items-center justify-center
-                    text-[#D06F1D]
-                    shrink-0
-                  "
-                >
-                  {item.icon}
-                </div>
+className="
+relative
+w-[76px]
+h-[76px]
+md:w-[96px]
+md:h-[96px]
+rounded-[18px]
+border
+border-[#E8D9C7]
+bg-[#FFFDF9]
+flex
+items-center
+justify-center
+shrink-0
+overflow-hidden
+p-5
+"
+>
+
+
+<Image
+
+src={
+item.icon ||
+"/bee.png"
+}
+
+alt={
+item.title
+}
+
+width={50}
+
+height={50}
+
+className="
+object-contain
+"
+
+/>
+
+
+</div>
 
 
                 {/* CONTENT */}
@@ -378,7 +450,7 @@ object-cover
                       max-w-[850px]
                     "
                   >
-                    {item.desc}
+                    {item.description}
                   </p>
 
 

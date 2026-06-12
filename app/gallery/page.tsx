@@ -17,7 +17,7 @@ import Image from "next/image";
 export default function GalleryPage() {
   const [gallery, setGallery] = useState<any[]>([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(12);
+  const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(true);
@@ -50,11 +50,9 @@ export default function GalleryPage() {
         },
       });
 
-      if (reset) {
-        setGallery(res.data.items);
-      } else {
-        setGallery((prev) => [...prev, ...res.data.items]);
-      }
+      setGallery(
+res.data.items
+);
 
       setTotalPages(res.data.totalPages);
     } catch {
@@ -73,19 +71,32 @@ export default function GalleryPage() {
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-    fetchGallery(true);
-  }, []);
+  useEffect(()=>{
 
-  useEffect(() => {
-    setPage(1);
-    fetchGallery(true);
-  }, [category]);
+fetchCategories();
 
-  useEffect(() => {
-    if (page > 1) fetchGallery();
-  }, [page]);
+},[]);
+
+
+
+useEffect(()=>{
+
+fetchGallery();
+
+},[
+page,
+category
+]);
+
+
+
+useEffect(()=>{
+
+setPage(1);
+
+},[
+category
+]);
 
   const slides = gallery
     .filter((img) => img.images?.[0])
@@ -94,104 +105,603 @@ export default function GalleryPage() {
       description: img.title || "",
     }));
 
-  return (
-    <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+return (
 
-      {/* Heading */}
-      <div className="text-center">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#3A1F16]">
-          Our Gallery
-        </h1>
-
-        <div className="mt-3 mx-auto h-[1px] w-24 bg-[#C6A77D]" />
-
-        <p className="mt-4 text-[#6F4E37] max-w-2xl mx-auto">
-          A glimpse into our natural process, farm, and pure honey extraction.
-        </p>
-      </div>
+<div
+className="
+min-h-screen
+bg-[#F8F1E6]
+overflow-hidden
+"
+>
 
 
-      {/* MOBILE FILTER BUTTON */}
-      <div className="lg:hidden flex justify-center mt-10">
-        <button
-          onClick={() => setFilterOpen(true)}
-          className="flex items-center gap-2 bg-[#F4E6D5] border border-[#C6A77D] px-6 py-3 rounded-md"
-        >
-          <Filter size={18} />
-          Filter
-        </button>
-      </div>
+{/* ================= HERO ================= */}
 
 
-      {/* PAGE LAYOUT */}
-      <div className="mt-14 grid grid-cols-1 lg:grid-cols-4 gap-10">
-
-        {/* DESKTOP FILTER SIDEBAR */}
-        <aside className="hidden lg:block bg-[#F4E6D5] p-6 rounded-xl shadow-sm space-y-6">
-
-          <h3 className="font-semibold text-[#3A1F16]">
-            Categories
-          </h3>
-
-          <div className="space-y-3">
-
-            <button
-              onClick={() => setCategory("all")}
-              className={`block w-full text-left ${
-                category === "all" ? "text-[#C4622D]" : ""
-              }`}
-            >
-              All
-            </button>
-
-            {categories.map((cat, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCategory(cat)}
-                className={`block w-full text-left ${
-                  category === cat ? "text-[#C4622D]" : ""
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-
-          </div>
-
-        </aside>
-
-
-        {/* GALLERY GRID */}
-        <div className="lg:col-span-3">
-
-          {loading && page === 1 ? (
-            <SkeletonGrid />
-          ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-
-              {gallery.map((item) => {
-                const imgSrc = item.images?.[0];
-                const slideIndex = slides.findIndex((s) => s.src === imgSrc);
-
-                return (
-                  <div
-                    key={item._id}
-                    className="cursor-pointer group"
-                    onClick={() => {
-                      if (slideIndex !== -1) {
-                        setCurrentIndex(slideIndex);
-                        setOpen(true);
-                      }
-                    }}
-                  >
-                    <div
+<section
 className="
 relative
+pt-14
+pb-10
+text-center
+"
+>
+
+
+<h1
+className="
+font-serif
+text-[44px]
+md:text-[68px]
+tracking-[4px]
+text-[#102515]
+"
+>
+
+Our Gallery
+
+</h1>
+
+
+
+<div
+className="
+mt-3
+flex
+items-center
+justify-center
+gap-5
+text-[#D19A25]
+"
+>
+
+<span className="w-24 h-px bg-[#D19A25]" />
+
+<span className="text-xl">
+🦋
+</span>
+
+<span className="w-24 h-px bg-[#D19A25]" />
+
+</div>
+
+
+
+
+<p
+className="
+mt-5
+text-[16px]
+tracking-wide
+text-[#3F3027]
+"
+>
+
+A glimpse into our natural process, farm, and pure honey extraction.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+{/* MOBILE FILTER */}
+
+
+<div className="lg:hidden flex justify-center mb-8">
+
+<button
+
+onClick={() => setFilterOpen(true)}
+
+className="
+flex
+items-center
+gap-2
+
+px-7
+py-3
+
+rounded-full
+
+bg-[#102515]
+text-white
+"
+>
+
+<Filter size={18}/>
+
+Filter
+
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{/* ================= MAIN AREA ================= */}
+
+
+<section
+className="
+max-w-[1500px]
+
+mx-auto
+
+px-5
+lg:px-12
+
+pb-20
+
+
+grid
+
+grid-cols-1
+lg:grid-cols-[300px_1fr]
+
+
+gap-8
+
+items-stretch
+"
+>
+
+
+
+
+
+
+
+
+
+
+
+{/* ================= SIDEBAR ================= */}
+
+
+<aside
+className="
+hidden
+lg:flex
+
+flex-col
+
+
+bg-[#FFFDF8]
+
+
+border
+border-[#E8D9C7]
+
+
+rounded-[22px]
+
+
+p-7
+
+
+self-stretch
+
+min-h-full
+
+
+sticky
+top-28
+"
+>
+
+
+
+
+
+{/* CATEGORY */}
+
+
+<h3
+className="
+font-semibold
+text-[18px]
+
+text-[#2B140A]
+
+mb-7
+
+flex
+items-center
+gap-2
+"
+>
+
+🍃 Categories
+
+</h3>
+
+
+
+
+
+
+
+<div
+className="
+space-y-5
+"
+>
+
+
+<button
+
+onClick={()=>setCategory("all")}
+
+className={`
 w-full
-h-52
+
+text-left
+
+transition
+
+
+${
+category==="all"
+?
+"text-[#C4622D] font-semibold"
+:
+"text-[#2B140A] hover:text-[#C4622D]"
+}
+
+`}
+>
+
+All
+
+</button>
+
+
+
+
+
+
+{
+categories.map((cat)=>(
+
+
+<button
+
+key={cat}
+
+onClick={()=>setCategory(cat)}
+
+className={`
+w-full
+
+text-left
+
+transition
+
+
+${
+category===cat
+?
+"text-[#C4622D] font-semibold"
+:
+"text-[#2B140A] hover:text-[#C4622D]"
+}
+
+`}
+>
+
+{cat}
+
+</button>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div
+className="
+my-10
+
+border-t
+
+border-[#E8D9C7]
+"
+/>
+
+
+
+
+
+
+
+
+
+
+{/* PROMISE */}
+
+
+<h3
+className="
+font-semibold
+
+text-[18px]
+
+text-[#2B140A]
+
+mb-7
+"
+>
+
+Nature’s Promise
+
+</h3>
+
+
+
+
+
+
+
+<div
+className="
+space-y-7
+"
+>
+
+
+{
+[
+
+{
+title:"100% Natural",
+desc:"Pure & authentic"
+},
+
+{
+title:"Raw & Unprocessed",
+desc:"As nature intended"
+},
+
+{
+title:"Sourced From Forests",
+desc:"Sustainably collected"
+}
+
+
+].map((item)=>(
+
+
+<div
+
+key={item.title}
+
+className="
+flex
+
+items-center
+
+gap-4
+"
+>
+
+
+
+<div
+className="
+w-12
+h-12
+
+rounded-full
+
+border
+border-[#D9A63A]
+
+
+flex
+
+items-center
+
+justify-center
+
+
+text-[#D9A63A]
+
+shrink-0
+"
+>
+
+🍯
+
+</div>
+
+
+
+
+
+<div>
+
+
+<p
+className="
+text-sm
+
+font-semibold
+
+text-[#2B140A]
+"
+>
+
+{item.title}
+
+</p>
+
+
+
+<p
+className="
+text-xs
+
+text-[#6F4E37]
+
+mt-1
+"
+>
+
+{item.desc}
+
+</p>
+
+
+
+</div>
+
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* ================= GALLERY CARDS ================= */}
+
+
+<div>
+
+
+{
+loading && page===1
+?
+<SkeletonGrid/>
+:
+<div
+className="
+grid
+
+grid-cols-1
+sm:grid-cols-2
+xl:grid-cols-3
+
+gap-8
+"
+>
+
+
+{
+gallery.map((item)=>{
+
+
+const imgSrc =
+item.images?.[0];
+
+
+const slideIndex =
+slides.findIndex(
+(s)=>s.src===imgSrc
+);
+
+
+
+return (
+
+<div
+
+key={item._id}
+
+
+onClick={()=>{
+
+
+if(slideIndex!==-1){
+
+setCurrentIndex(slideIndex);
+
+setOpen(true);
+
+}
+
+
+}}
+
+
+className="
+group
+
+cursor-pointer
+
+
+rounded-[18px]
+
 overflow-hidden
-rounded-lg
-shadow-sm
+
+
+bg-[#FFFDF8]
+
+
+shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+"
+>
+
+
+
+
+
+
+
+<div
+className="
+relative
+
+h-[260px]
+
+overflow-hidden
 "
 >
 
@@ -200,26 +710,23 @@ shadow-sm
 
 src={
 imgSrc ||
-"/placeholder.png"
+'/placeholder.png'
 }
 
-alt={
-item.title ||
-"Vanamrith gallery"
-}
+alt={item.title}
 
 fill
 
-sizes="
-(max-width:768px) 50vw,
-33vw
-"
+sizes="33vw"
 
 className="
 object-cover
-group-hover:scale-[1.02]
+
 transition
-duration-500
+
+duration-700
+
+group-hover:scale-110
 "
 
 />
@@ -227,89 +734,610 @@ duration-500
 
 </div>
 
-                    <p className="mt-3 text-center text-[#6F4E37]">
-                      {item.title}
-                    </p>
-                  </div>
-                );
-              })}
-
-            </div>
-          )}
 
 
-          {/* LOAD MORE */}
-          {!loading && page < totalPages && (
-            <div className="text-center mt-16">
-              <button
-                onClick={() => setPage(page + 1)}
-                className="px-6 py-3 bg-[#C4622D] text-white rounded-md hover:bg-[#552619]"
-              >
-                Load More
-              </button>
-            </div>
-          )}
-
-        </div>
-      </div>
 
 
-      {/* MOBILE FILTER DRAWER */}
-      {filterOpen && (
-        <div className="fixed inset-0 bg-black/40 flex items-end z-50">
-
-          <div className="w-full bg-white rounded-t-2xl p-6 animate-slideUp max-h-[70vh] overflow-y-auto">
-
-            <div className="flex justify-between mb-6">
-              <h3 className="font-semibold text-lg">Filter Gallery</h3>
-
-              <button onClick={() => setFilterOpen(false)}>
-                <X />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-
-              <button
-                onClick={() => {
-                  setCategory("all");
-                  setFilterOpen(false);
-                }}
-                className="block w-full text-left"
-              >
-                All
-              </button>
-
-              {categories.map((cat, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setCategory(cat);
-                    setFilterOpen(false);
-                  }}
-                  className="block w-full text-left"
-                >
-                  {cat}
-                </button>
-              ))}
-
-            </div>
-
-          </div>
-
-        </div>
-      )}
 
 
-      {/* LIGHTBOX */}
-      <Lightbox
-        open={open}
-        close={() => setOpen(false)}
-        index={currentIndex}
-        slides={slides}
-        plugins={[Zoom, Captions, Thumbnails]}
-      />
 
-    </div>
-  );
+
+<div
+className="
+relative
+
+pt-12
+pb-8
+
+text-center
+"
+>
+
+
+
+<div
+className="
+absolute
+
+left-1/2
+
+-top-8
+
+-translate-x-1/2
+
+
+w-16
+h-16
+
+
+rounded-full
+
+
+bg-white
+
+
+border
+border-[#EAD8B5]
+
+
+shadow-md
+
+
+flex
+items-center
+justify-center
+
+text-2xl
+"
+>
+
+🐝
+
+</div>
+
+
+
+
+
+<h3
+className="
+font-serif
+
+text-[24px]
+
+text-[#2B140A]
+"
+>
+
+{item.title}
+
+</h3>
+
+
+
+
+<p
+className="
+mt-2
+
+text-sm
+
+text-[#6F4E37]
+"
+>
+
+Pure harvest, real honey
+
+</p>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+)
+
+})
+
+}
+
+
+</div>
+
+}
+
+
+
+
+
+
+
+
+
+{/* PAGINATION */}
+
+
+{
+totalPages > 1 && (
+
+<div
+className="
+flex
+justify-center
+items-center
+
+gap-3
+
+mt-14
+"
+>
+
+
+
+<button
+
+disabled={page===1}
+
+onClick={()=>setPage(page-1)}
+
+className="
+w-10
+h-10
+
+rounded-full
+
+border
+border-[#D9A63A]
+
+disabled:opacity-40
+"
+>
+
+←
+
+</button>
+
+
+
+
+
+
+{
+Array.from(
+{
+length:totalPages
+},
+(_,i)=>i+1
+)
+.map((p)=>(
+
+
+<button
+
+key={p}
+
+onClick={()=>setPage(p)}
+
+className={`
+w-10
+h-10
+
+rounded-full
+
+
+${
+page===p
+?
+"bg-[#D9A63A] text-[#102515]"
+:
+"border border-[#D9A63A]"
+}
+
+`}
+>
+
+{p}
+
+</button>
+
+
+))
+
+}
+
+
+
+
+
+<button
+
+disabled={page===totalPages}
+
+onClick={()=>setPage(page+1)}
+
+className="
+w-10
+h-10
+
+rounded-full
+
+border
+border-[#D9A63A]
+
+disabled:opacity-40
+"
+>
+
+→
+
+</button>
+
+
+
+</div>
+
+)
+
+}
+
+
+</div>
+
+
+</section>
+
+
+
+
+{/* ================= MOBILE FILTER DRAWER ================= */}
+
+
+{
+filterOpen && (
+
+<div
+className="
+fixed
+inset-0
+
+bg-black/40
+
+z-[100]
+
+flex
+items-end
+
+lg:hidden
+"
+>
+
+
+<div
+className="
+w-full
+
+bg-[#FFFDF8]
+
+rounded-t-[28px]
+
+p-7
+
+max-h-[75vh]
+
+overflow-y-auto
+
+animate-slideUp
+"
+>
+
+
+
+{/* HEADER */}
+
+
+<div
+className="
+flex
+justify-between
+items-center
+
+mb-8
+"
+>
+
+
+<h3
+className="
+font-serif
+
+text-2xl
+
+text-[#2B140A]
+"
+>
+
+🍃 Filter Gallery
+
+</h3>
+
+
+
+<button
+
+onClick={()=>
+setFilterOpen(false)
+}
+
+className="
+text-[#2B140A]
+"
+>
+
+<X size={26}/>
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+{/* CATEGORIES */}
+
+
+<div className="space-y-5">
+
+
+<button
+
+onClick={()=>{
+
+setCategory("all");
+
+setFilterOpen(false);
+
+}}
+
+className={`
+w-full
+
+text-left
+
+py-3
+
+border-b
+
+border-[#E8D9C7]
+
+
+${
+category==="all"
+?
+"text-[#C4622D] font-semibold"
+:
+"text-[#2B140A]"
+}
+
+`}
+>
+
+All
+
+</button>
+
+
+
+
+
+{
+categories.map((cat)=>(
+
+
+<button
+
+key={cat}
+
+onClick={()=>{
+
+setCategory(cat);
+
+setFilterOpen(false);
+
+}}
+
+className={`
+w-full
+
+text-left
+
+py-3
+
+border-b
+
+border-[#E8D9C7]
+
+
+${
+category===cat
+?
+"text-[#C4622D] font-semibold"
+:
+"text-[#2B140A]"
+}
+
+`}
+>
+
+{cat}
+
+</button>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* PROMISE MOBILE */}
+
+
+<div
+className="
+mt-8
+
+pt-6
+
+border-t
+
+border-[#E8D9C7]
+"
+>
+
+
+<h4
+className="
+font-semibold
+
+text-[#2B140A]
+
+mb-5
+"
+>
+
+Nature’s Promise
+
+</h4>
+
+
+
+<div className="space-y-4">
+
+
+{
+[
+"100% Natural",
+"Raw & Unprocessed",
+"Sourced From Forests"
+
+].map((item)=>(
+
+
+<div
+
+key={item}
+
+className="
+flex
+items-center
+gap-4
+"
+>
+
+
+<div
+className="
+w-10
+h-10
+
+rounded-full
+
+border
+
+border-[#D9A63A]
+
+flex
+
+items-center
+
+justify-center
+"
+>
+
+🍯
+
+</div>
+
+
+
+<p
+className="
+text-sm
+
+text-[#2B140A]
+"
+>
+
+{item}
+
+</p>
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+)
+}
+
+
+
+
+{/* LIGHTBOX */}
+
+
+<Lightbox
+
+open={open}
+
+close={()=>setOpen(false)}
+
+index={currentIndex}
+
+slides={slides}
+
+plugins={[Zoom,Captions,Thumbnails]}
+
+/>
+
+
+
+</div>
+
+);
 }

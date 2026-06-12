@@ -65,14 +65,38 @@ export default function BlogsPage() {
   }, []);
 
 
-  const categories = [
-    "All Categories",
-    "Beekeeping",
-    "Health & Wellness",
-    "Honey Knowledge",
-    "Recipes",
-    "Sustainability",
-  ];
+  const categories =
+useMemo(()=>{
+
+const uniqueCategories =
+Array.from(
+
+new Set(
+
+blogs
+
+.map(
+(blog)=>
+blog.category
+)
+
+.filter(Boolean)
+
+)
+
+);
+
+
+return [
+
+"All Categories",
+
+...uniqueCategories
+
+];
+
+
+},[blogs]);
 
 
   const filteredBlogs = useMemo(() => {
@@ -547,8 +571,8 @@ object-cover
               {paginatedBlogs.map((b, index) => {
 
                 const category =
-                  b.category ||
-                  categories[(index % 5) + 1];
+b.category ||
+"Vanamrith";
 
                 return (
 
