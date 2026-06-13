@@ -2,20 +2,26 @@
 
 
 import Link from "next/link";
+
 import { useSearchParams } from "next/navigation";
+
 import {
- CheckCircle,
- PackageSearch,
- Home,
+  CheckCircle,
+  PackageSearch,
+  Home,
 } from "lucide-react";
+
+
 
 
 
 export default function OrderSuccessPage(){
 
 
+
 const params =
 useSearchParams();
+
 
 
 const orderNumber =
@@ -23,64 +29,181 @@ params.get("order");
 
 
 
+
+
 return (
+
+
+<section
+className="
+relative
+
+min-h-screen
+
+flex
+
+items-center
+
+justify-center
+
+px-5
+
+py-20
+
+overflow-hidden
+"
+style={{
+
+backgroundImage:
+"url('/cart-empty-bg.png')",
+
+backgroundSize:
+"cover",
+
+backgroundPosition:
+"center",
+
+backgroundRepeat:
+"no-repeat",
+
+}}
+>
+
+
+
+
+
+{/* CONTENT CARD */}
+
 
 <div
 className="
-min-h-screen
-bg-[#FFF9F2]
-flex
-items-center
-justify-center
-px-5
+relative
+
+z-10
+
+w-full
+
+max-w-[620px]
+
+rounded-[26px]
+
+border
+
+border-[#D8BE9A]
+
+
+bg-[#FFF8ED]/70
+
+backdrop-blur-sm
+
+
+shadow-[0_25px_60px_rgba(74,45,20,0.18)]
+
+
+px-6
+
+md:px-14
+
+py-12
+
+text-center
 "
 >
 
 
+
+
+
+{/* SUCCESS ICON */}
+
+
 <div
 className="
-bg-[#F4E6D5]
-border
-border-[#C6A77D]
-rounded-2xl
-p-10
-max-w-lg
-w-full
-text-center
-shadow
+mx-auto
+
+w-[105px]
+
+h-[105px]
+
+rounded-full
+
+bg-[#EEF4DF]
+
+flex
+
+items-center
+
+justify-center
+
+
+shadow-inner
 "
 >
 
 
 <CheckCircle
-size={70}
+
+size={72}
+
+strokeWidth={2.2}
+
 className="
 text-green-600
-mx-auto
 "
+
 />
 
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* TITLE */}
 
 
 <h1
 className="
-text-3xl
+mt-10
+
 font-serif
-text-[#3A1F16]
-mt-5
+
+text-[34px]
+
+md:text-[46px]
+
+leading-tight
+
+text-[#2B140A]
 "
 >
 
+
 Order Confirmed 🎉
+
 
 </h1>
 
 
 
+
+
+
 <p
 className="
+mt-4
+
+text-[17px]
+
+md:text-[19px]
+
 text-[#6F4E37]
-mt-3
 "
 >
 
@@ -92,17 +215,44 @@ Thank you for choosing Vanamrith
 
 
 
+
+
+
+
+
+{/* ORDER NUMBER */}
+
+
 <div
 className="
-bg-white
-rounded-lg
-p-4
-mt-6
+mt-8
+
+bg-white/80
+
+rounded-xl
+
+shadow-sm
+
+border
+
+border-[#EFE2CF]
+
+
+py-5
+
+px-5
 "
 >
 
 
-<p className="text-sm">
+
+<p
+className="
+text-[#3A1F16]
+
+text-[16px]
+"
+>
 
 Order Number
 
@@ -112,15 +262,24 @@ Order Number
 
 <h2
 className="
-text-xl
+mt-2
+
+text-[26px]
+
+tracking-[3px]
+
 font-bold
+
 text-[#C4622D]
 "
 >
 
+
 {orderNumber}
 
+
 </h2>
+
 
 
 </div>
@@ -129,40 +288,75 @@ text-[#C4622D]
 
 
 
+
+
+
+
+{/* BUTTONS */}
+
+
+
 <div
 className="
-flex
-flex-col
-gap-3
-mt-8
+mt-9
+
+space-y-4
 "
 >
+
+
+
 
 
 <Link
 
 href="/track-order"
 
-className="
-bg-[#C4622D]
-text-white
-py-3
-rounded-md
-flex
-justify-center
-gap-2
-"
 
+className="
+h-[58px]
+
+rounded-xl
+
+bg-[#C4622D]
+
+text-white
+
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+
+font-semibold
+
+text-[18px]
+
+
+hover:bg-[#A94F1E]
+
+transition
+"
 >
 
 
-<PackageSearch/>
+
+<PackageSearch size={24}/>
+
 
 
 Track Order
 
 
+
 </Link>
+
+
+
 
 
 
@@ -173,37 +367,74 @@ Track Order
 
 href="/"
 
-className="
-border
-border-[#C4622D]
-text-[#3A1F16]
-py-3
-rounded-md
-flex
-justify-center
-gap-2
-"
 
+className="
+h-[58px]
+
+rounded-xl
+
+
+border
+
+border-[#C4622D]
+
+
+text-[#3A1F16]
+
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+
+font-semibold
+
+text-[18px]
+
+
+bg-white/30
+
+
+hover:bg-[#FFF3E5]
+
+transition
+"
 >
 
 
-<Home/>
+<Home size={24}/>
 
 
 Continue Shopping
 
 
+
 </Link>
 
 
-</div>
 
 
 
 </div>
 
 
+
+
+
+
+
 </div>
+
+
+
+
+
+</section>
+
 
 );
 

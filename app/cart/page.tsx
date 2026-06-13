@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
 
@@ -17,6 +18,7 @@ import {
   Minus,
   Plus,
   ShoppingBag,
+  ArrowRight,
 } from "lucide-react";
 
 
@@ -24,44 +26,50 @@ import {
 export default function CartPage() {
 
 
-  const [checkoutOpen,setCheckoutOpen] =
-  useState(false);
+const [checkoutOpen,setCheckoutOpen] =
+useState(false);
 
-  const [stockIssues,setStockIssues] =
+
+const [stockIssues,setStockIssues] =
 useState<any>({});
 
 
 
-  const {
+const {
 
-    items,
+items,
 
-    removeFromCart,
+removeFromCart,
 
-    increaseQty,
+increaseQty,
 
-    decreaseQty,
+decreaseQty,
 
-    totalAmount,
+totalAmount,
 
-    clearCart,
+clearCart,
 
-  } = useCartStore();
+} = useCartStore();
 
-  useEffect(()=>{
+
+
+
+
+
+/* ================= STOCK CHECK ================= */
+
+useEffect(()=>{
 
 
 const checkCartStock =
 async()=>{
 
 
-const issues:any = {};
+const issues:any={};
 
 
 
-for(
-const item of items
-){
+for(const item of items){
 
 
 try{
@@ -73,42 +81,20 @@ await api.get(
 );
 
 
-
-const product =
-res.data;
-
-
-
-const variant =
-product.variants?.find(
-(v:any)=>
-
-(v.title || v.label)
-===
-item.size
-
-);
+const product=res.data;
 
 
 
 const stock =
-variant
-?
-variant.stock
-:
 product.stock;
 
 
 
-
-if(
-stock <= 0
-){
+if(stock<=0){
 
 
 issues[
-item.productId +
-item.size
+item.productId+item.size
 ]
 =
 "Out of stock";
@@ -117,33 +103,25 @@ item.size
 }
 
 
-
-else if(
-item.qty > stock
-){
+else if(item.qty>stock){
 
 
 issues[
-item.productId +
-item.size
+item.productId+item.size
 ]
 =
 `Only ${stock} available`;
 
+}
 
 
 }
 
-
-
-
-}
 catch{
 
 
 issues[
-item.productId +
-item.size
+item.productId+item.size
 ]
 =
 "Product unavailable";
@@ -156,21 +134,14 @@ item.size
 
 
 
-
-setStockIssues(
-issues
-);
-
+setStockIssues(issues);
 
 
 };
 
 
 
-
-if(
-items.length > 0
-){
+if(items.length){
 
 checkCartStock();
 
@@ -180,92 +151,10 @@ checkCartStock();
 
 },[items]);
 
+
+
 const hasStockIssue =
-Object.keys(stockIssues).length > 0;
-
-
-
-
-  if (items.length === 0) {
-
-
-    return (
-
-      <div
-        className="
-        min-h-[70vh]
-        flex
-        flex-col
-        items-center
-        justify-center
-        bg-[#F8F2EA]
-        px-5
-        "
-      >
-
-
-        <ShoppingBag
-          size={70}
-          className="text-[#D06F1D]"
-        />
-
-
-
-        <h1
-          className="
-          mt-5
-          text-3xl
-          font-serif
-          text-[#2E1B12]
-          "
-        >
-
-          Your Cart is Empty
-
-        </h1>
-
-
-
-
-        <p className="mt-2 text-[#6F4E37]">
-
-          Add your favourite products.
-
-        </p>
-
-
-
-
-
-        <Link href="/products">
-
-
-          <button
-            className="
-            mt-6
-            bg-[#D06F1D]
-            text-white
-            px-8
-            py-3
-            rounded-xl
-            "
-          >
-
-            Continue Shopping
-
-          </button>
-
-
-        </Link>
-
-
-
-      </div>
-
-
-    );
-
-  }
+Object.keys(stockIssues).length>0;
 
 
 
@@ -273,38 +162,129 @@ Object.keys(stockIssues).length > 0;
 
 
 
+/* ================= EMPTY CART ================= */
 
+
+if(items.length===0){
 
 return (
 
+<div
+className="
+relative
+min-h-screen
+overflow-hidden
+bg-[#F8F1E6]
+"
+>
 
-<div className="bg-[#F8F2EA] min-h-screen">
+
+{/* BACKGROUND IMAGE */}
+
+
+<Image
+
+src="/cart-empty-bg.png"
+
+alt="Vanamrith Honey Background"
+
+fill
+
+priority
+
+sizes="100vw"
+
+className="
+object-cover
+object-center
+z-0
+"
+
+/>
+
+
+
+
+
+{/* CONTENT */}
+
+
+<div
+className="
+relative
+z-10
+
+min-h-[720px]
+
+flex
+flex-col
+items-center
+justify-center
+
+px-5
+
+text-center
+"
+>
+
 
 
 
 <div
 className="
-max-w-7xl
-mx-auto
-px-5
-lg:px-8
-py-10
+w-24
+h-24
+
+rounded-full
+
+bg-[#F2DEB8]/80
+
+backdrop-blur-sm
+
+flex
+items-center
+justify-center
+
+mb-8
 "
 >
+
+
+<ShoppingBag
+
+size={42}
+
+strokeWidth={1.5}
+
+className="
+text-[#C87819]
+"
+
+/>
+
+
+</div>
+
+
+
 
 
 
 
 <h1
 className="
-text-[38px]
-md:text-[52px]
 font-serif
-text-[#2E1B12]
+
+text-[42px]
+md:text-[64px]
+
+tracking-wide
+
+text-[#2B140A]
 "
 >
 
-Shopping Cart
+Your Cart is Empty
 
 </h1>
 
@@ -314,13 +294,499 @@ Shopping Cart
 
 
 
+<p
+className="
+mt-5
+
+text-[17px]
+md:text-xl
+
+text-[#5B4636]
+"
+>
+
+Looks like you haven’t added anything yet.
+
+</p>
+
+
+
+
+<p
+className="
+mt-3
+
+text-[17px]
+md:text-xl
+
+text-[#5B4636]
+"
+>
+
+Explore our natural honey and bring home the goodness of nature.
+
+</p>
+
+
+
+
+
+
+<Link href="/products">
+
+
+<button
+className="
+mt-10
+
+h-[58px]
+
+px-12
+
+rounded-[14px]
+
+bg-[#C66A12]
+
+text-white
+
+font-semibold
+
+tracking-wide
+
+flex
+items-center
+gap-3
+
+hover:bg-[#5A2815]
+
+transition
+"
+>
+
+Continue Shopping
+
+
+<ArrowRight size={20}/>
+
+
+</button>
+
+
+</Link>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* FEATURE STRIP */}
+
+
+<div
+className="
+relative
+z-20
+
+max-w-6xl
+
+mx-auto
+
+-mt-20
+
+px-5
+"
+>
+
+
+<div
+className="
+bg-white/70
+
+backdrop-blur-md
+
+border
+border-white/60
+
+rounded-[22px]
+
+shadow-[0_15px_40px_rgba(60,40,20,0.18)]
+
+grid
+grid-cols-1
+sm:grid-cols-2
+lg:grid-cols-4
+
+overflow-hidden
+"
+>
+
+
+
+{
+
+
+[
+
+{
+img:"/leaf.png",
+title:"100% Natural",
+desc:"Pure & authentic forest honey"
+},
+
+{
+img:"/Ljar.png",
+title:"Raw & Unprocessed",
+desc:"No additives, no processing"
+},
+
+{
+img:"/forest.png",
+title:"Sourced From Forests",
+desc:"Ethically collected"
+},
+
+{
+img:"/Lbee.png",
+title:"Rich in Nutrients",
+desc:"Packed with natural goodness"
+}
+
+
+].map((item)=>(
+
+
+
+<div
+
+key={item.title}
+
+className="
+flex
+
+items-center
+
+gap-5
+
+px-8
+py-8
+
+border-b
+lg:border-b-0
+lg:border-r
+
+border-[#E5D6BE]
+
+last:border-0
+"
+>
+
+
+
+<Image
+
+src={item.img}
+
+alt={item.title}
+
+width={52}
+
+height={52}
+
+className="
+object-contain
+"
+
+/>
+
+
+
+
+<div>
+
+
+<h4
+className="
+font-semibold
+
+text-[#3A1F16]
+"
+>
+
+{item.title}
+
+</h4>
+
+
+
+<p
+className="
+text-sm
+
+mt-1
+
+leading-relaxed
+
+text-[#6F4E37]
+"
+>
+
+{item.desc}
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* BOTTOM QUOTE */}
+
+
+<div
+className="
+relative
+z-20
+
+text-center
+
+mt-12
+
+pb-14
+"
+>
+
+
+<p
+className="
+font-serif
+
+text-2xl
+
+text-[#3A1F16]
+"
+>
+
+Taste the purity. Feel the nature.
+
+</p>
+
+
+
+<div
+className="
+mt-5
+
+flex
+
+justify-center
+
+items-center
+
+gap-5
+
+text-[#C49A2C]
+"
+>
+
+
+<span className="w-16 h-px bg-[#C49A2C]" />
+
+
+🌿
+
+
+<span className="w-16 h-px bg-[#C49A2C]" />
+
+
+</div>
+
+
+</div>
+
+
+
+
+</div>
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* ================= CART PAGE ================= */
+
+
+return (
+
+<div
+className="
+relative
+min-h-screen
+overflow-hidden
+bg-[#F8F1E6]
+"
+>
+
+
+{/* BACKGROUND */}
+
+<Image
+
+src="/cart-empty-bg.png"
+
+alt="Honey Background"
+
+fill
+
+priority
+
+sizes="100vw"
+
+className="
+object-cover
+object-center
+z-0
+"
+
+/>
+
+
+
+
+
+
+<div
+className="
+relative
+z-10
+
+max-w-7xl
+
+mx-auto
+
+px-5
+lg:px-8
+
+pt-20
+pb-20
+"
+>
+
+
+
+
+
+{/* TITLE */}
+
+
+<div
+className="
+mb-12
+"
+>
+
+
+<h1
+className="
+font-serif
+
+text-[42px]
+md:text-[60px]
+
+tracking-wide
+
+text-[#2B140A]
+"
+>
+
+Shopping Cart
+
+</h1>
+
+
+
+<div
+className="
+mt-5
+
+flex
+
+items-center
+
+gap-5
+text-[#B88A34]
+"
+>
+
+
+<span className="w-28 h-px bg-[#B88A34]" />
+
+🌿
+
+<span className="w-28 h-px bg-[#B88A34]" />
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* CART CONTENT */}
+
+
 <div
 className="
 grid
+
 grid-cols-1
-lg:grid-cols-[1fr_360px]
-gap-8
-mt-8
+
+lg:grid-cols-[1fr_420px]
+
+gap-10
+
+items-start
 "
 >
 
@@ -330,13 +796,17 @@ mt-8
 
 
 
-{/* ITEMS */}
 
-<div className="space-y-5">
+{/* LEFT PRODUCTS */}
+
+
+<div className="space-y-6">
+
 
 
 {
 items.map((item)=>(
+
 
 
 <div
@@ -348,30 +818,57 @@ item.size
 
 
 className="
-bg-[#FFFCF8]
+bg-white/65
+
+backdrop-blur-md
+
 border
 border-[#E8D9C7]
-rounded-[22px]
-p-4
-flex
-gap-5
-"
 
+rounded-[26px]
+
+shadow-[0_15px_35px_rgba(60,40,20,0.12)]
+
+p-6
+
+
+grid
+
+grid-cols-1
+
+md:grid-cols-[220px_1fr_150px]
+
+gap-8
+
+items-center
+"
 >
 
+
+
+
+
+
+{/* IMAGE */}
 
 
 <div
 className="
 relative
-w-[110px]
-h-[110px]
-shrink-0
-rounded-[16px]
+
+w-full
+md:w-[220px]
+
+h-[190px]
+
+rounded-[18px]
+
 overflow-hidden
+
 bg-white
 "
 >
+
 
 
 <Image
@@ -381,13 +878,11 @@ item.image ||
 "/placeholder.png"
 }
 
-alt={
-item.name
-}
+alt={item.name}
 
 fill
 
-sizes="110px"
+sizes="220px"
 
 className="
 object-cover
@@ -404,15 +899,21 @@ object-cover
 
 
 
-<div className="flex-1">
 
+
+{/* INFO */}
+
+
+<div>
 
 
 <h2
 className="
-text-xl
-font-semibold
-text-[#2E1B12]
+font-serif
+
+text-[28px]
+
+text-[#2B140A]
 "
 >
 
@@ -423,45 +924,61 @@ text-[#2E1B12]
 
 
 
+<p
+className="
+mt-2
 
-<p className="text-[#6F4E37] mt-1">
+text-[#6F4E37]
+"
+>
 
-Size:
-{" "}
-{item.size}
+Size : {item.size}
 
 </p>
 
+
+
+
+
+
 {
 stockIssues[
-item.productId+
-item.size
+item.productId+item.size
 ]
 &&
-(
 
-<p className="text-red-600 text-sm mt-2">
+<p
+className="
+text-red-600
+text-sm
+mt-2
+"
+>
 
 {
 stockIssues[
-item.productId+
-item.size
+item.productId+item.size
 ]
 }
 
 </p>
 
-)
 }
+
+
+
 
 
 
 <p
 className="
-mt-3
+mt-4
+
+text-[26px]
+
 font-bold
-text-[#D06F1D]
-text-xl
+
+text-[#C66A12]
 "
 >
 
@@ -475,32 +992,25 @@ text-xl
 
 
 
+
+
 {/* QTY */}
 
 
 <div
 className="
-mt-4
-flex
-items-center
-gap-4
-"
->
+mt-7
 
+inline-flex
 
-
-<div
-className="
-flex
 border
-border-[#E8D9C7]
-rounded-xl
+border-[#D7C6AA]
+
+rounded-lg
+
 overflow-hidden
-bg-white
 "
 >
-
-
 
 
 
@@ -514,14 +1024,12 @@ item.size
 }
 
 className="
-w-10
-h-10
-text-[#D06F1D]
+w-14
+h-11
 flex
 items-center
 justify-center
 "
-
 >
 
 <Minus size={16}/>
@@ -532,13 +1040,13 @@ justify-center
 
 
 
-
 <div
 className="
-w-12
-h-10
+w-16
+h-11
+
 border-x
-border-[#E8D9C7]
+
 flex
 items-center
 justify-center
@@ -554,17 +1062,13 @@ justify-center
 
 
 
-
 <button
-
 
 disabled={
 !!stockIssues[
-item.productId+
-item.size
+item.productId+item.size
 ]
 }
-
 
 onClick={()=>
 increaseQty(
@@ -573,28 +1077,16 @@ item.size
 )
 }
 
+className="
+w-14
+h-11
 
-className={`
-w-10
-h-10
-text-[#D06F1D]
 flex
+
 items-center
+
 justify-center
-
-${
-stockIssues[
-item.productId+
-item.size
-]
-?
-"opacity-40 cursor-not-allowed"
-:
-""
-}
-
-`}
-
+"
 >
 
 <Plus size={16}/>
@@ -607,6 +1099,53 @@ item.size
 </div>
 
 
+
+</div>
+
+
+
+
+
+
+
+
+{/* PRICE + DELETE */}
+
+
+<div
+className="
+md:border-l
+
+border-[#D7C6AA]
+
+h-full
+
+flex
+md:flex-col
+
+items-center
+
+justify-between
+
+md:pl-10
+"
+>
+
+
+
+<p
+className="
+font-semibold
+
+text-[26px]
+
+text-[#2B140A]
+"
+>
+
+₹{item.price*item.qty}
+
+</p>
 
 
 
@@ -624,15 +1163,27 @@ item.size
 className="
 text-red-500
 "
-
 >
 
-<Trash2 size={20}/>
+<Trash2 size={22}/>
 
 </button>
 
 
 
+</div>
+
+
+
+
+</div>
+
+
+))
+
+}
+
+
 
 </div>
 
@@ -640,33 +1191,314 @@ text-red-500
 
 
 
-</div>
 
 
 
 
+{/* ORDER SUMMARY */}
+
+
+
+<div
+className="
+bg-white/70
+
+backdrop-blur-md
+
+border
+
+border-[#E8D9C7]
+
+
+rounded-[28px]
+
+
+shadow-[0_15px_40px_rgba(60,40,20,0.15)]
+
+
+p-8
+
+
+sticky
+
+top-28
+"
+>
+
+
+
+<h2
+className="
+font-serif
+
+text-[34px]
+
+text-[#2B140A]
+"
+>
+
+Order Summary
+
+</h2>
 
 
 
 
 <div
 className="
-hidden
-md:block
-font-semibold
-text-xl
-text-[#2E1B12]
+my-5
+
+flex
+
+items-center
+
+gap-4
+text-[#B88A34]
 "
 >
 
 
-₹{item.price * item.qty}
+<span className="w-20 h-px bg-[#B88A34]" />
+
+🌿
+
+<span className="w-20 h-px bg-[#B88A34]" />
 
 
 </div>
 
 
 
+
+
+<div className="space-y-5">
+
+
+<Row
+label="Subtotal"
+value={`₹${totalAmount()}`}
+/>
+
+
+<Row
+label="Shipping"
+value="Calculated later"
+/>
+
+
+<hr className="border-[#D7C6AA]" />
+
+
+
+<Row
+
+label="Total"
+
+value={`₹${totalAmount()}`}
+
+bold
+
+/>
+
+
+</div>
+
+
+
+
+
+
+
+<button
+
+disabled={hasStockIssue}
+
+onClick={()=>
+setCheckoutOpen(true)
+}
+
+className={`
+mt-10
+
+w-full
+
+h-[58px]
+
+rounded-xl
+
+text-white
+
+font-semibold
+
+${
+hasStockIssue
+?
+"bg-gray-400"
+:
+"bg-[#C66A12]"
+}
+
+`}
+>
+
+{
+hasStockIssue
+?
+"Update Cart"
+:
+"Proceed to Checkout →"
+}
+
+</button>
+
+
+
+<p
+className="
+text-center
+mt-5
+text-[#6F4E37]
+text-sm
+"
+>
+
+🛡 Secure Checkout
+
+</p>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+{/* FEATURE STRIP */}
+
+
+<div
+className="
+mt-20
+
+bg-white/65
+
+backdrop-blur-md
+
+border
+
+border-[#E8D9C7]
+
+rounded-[26px]
+
+
+shadow-lg
+
+
+grid
+
+grid-cols-1
+
+sm:grid-cols-2
+
+lg:grid-cols-4
+
+overflow-hidden
+"
+>
+
+
+
+{
+[
+{
+img:"/leaf.png",
+title:"100% Natural",
+desc:"Pure & authentic forest honey"
+},
+
+{
+img:"/Ljar.png",
+title:"Raw & Unprocessed",
+desc:"No additives, no processing"
+},
+
+{
+img:"/forest.png",
+title:"Sourced From Forests",
+desc:"Ethically collected"
+},
+
+{
+img:"/Lbee.png",
+title:"Rich in Nutrients",
+desc:"Packed with natural goodness"
+}
+
+].map((item)=>(
+
+
+
+<div
+
+key={item.title}
+
+className="
+flex
+items-center
+gap-5
+
+px-8
+py-8
+
+border-r
+last:border-r-0
+
+border-[#E5D6BE]
+"
+>
+
+
+
+<Image
+
+src={item.img}
+
+alt={item.title}
+
+width={52}
+
+height={52}
+/>
+
+
+
+<div>
+
+
+<h4 className="font-semibold">
+
+{item.title}
+
+</h4>
+
+
+<p className="text-sm text-[#6F4E37]">
+
+{item.desc}
+
+</p>
+
+
+</div>
 
 
 </div>
@@ -683,206 +1515,37 @@ text-[#2E1B12]
 
 
 
-
-
-
-
-
-{/* SUMMARY */}
-
-
-<div
-className="
-bg-[#FFFCF8]
-border
-border-[#E8D9C7]
-rounded-[24px]
-p-6
-h-fit
-"
->
-
-
-
-
-<h2
-className="
-text-2xl
-font-semibold
-text-[#2E1B12]
-"
->
-
-Order Summary
-
-</h2>
-
-
-
-
-
-<div className="mt-6 space-y-4">
-
-
-<Row
-
-label="Subtotal"
-
-value={`₹${totalAmount()}`}
-
-/>
-
-
-
-
-
-<Row
-
-label="Shipping"
-
-value="Calculated later"
-
-/>
-
-
-
-
-
-<hr/>
-
-
-
-
-
-<Row
-
-label="Total"
-
-value={`₹${totalAmount()}`}
-
-bold
-
-/>
-
-
-
-
-
 </div>
 
 
 
 
-
-
-
-
-<button
-
-
-disabled={
-hasStockIssue
-}
-
-
-onClick={()=>
-setCheckoutOpen(true)
-}
-
-className={`
-mt-8
-w-full
-h-[54px]
-rounded-[14px]
-text-white
-font-semibold
-
-${
-hasStockIssue
-?
-"bg-gray-400 cursor-not-allowed"
-:
-"bg-[#D06F1D]"
-}
-
-`}
-
->
-
-{
-hasStockIssue
-?
-"Update Cart"
-:
-"Checkout"
-}
-
-</button>
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-{/* CHECKOUT MODAL */}
 
 
 <BuyNowModal
 
-
 isOpen={checkoutOpen}
-
 
 onClose={()=>
 setCheckoutOpen(false)
 }
 
-
 cartItems={items}
 
-
 onSuccess={()=>{
-
-
 clearCart();
-
-
 }}
-
 
 />
 
 
 
-
-
 </div>
-
 
 );
 
-}
 
+}
 
 
 
@@ -897,16 +1560,9 @@ value,
 bold
 }:any){
 
-
 return (
 
-<div
-className="
-flex
-justify-between
-"
->
-
+<div className="flex justify-between">
 
 
 <span className="text-[#6F4E37]">
@@ -916,25 +1572,19 @@ justify-between
 </span>
 
 
-
-
-
 <span
 className={
 bold
 ?
-"text-xl font-bold text-[#2E1B12]"
+"text-xl font-bold text-[#2B140A]"
 :
-"text-[#2E1B12]"
+"text-[#2B140A]"
 }
 >
 
-
 {value}
 
-
 </span>
-
 
 
 </div>

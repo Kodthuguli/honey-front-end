@@ -325,7 +325,7 @@ gap-2
 "
 >
 
-🍃 Categories
+Categories
 
 </h3>
 
@@ -476,22 +476,23 @@ space-y-7
 
 {
 [
-
 {
 title:"100% Natural",
-desc:"Pure & authentic"
+desc:"Pure & authentic",
+icon:"/leaf.png"
 },
 
 {
 title:"Raw & Unprocessed",
-desc:"As nature intended"
+desc:"As nature intended",
+icon:"/honeycomb.png"
 },
 
 {
 title:"Sourced From Forests",
-desc:"Sustainably collected"
+desc:"Sustainably collected",
+icon:"/forest.png"
 }
-
 
 ].map((item)=>(
 
@@ -502,9 +503,7 @@ key={item.title}
 
 className="
 flex
-
 items-center
-
 gap-4
 "
 >
@@ -521,23 +520,38 @@ rounded-full
 border
 border-[#D9A63A]
 
+bg-white
 
 flex
-
 items-center
-
 justify-center
 
-
-text-[#D9A63A]
+p-2
 
 shrink-0
 "
 >
 
-🍯
+
+<Image
+
+src={item.icon}
+
+alt={item.title}
+
+width={32}
+
+height={32}
+
+className="
+object-contain
+"
+
+/>
+
 
 </div>
+
 
 
 
@@ -760,7 +774,6 @@ className="
 absolute
 
 left-1/2
-
 -top-8
 
 -translate-x-1/2
@@ -787,15 +800,31 @@ flex
 items-center
 justify-center
 
-text-2xl
+overflow-hidden
+
+p-2
 "
 >
 
-🐝
+
+<Image
+
+src="/logo.png"
+
+alt="Vanamrith"
+
+width={48}
+
+height={48}
+
+className="
+object-contain
+"
+
+/>
+
 
 </div>
-
-
 
 
 
@@ -1235,16 +1264,24 @@ Nature’s Promise
 
 {
 [
-"100% Natural",
-"Raw & Unprocessed",
-"Sourced From Forests"
+{
+title:"100% Natural",
+icon:"/leaf.png",
+},
+{
+title:"Raw & Unprocessed",
+icon:"/honeycomb.png",
+},
+{
+title:"Sourced From Forests",
+icon:"/forest.png",
+}
 
 ].map((item)=>(
 
-
 <div
 
-key={item}
+key={item.title}
 
 className="
 flex
@@ -1262,18 +1299,37 @@ h-10
 rounded-full
 
 border
-
 border-[#D9A63A]
 
+bg-white
+
 flex
-
 items-center
-
 justify-center
+
+p-2
+
+shrink-0
 "
 >
 
-🍯
+
+<Image
+
+src={item.icon}
+
+alt={item.title}
+
+width={28}
+
+height={28}
+
+className="
+object-contain
+"
+
+/>
+
 
 </div>
 
@@ -1287,7 +1343,7 @@ text-[#2B140A]
 "
 >
 
-{item}
+{item.title}
 
 </p>
 

@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function FAQPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
@@ -40,7 +41,7 @@ export default function FAQPage() {
 
   const handleSubmit = async () => {
     if (!question.trim()) {
-      return alert("Please enter your question");
+      return toast.error("Please enter your question");
     }
 
     try {
@@ -55,7 +56,7 @@ export default function FAQPage() {
       setQuestion("");
       setAskedBy("");
     } catch {
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }

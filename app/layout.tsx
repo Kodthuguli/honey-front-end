@@ -1,10 +1,9 @@
-import "./globals.css";
+import './globals.css';
 
-import "@fontsource/playfair-display/600.css";
-
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
+import {
+  Inter,
+  Playfair_Display,
+} from "next/font/google";
 
 
 import type { Metadata } from "next";
@@ -13,10 +12,42 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 
 import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
+import HoneyLoader from '@/components/HoneyLoader';
+
+const inter =
+Inter({
+
+subsets:["latin"],
+
+weight:[
+"400",
+"500",
+"600"
+],
+
+variable:"--font-inter",
+
+display:"swap",
+
+});
 
 
+
+const playfair =
+Playfair_Display({
+
+subsets:["latin"],
+
+weight:["600"],
+
+variable:"--font-playfair",
+
+display:"swap",
+
+});
 
 
 
@@ -312,7 +343,11 @@ return (
 
 lang="en"
 
-className="scroll-smooth"
+className={`
+scroll-smooth
+${inter.variable}
+${playfair.variable}
+`}
 
 >
 
@@ -364,7 +399,19 @@ backgroundColor:
 <OrganizationSchema />
 
 <Navbar />
+<HoneyLoader />
 
+<Toaster
+
+position="top-right"
+
+richColors
+
+closeButton
+
+duration={3000}
+
+/>
 
 
 <main className="pt-[64px] min-h-screen">

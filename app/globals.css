@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@theme {
+
+  --font-inter:
+    var(--font-inter);
+
+  --font-serif:
+    var(--font-playfair);
+
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -160,4 +170,50 @@
 
 .animate-slideUp {
   animation: slideUp 0.3s ease;
+}
+
+@keyframes beeFly {
+
+0% {
+
+transform:
+rotate(0deg)
+translateX(45px)
+rotate(0deg);
+
+}
+
+
+100% {
+
+transform:
+rotate(360deg)
+translateX(45px)
+rotate(-360deg);
+
+}
+
+}
+
+@keyframes beeOrbit {
+
+0% {
+
+transform:
+rotate(0deg);
+
+}
+
+
+100% {
+
+transform:
+rotate(360deg);
+
+}
+
+}
+
+.footer-list{
+@apply space-y-6 text-[#2B140A];
 }

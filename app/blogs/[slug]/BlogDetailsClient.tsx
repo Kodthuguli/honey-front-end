@@ -10,6 +10,7 @@ import {
   Share2,
   ChevronDown,
 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function BlogDetailsClient({
   blog,
@@ -63,7 +64,7 @@ window.location.href
 );
 
 
-alert(
+toast.info(
 "Blog link copied!"
 );
 

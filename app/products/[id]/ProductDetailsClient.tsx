@@ -14,6 +14,7 @@ import {
   Star,
   ShoppingCart,
 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ProductDetailsClient({
 initialProduct,
@@ -52,7 +53,6 @@ return initialProduct.variants[0];
 return {
 label:"250g",
 price:482,
-stock:initialProduct?.stock
 };
 
 
@@ -73,13 +73,7 @@ stock:initialProduct?.stock
 
 const currentStock =
 Number(
-
-selectedVariant
-?
-selectedVariant.stock
-:
-product?.stock ?? 0
-
+product?.stock || 0
 );
 
 
@@ -122,7 +116,8 @@ if(
 isOutOfStock
 ){
 
-alert(
+
+toast.info(
 "Selected product is out of stock"
 );
 
@@ -136,7 +131,7 @@ if(
 qty > currentStock
 ){
 
-alert(
+toast.info(
 `Only ${currentStock} item available`
 );
 
@@ -179,9 +174,9 @@ selectedVariant?.label ||
 
 
 
-  alert(
-    "Product added to cart"
-  );
+  toast.success(
+"Product added to cart"
+);
 
 
 };
@@ -614,20 +609,17 @@ product.variants
 [
 {
 label:"250g",
-price:482,
-stock:product.stock
+price:482
 },
 
 {
 label:"500g",
-price:580,
-stock:product.stock
+price:580
 },
 
 {
 label:"1kg",
-price:1080,
-stock:product.stock
+price:1080
 }
 
 ]
@@ -635,10 +627,10 @@ stock:product.stock
 ).map((v:any,index:number)=>(
 
 
-                  <button
-                    key={index}
-                    disabled={
-v.stock <= 0
+                 <button
+key={index}
+disabled={
+isOutOfStock
 }
                     onClick={() => setSelectedVariant(v)}
                     className={`
@@ -651,7 +643,7 @@ v.stock <= 0
                       transition
 
 ${
-v.stock <= 0
+isOutOfStock
 ?
 "opacity-50 cursor-not-allowed"
 :

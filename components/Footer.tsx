@@ -8,99 +8,82 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
+import {
+  ShoppingBag,
+  BookOpen,
+  Headphones,
+  Mail,
+} from "lucide-react";
 
 const features = [
   {
     title: "100% Natural",
-    icon: "/icons/leaf.svg",
+    icon: "/icons/leaf.png",
   },
   {
     title: "Unprocessed",
-    icon: "/icons/honey.svg",
-  },
-  {
-    title: "Responsibly Sourced",
-    icon: "/icons/mountain.svg",
+    icon: "/icons/honey-stick.png",
   },
   {
     title: "Sustainable",
-    icon: "/icons/heart.svg",
+    icon: "/icons/earth.png",
   },
 ];
 
 export default function Footer() {
-  return (
-    <footer
-      className="
-        relative overflow-hidden
-        pt-16 lg:pt-24
-        bg-[#f8f2e9]
-      "
-    >
+return (
 
-      {/* RIGHT LEAVES */}
-      {/* <Image
-
-src="/footer-right-leaves.png"
-
-alt=""
-
-width={160}
-
-height={160}
-
+<footer
 className="
-absolute
-right-0
-top-8
-w-24
-lg:w-40
-opacity-70
-pointer-events-none
+relative
+overflow-hidden
+bg-[#F8F1E6]
+pt-20
 "
+>
 
-/> */}
 
-      {/* HONEYCOMB LEFT */}
-      {/* <Image
-
-src="/hex-pattern.png"
-
-alt=""
-
-width={176}
-
-height={176}
-
+<div
 className="
-absolute
-left-0
-top-20
-w-28
-lg:w-44
-opacity-40
-pointer-events-none
+max-w-[1500px]
+mx-auto
+px-6
+lg:px-14
 "
+>
 
-/> */}
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
 
-        {/* TOP GRID */}
-        <div
-          className="
-            grid
-            grid-cols-2
-            lg:grid-cols-[1.2fr_1fr_1fr_1fr_1.1fr]
-            gap-x-10
-            gap-y-12
-          "
-        >
+{/* ================= TOP FOOTER ================= */}
 
-          {/* BRAND */}
-          <div className="col-span-2 lg:col-span-1">
 
-           <Image
+<div
+className="
+grid
+grid-cols-1
+md:grid-cols-2
+xl:grid-cols-[1.3fr_1fr_1fr_1.2fr_1.2fr]
+gap-12
+"
+>
+
+
+
+
+
+{/* BRAND */}
+
+
+<div
+className="
+xl:border-r
+border-[#E2C9A8]
+xl:pr-12
+"
+>
+
+
+<Image
 
 src="/logo.png"
 
@@ -111,433 +94,706 @@ width={230}
 height={120}
 
 className="
-w-[200px]
-lg:w-[230px]
+w-[220px]
 h-auto
 "
 
 />
 
-            <p
-              className="
-                mt-6
-                text-[#2B140A]
-                text-[17px]
-                leading-[2]
-                max-w-[320px]
-              "
-            >
-              Vanamrith brings you 100% pure,
-              raw and natural honey, sourced
-              from wild forests with care and
-              delivered with love.
-            </p>
 
-          </div>
 
-          {/* SHOP */}
-          <div>
-            <h3
-              className="
-                text-[#2B140A]
-                font-semibold
-                tracking-[1.5px]
-                text-[18px]
-                uppercase
-              "
-            >
-              Shop
-            </h3>
+<p
+className="
+mt-8
+text-[#2B140A]
+leading-8
+max-w-[320px]
+"
+>
 
-            <div className="w-10 h-[2px] bg-[#D89B18] mt-4 mb-6" />
+Vanamrith brings you 100%
+pure, raw and natural honey,
+sourced from wild forests
+with care and delivered
+with love.
 
-            <ul className="space-y-5 text-[#2B140A] text-[17px]">
-              <li>
-                <Link href="/products">All Products</Link>
-              </li>
+</p>
 
-              <li>
-                <Link href="/products">Raw Honey</Link>
-              </li>
 
-              <li>
-                <Link href="/products">Wild Forest Honey</Link>
-              </li>
 
-              <li>
-                <Link href="/products">Honey Comb</Link>
-              </li>
 
-              <li>
-                <Link href="/products">Gift Packs</Link>
-              </li>
+<div
+className="
+mt-8
+h-px
+w-20
+bg-[#C87512]
+"
+/>
 
-              <li>
-                <Link href="/products">Offers</Link>
-              </li>
-            </ul>
-          </div>
 
-          {/* OUR STORY */}
-          <div>
-            <h3
-              className="
-                text-[#2B140A]
-                font-semibold
-                tracking-[1.5px]
-                text-[18px]
-                uppercase
-              "
-            >
-              Our Story
-            </h3>
 
-            <div className="w-10 h-[2px] bg-[#D89B18] mt-4 mb-6" />
 
-            <ul className="space-y-5 text-[#2B140A] text-[17px]">
-              <li>
-                <Link href="/about">Our Story</Link>
-              </li>
+{/* FEATURES */}
 
-              <li>
-                <Link href="/about">Why Vanamrith</Link>
-              </li>
 
-              <li>
-                <Link href="/about">Our Beekeepers</Link>
-              </li>
+<div
+className="
+mt-8
+space-y-5
+"
+>
 
-              <li>
-                <Link href="/blog">Blog</Link>
-              </li>
 
-              <li>
-                <Link href="/recipes">Recipes</Link>
-              </li>
+{
+features.map((item)=>(
 
-              <li>
-                <Link href="/faq">FAQs</Link>
-              </li>
-            </ul>
-          </div>
 
-          {/* CUSTOMER CARE */}
-          <div>
-            <h3
-              className="
-                text-[#2B140A]
-                font-semibold
-                tracking-[1.5px]
-                text-[18px]
-                uppercase
-              "
-            >
-              Customer Care
-            </h3>
+<div
 
-            <div className="w-10 h-[2px] bg-[#D89B18] mt-4 mb-6" />
+key={item.title}
 
-            <ul className="space-y-5 text-[#2B140A] text-[17px]">
-              <li>
-                <Link href="/orders">My Orders</Link>
-              </li>
+className="
+flex
+items-center
+gap-4
+"
+>
 
-              <li>
-                <Link href="/shipping">Shipping & Delivery</Link>
-              </li>
 
-              <li>
-                <Link href="/returns">Returns & Refunds</Link>
-              </li>
+<div
+className="
+w-11
+h-11
+rounded-full
+border
+border-[#C87512]
 
-              <li>
-                <Link href="/track-order">Track Order</Link>
-              </li>
+flex
+items-center
+justify-center
+"
+>
 
-              <li>
-                <Link href="/terms">Terms & Conditions</Link>
-              </li>
 
-              <li>
-                <Link href="/privacy-policy">Privacy Policy</Link>
-              </li>
-            </ul>
-          </div>
+<Image
 
-          {/* STAY CONNECTED */}
-          <div className="relative">
-
-            <h3
-              className="
-                text-[#2B140A]
-                font-semibold
-                tracking-[1.5px]
-                text-[18px]
-                uppercase
-              "
-            >
-              Stay Connected
-            </h3>
-
-            <div className="w-10 h-[2px] bg-[#D89B18] mt-4 mb-6" />
-
-            <div className="mt-8">
-
-              <h4
-                className="
-                  text-[#2B140A]
-                  font-semibold
-                  tracking-[1px]
-                  text-[18px]
-                  uppercase
-                "
-              >
-                Follow Us
-              </h4>
-
-              <div className="flex items-center gap-4 mt-6">
-
-                {[
-                  FaInstagram,
-                  FaFacebookF,
-                  FaYoutube,
-                  FaWhatsapp,
-                ].map((Icon, i) => (
-                  <Link
-                    href="#"
-                    key={i}
-                    className="
-                      w-12 h-12
-                      rounded-full
-                      border border-[#D9C6AF]
-                      flex items-center justify-center
-                      text-[#2B140A]
-                      hover:bg-[#D89B18]
-                      hover:text-white
-                      transition
-                    "
-                  >
-                    <Icon size={20} />
-                  </Link>
-                ))}
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* BEE PATH */}
-        <div className="relative h-28 hidden lg:block">
-
-          <Image
-
-src="/bee.png"
+src={item.icon}
 
 alt=""
 
-width={56}
+width={22}
 
-height={56}
+height={22}
+
+/>
+
+
+</div>
+
+
+<p
+className="
+text-[#2B140A]
+"
+>
+
+{item.title}
+
+</p>
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* SHOP */}
+
+
+<div>
+
+
+<FooterTitle
+icon={<ShoppingBag/>}
+title="SHOP"
+/>
+
+
+<ul className="footer-list">
+
+<li>
+<Link href="/products">
+All Products
+</Link>
+</li>
+
+<li>Raw Honey</li>
+
+<li>Wild Forest Honey</li>
+
+<li>Honey Comb</li>
+
+<li>Gift Packs</li>
+
+<li>Offers</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* STORY */}
+
+
+<div>
+
+
+<FooterTitle
+icon={<BookOpen/>}
+title="OUR STORY"
+/>
+
+
+
+<ul className="footer-list">
+
+<li>
+<Link href="/about">
+Our Story
+</Link>
+</li>
+
+<li>Why Vanamrith</li>
+
+<li>Our Beekeepers</li>
+
+<li>
+<Link href="/blog">
+Blog
+</Link>
+</li>
+
+<li>Recipes</li>
+
+<li>FAQs</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{/* CUSTOMER CARE */}
+
+
+<div>
+
+
+<FooterTitle
+icon={<Headphones/>}
+title="CUSTOMER CARE"
+/>
+
+
+
+<ul className="footer-list">
+
+<li>My Orders</li>
+
+<li>Shipping & Delivery</li>
+
+<li>Returns & Refunds</li>
+
+<li>
+<Link href="/track-order">
+Track Order
+</Link>
+</li>
+
+<li>Terms & Conditions</li>
+
+<li>Privacy Policy</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{/* CONNECT */}
+
+
+<div>
+
+
+<FooterTitle
+icon={<Mail/>}
+title="STAY CONNECTED"
+/>
+
+
+
+<p
+className="
+text-[#2B140A]
+leading-8
+"
+>
+
+Follow us for updates, offers
+and honey goodness.
+
+</p>
+
+
+
+
+<div
+className="
+flex
+gap-4
+mt-8
+"
+>
+
+
+{
+[
+FaInstagram,
+FaFacebookF,
+FaYoutube,
+FaWhatsapp
+
+].map((Icon,i)=>(
+
+
+
+<Link
+
+href="#"
+
+key={i}
 
 className="
+w-12
+h-12
+
+rounded-full
+
+border
+border-[#C87512]
+
+
+flex
+items-center
+justify-center
+
+
+text-[#2B140A]
+
+
+hover:bg-[#C87512]
+hover:text-white
+
+transition
+"
+>
+
+
+<Icon size={20}/>
+
+
+</Link>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* ================= BOTTOM STRIP ================= */}
+
+
+<div
+className="
+relative
+mt-24
+
+bg-[#1B0D08]
+"
+>
+
+
+
+{/* CURVE */}
+
+
+<div
+className="
 absolute
-right-[300px]
-top-8
-w-14
+-top-12
+left-0
+w-full
+overflow-hidden
+"
+>
+
+
+<svg
+viewBox="0 0 1440 100"
+preserveAspectRatio="none"
+className="
+w-full
+h-14
+"
+>
+
+
+<path
+
+fill="#1B0D08"
+
+d="
+M0,70
+C350,120
+1000,10
+1440,70
+L1440,100
+L0,100
+Z
 "
 
 />
 
-          {/* <Image
 
-src="/bee-path.png"
+</svg>
 
-alt=""
 
-width={340}
+</div>
 
-height={120}
+
+
+
+
+
+
+
+<div
+className="
+relative
+
+max-w-[1500px]
+
+mx-auto
+
+px-6
+lg:px-14
+
+py-10
+
+
+flex
+flex-col
+lg:flex-row
+
+items-center
+justify-between
+
+gap-8
+"
+>
+
+
+
+
+{/* THANK YOU */}
+
+
+<div>
+
+
+<p
+className="
+text-white
+"
+>
+
+Thank you for choosing purity.
+
+</p>
+
+
+<p
+className="
+text-[#D9A63A]
+font-serif
+italic
+text-2xl
+mt-2
+"
+>
+
+We&apos;re grateful for your trust.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* COPYRIGHT */}
+
+
+<p
+className="
+text-white/90
+text-center
+"
+>
+
+© {new Date().getFullYear()} Vanamrith.
+All Rights Reserved.
+
+</p>
+
+
+
+
+
+
+
+
+
+{/* PAYMENTS */}
+
+
+{/* PAYMENTS */}
+
+
+<div
+className="
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+flex-wrap
+"
+>
+
+
+{
+[
+"/visa.png",
+"/mastercard.png",
+"/upi.png",
+"/razorpay.png"
+
+].map((src)=>(
+
+
+
+<div
+
+key={src}
 
 className="
-absolute
-left-1/2
--translate-x-1/2
-top-5
-w-[340px]
-opacity-80
+bg-white
+
+w-[82px]
+h-10
+
+md:w-[90px]
+md:h-11
+
+rounded-lg
+
+flex
+items-center
+justify-center
+
+shadow-sm
+"
+>
+
+
+<Image
+
+src={src}
+
+alt="payment"
+
+width={60}
+
+height={25}
+
+className="
+object-contain
 "
 
-/> */}
-        </div>
-      </div>
+/>
 
-      {/* BOTTOM STRIP */}
-<div className="relative mt-10">
 
-  {/* TOP CURVE */}
-  <div className="absolute top-[-58px] left-0 w-full overflow-hidden leading-none z-10">
-    <svg
-      viewBox="0 0 1440 140"
-      preserveAspectRatio="none"
-      className="w-full h-[70px]"
-    >
-      <path
-        d="M0,96L80,90.7C160,85,320,75,480,74.7C640,75,800,85,960,90.7C1120,96,1280,96,1360,96L1440,96L1440,140L1360,140C1280,140,1120,140,960,140C800,140,640,140,480,140C320,140,160,140,80,140L0,140Z"
-        fill="#1B0D08"
-      />
-    </svg>
-  </div>
+</div>
 
-  {/* MAIN STRIP */}
-  <div
-    className="
-      bg-gradient-to-r
-      from-[#1B0D08]
-      via-[#24130A]
-      to-[#1B0D08]
-      pt-12
-      pb-7
-    "
-  >
 
-    <div
-      className="
-        max-w-7xl mx-auto
-        px-6 lg:px-8
-        flex flex-col lg:flex-row
-        items-center justify-between
-        gap-6
-      "
-    >
+))
 
-      {/* LEFT */}
-      <div className="flex items-center gap-4">
+}
 
-        <Image
 
-src="/logo.png"
+</div>
 
-alt="Vanamrith"
 
-width={40}
 
-height={40}
 
+</div>
+
+
+
+</div>
+
+
+
+
+</footer>
+
+)
+}
+
+function FooterTitle({
+icon,
+title
+}:any){
+
+return (
+
+<>
+
+<div
+className="
+flex
+items-center
+gap-4
+"
+>
+
+<div
+className="
+text-[#C87512]
+"
+>
+
+{icon}
+
+</div>
+
+
+<h3
+className="
+uppercase
+tracking-[4px]
+font-bold
+text-sm
+text-[#2B140A]
+"
+>
+
+{title}
+
+</h3>
+
+
+</div>
+
+
+<div
 className="
 w-10
-h-10
+h-px
+bg-[#C87512]
+mt-4
+mb-8
 "
-
 />
 
-        <div>
-          <p
-            className="
-              text-white
-              font-serif
-              text-[17px]
-              leading-none
-            "
-          >
-            Thank you for choosing purity.
-          </p>
+</>
 
-          <p
-            className="
-              text-[#E0A126]
-              italic
-              font-serif
-              text-[28px]
-              mt-2
-              leading-none
-            "
-          >
-            We&apos;re grateful for your trust.
-          </p>
-        </div>
-      </div>
+)
 
-      {/* CENTER */}
-      <div
-        className="
-          text-white
-          text-[15px]
-          whitespace-nowrap
-          lg:px-10
-          lg:border-l
-lg:border-l-[#4B3429]
-        "
-      >
-        © {new Date().getFullYear()} Vanamrith.
-        All Rights Reserved.
-      </div>
-
-      {/* PAYMENT */}
-      <div className="flex items-center gap-3 whitespace-nowrap">
-
-  {[
-    {
-      src: "/visa.png",
-      alt: "Visa",
-    },
-    {
-      src: "/mastercard.png",
-      alt: "Mastercard",
-    },
-    {
-      src: "/upi.png",
-      alt: "UPI",
-    },
-    {
-      src: "/razorpay.png",
-      alt: "Razorpay",
-    },
-  ].map((item, i) => (
-
-    <div
-      key={i}
-      className="
-        h-12
-        w-[92px]
-        rounded-xl
-        border
-        border-[#E8D9C7]
-        bg-white
-        flex
-        items-center
-        justify-center
-        shrink-0
-        shadow-sm
-      "
-    >
-
-      <Image
-
-        src={item.src}
-
-        alt={item.alt}
-
-        width={70}
-
-        height={32}
-
-        className="
-          max-h-7
-          w-auto
-          object-contain
-        "
-
-      />
-
-    </div>
-
-  ))}
-
-</div>
-
-    </div>
-  </div>
-</div>
-    </footer>
-  );
 }

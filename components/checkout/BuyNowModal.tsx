@@ -6,6 +6,19 @@ import { api } from "@/lib/api";
 import { loadRazorpayScript } from "@/lib/razorpay";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { toast } from "sonner";
+import {
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Building2,
+  Map,
+  ShieldCheck,
+  Truck,
+  Leaf,
+  Lock,
+} from "lucide-react";
 
 
 
@@ -146,37 +159,232 @@ orderItems.reduce(
 const validateForm = ()=>{
 
 
+// SIZE
+
 if(
-
-(!isCartOrder && !selectedVariant)
-
-||
-
-!name ||
-
-!phone ||
-
-!email ||
-
-!fullAddress ||
-
-!city ||
-
-!state ||
-
-!pincode
-
+!isCartOrder &&
+!selectedVariant
 ){
 
-alert(
-"Please fill all required fields"
+toast.error(
+"Please select product size"
 );
 
 return false;
 
 }
 
+
+
+
+
+// NAME
+
+if(
+!name.trim()
+){
+
+toast.error(
+"Please enter your name"
+);
+
+return false;
+
+}
+
+
+if(
+name.trim().length < 3
+){
+
+toast.error(
+"Name should contain at least 3 characters"
+);
+
+return false;
+
+}
+
+
+if(
+!/^[A-Za-z ]+$/.test(name)
+){
+
+toast.error(
+"Name should contain only letters"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+// PHONE INDIA
+
+const phoneRegex =
+/^[6-9]\d{9}$/;
+
+
+if(
+!phoneRegex.test(phone)
+){
+
+toast.error(
+"Enter valid 10 digit mobile number"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+
+// EMAIL
+
+const emailRegex =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+if(
+!emailRegex.test(email)
+){
+
+toast.error(
+"Enter valid email address"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+
+// ADDRESS
+
+if(
+fullAddress.trim().length < 10
+){
+
+toast.error(
+"Please enter complete address"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+
+// CITY
+
+if(
+!city.trim()
+){
+
+toast.error(
+"Please enter city"
+);
+
+return false;
+
+}
+
+
+if(
+!/^[A-Za-z ]+$/.test(city)
+){
+
+toast.error(
+"City should contain only letters"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+
+// STATE
+
+if(
+!state.trim()
+){
+
+toast.error(
+"Please enter state"
+);
+
+return false;
+
+}
+
+
+if(
+!/^[A-Za-z ]+$/.test(state)
+){
+
+toast.error(
+"State should contain only letters"
+);
+
+return false;
+
+}
+
+
+
+
+
+
+
+
+// PINCODE INDIA
+
+const pinRegex =
+/^[1-9][0-9]{5}$/;
+
+
+if(
+!pinRegex.test(pincode)
+){
+
+toast.error(
+"Enter valid 6 digit PIN code"
+);
+
+return false;
+
+}
+
+
+
 return true;
+
 
 };
 
@@ -377,9 +585,14 @@ message.trim()
 
 
 
+onClose();
+
+
+setTimeout(()=>{
+
 onSuccess?.();
 
-onClose();
+},500);
 
 
 
@@ -388,7 +601,7 @@ catch(err){
 
 console.error(err);
 
-alert(
+toast.error(
 "Order failed"
 );
 
@@ -438,7 +651,7 @@ await loadRazorpayScript();
 
 if(!loaded){
 
-alert(
+toast.error(
 "Razorpay failed to load"
 );
 
@@ -547,16 +760,25 @@ response.razorpay_signature,
 
 
 
-router.push(
+// redirect first
+
+router.replace(
 `/order-success?order=${order.orderNumber}`
 );
 
 
+// close modal
+
+onClose();
+
+
+// clear cart after route change
+
+setTimeout(()=>{
 
 onSuccess?.();
 
-
-onClose();
+},500);
 
 
 
@@ -567,7 +789,7 @@ catch(error){
 console.error(error);
 
 
-router.push(
+router.replace(
 `/order-failed?order=${order.orderNumber}`
 );
 
@@ -732,7 +954,7 @@ error?.response?.data?.message;
 if(message){
 
 
-alert(
+toast.info(
 message
 );
 
@@ -747,7 +969,7 @@ return;
 
 // REAL PAYMENT ERROR
 
-router.push(
+router.replace(
 
 `/order-failed?order=${currentOrder?.orderNumber || ""}`
 
@@ -784,24 +1006,93 @@ return null;
 
 return (
 
-<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+<div
+className="
+fixed
+inset-0
+bg-black/55
+backdrop-blur-[2px]
+flex
+items-center
+justify-center
+z-50
+px-4
+"
+>
 
 
-<div className="bg-[#F4E6D5] rounded-xl shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-8">
+<div
+className="
+bg-[#FFF8ED]/95
+
+w-full
+max-w-[620px]
+
+rounded-[22px]
+
+shadow-[0_25px_60px_rgba(0,0,0,0.25)]
+
+max-h-[92vh]
+
+overflow-y-auto
+
+p-6
+md:p-8
+
+border
+border-[#E5D1B7]
+"
+>
 
 
-<div className="flex justify-between mb-6">
 
 
-<h2 className="text-2xl font-serif text-[#3A1F16]">
+{/* HEADER */}
+
+<div
+className="
+flex
+justify-between
+items-center
+mb-6
+"
+>
+
+
+<h2
+className="
+font-serif
+text-[28px]
+text-[#2B140A]
+"
+>
 
 Complete Your Order
 
 </h2>
 
 
-<button onClick={onClose}>
+
+<button
+
+onClick={onClose}
+
+className="
+w-10
+h-10
+rounded-full
+bg-white
+shadow
+flex
+items-center
+justify-center
+hover:scale-105
+transition
+"
+>
+
 ✕
+
 </button>
 
 
@@ -813,47 +1104,66 @@ Complete Your Order
 
 
 
+
+
+{/* PRODUCT CARD */}
+
+
 <div className="space-y-3">
 
 
-{orderItems.map(
-(item,index)=>(
+{
+orderItems.map((item,index)=>(
 
 
 <div
+
 key={index}
-className="flex gap-4 bg-[#E9DCCB] border border-[#C6A77D] rounded-lg p-4"
+
+className="
+flex
+gap-5
+
+border
+border-[#CDB89A]
+
+rounded-[14px]
+
+p-4
+
+bg-white/40
+"
 >
+
 
 
 <div
 className="
 relative
-w-20
-h-20
-shrink-0
-rounded-lg
+w-[95px]
+h-[85px]
+
+rounded-xl
+
 overflow-hidden
+
 bg-white
+
+shrink-0
 "
 >
 
 
+
 <Image
 
-src={
-item.image ||
-"/placeholder.png"
-}
+src={item.image || "/placeholder.png"}
 
-alt={
-item.name ||
-"Vanamrith product"
-}
+alt={item.name}
 
 fill
 
-sizes="80px"
+sizes="95px"
 
 className="
 object-cover
@@ -865,58 +1175,102 @@ object-cover
 </div>
 
 
+
+
+
+
 <div>
 
-<h3 className="font-semibold">
+
+<h3
+className="
+font-semibold
+text-lg
+text-[#2B140A]
+"
+>
+
 {item.name}
+
 </h3>
 
-<p>
+
+
+<p className="text-[#6F4E37]">
 Size: {item.variant}
 </p>
 
-<p>
+
+<p className="text-[#6F4E37]">
 Qty: {item.quantity}
 </p>
 
-<p className="font-bold text-[#C4622D]">
+
+<p
+className="
+font-bold
+text-[#C66A12]
+text-lg
+"
+>
+
 ₹{item.total}
+
 </p>
 
-</div>
-
-
-</div>
-
-)
-)}
 
 
 </div>
 
 
 
+</div>
+
+
+))
+
+}
+
+
+
+</div>
 
 
 
 
 
 
-<div className="mt-8 space-y-5">
 
 
-{!isCartOrder && (
+
+{/* FORM */}
+
+<div
+className="
+mt-8
+space-y-5
+"
+>
+
+
+
+
+{
+!isCartOrder && (
 
 <div>
 
-<label>
+
+<label className="font-medium">
 Select Size *
 </label>
 
 
-<div className="flex gap-3 mt-3">
+<div className="flex flex-wrap gap-3 mt-3">
 
-{availableVariants.map(
+
+{
+availableVariants.map(
 (v:any,i:number)=>(
 
 
@@ -929,14 +1283,29 @@ setSelectedVariant(v)
 }
 
 className={`
-px-5 py-2 rounded-md border
+
+px-6
+py-2
+
+rounded-lg
+
+border
+
+transition
+
 ${
 selectedVariant?.label===v.label
+
 ?
-"bg-[#C4622D] text-white"
+
+"bg-[#C66A12] text-white"
+
 :
-"bg-[#E9DCCB]"
+
+"bg-white"
+
 }
+
 `}
 
 >
@@ -945,24 +1314,74 @@ selectedVariant?.label===v.label
 
 </button>
 
+
+))
+}
+
+
+</div>
+
+
+</div>
+
 )
-)}
 
-</div>
-
-</div>
-
-)}
+}
 
 
 
-<InputField label="Name" value={name} setValue={setName}/>
 
-<InputField label="Phone" value={phone} setValue={setPhone}/>
 
 <InputField
 
+icon={<User size={16}/>}
+
+label="Name"
+
+placeholder="Enter your full name"
+
+value={name}
+
+setValue={setName}
+
+/>
+
+
+
+
+<InputField
+
+icon={<Phone size={16}/>}
+
+label="Phone"
+
+placeholder="Enter your phone number"
+
+value={phone}
+
+setValue={(v:string)=>{
+
+const value=v.replace(/\D/g,"");
+
+if(value.length<=10)
+setPhone(value);
+
+}}
+
+/>
+
+
+
+
+
+
+<InputField
+
+icon={<Mail size={16}/>}
+
 label="Email"
+
+placeholder="Enter your email address"
 
 value={email}
 
@@ -970,28 +1389,128 @@ setValue={setEmail}
 
 />
 
-<InputField label="Address Line" value={fullAddress} setValue={setFullAddress}/>
 
 
-<div className="grid grid-cols-2 gap-3">
 
-<InputField label="City" value={city} setValue={setCity}/>
 
-<InputField label="State" value={state} setValue={setState}/>
+
+<InputField
+
+icon={<MapPin size={16}/>}
+
+label="Address Line"
+
+placeholder="House no., Street, Area"
+
+value={fullAddress}
+
+setValue={setFullAddress}
+
+/>
+
+
+
+
+
+
+
+<div
+className="
+grid
+grid-cols-1
+md:grid-cols-2
+gap-4
+"
+>
+
+
+<InputField
+
+icon={<Building2 size={16}/>}
+
+label="City"
+
+placeholder="Enter city"
+
+value={city}
+
+setValue={setCity}
+
+/>
+
+
+
+
+<InputField
+
+icon={<Map size={16}/>}
+
+label="State"
+
+placeholder="Enter state"
+
+value={state}
+
+setValue={setState}
+
+/>
+
 
 </div>
 
 
-<InputField label="Pincode" value={pincode} setValue={setPincode}/>
 
 
-<div className="text-right text-xl font-bold">
+
+
+
+<InputField
+
+icon={<MapPin size={16}/>}
+
+label="Pincode"
+
+placeholder="Enter pincode"
+
+value={pincode}
+
+setValue={(v:string)=>{
+
+const value=v.replace(/\D/g,"");
+
+if(value.length<=6)
+setPincode(value);
+
+}}
+
+/>
+
+
+
+
+
+
+
+
+
+<div
+className="
+text-right
+
+font-bold
+
+text-2xl
+
+text-[#2B140A]
+"
+>
 
 Total: ₹{grandTotal}
 
 </div>
 
 
+
 </div>
 
 
@@ -1000,28 +1519,94 @@ Total: ₹{grandTotal}
 
 
 
-<div className="grid grid-cols-1 gap-3 mt-8">
+
+
+{/* BUTTONS */}
+
+
+
+<div
+className="
+space-y-4
+mt-7
+"
+>
+
 
 
 <button
+
 disabled={loading}
+
 onClick={handleWhatsAppOrder}
-className="py-3 rounded-md bg-[#C4622D] text-white"
+
+className="
+w-full
+
+h-[52px]
+
+rounded-lg
+
+bg-[#C66A12]
+
+text-white
+
+font-semibold
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+"
 >
 
-Order via WhatsApp
+Order via WhatsApp →
 
 </button>
+
+
+
+
 
 
 
 <button
+
 disabled={loading}
+
 onClick={handleOnlinePayment}
-className="py-3 rounded-md bg-[#2E1B12] text-white"
+
+className="
+w-full
+
+h-[52px]
+
+rounded-lg
+
+bg-[#2B140A]
+
+text-white
+
+font-semibold
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+"
 >
 
-Pay Online
+
+<Lock size={17}/>
+
+Pay Online Securely
+
 
 </button>
 
@@ -1031,7 +1616,117 @@ Pay Online
 
 
 
+
+
+
+
+
+
+
+{/* TRUST STRIP */}
+
+
+
+<div
+className="
+mt-8
+
+pt-6
+
+border-t
+
+border-[#E3CEB3]
+
+
+grid
+
+grid-cols-3
+
+gap-3
+"
+>
+
+
+{
+[
+
+{
+icon:<ShieldCheck/>,
+title:"Secure Checkout",
+desc:"Your data protected"
+},
+
+{
+icon:<Leaf/>,
+title:"100% Natural",
+desc:"Pure & authentic"
+},
+
+{
+icon:<Truck/>,
+title:"Fast Delivery",
+desc:"Quick & reliable"
+}
+
+
+].map((item)=>(
+
+
+<div
+
+key={item.title}
+
+className="
+flex
+gap-2
+items-center
+"
+>
+
+
+<div className="text-[#8A5A22]">
+
+{item.icon}
+
 </div>
+
+
+
+<div>
+
+<p className="text-xs font-semibold">
+
+{item.title}
+
+</p>
+
+
+<p className="text-[11px] text-[#6F4E37]">
+
+{item.desc}
+
+</p>
+
+</div>
+
+
+
+</div>
+
+
+))
+
+}
+
+
+
+</div>
+
+
+
+
+</div>
+
 
 </div>
 
@@ -1041,48 +1736,92 @@ Pay Online
 
 
 
-
-
-
-
-
-
 function InputField({
 label,
 value,
-setValue
+setValue,
+placeholder,
+icon
 }:any){
 
 return (
 
 <div>
 
-<label className="font-medium">
+
+<label
+className="
+font-medium
+text-[#2B140A]
+"
+>
 {label}
 </label>
+
+
+
+<div
+className="
+relative
+mt-2
+"
+>
+
+
+<div
+className="
+absolute
+left-4
+top-1/2
+-translate-y-1/2
+
+text-[#9B7A52]
+"
+>
+
+{icon}
+
+</div>
+
 
 
 <input
 
 value={value}
 
-onChange={
-(e)=>
+placeholder={placeholder}
+
+onChange={(e)=>
 setValue(e.target.value)
 }
 
 className="
 w-full
-mt-2
-bg-[#E9DCCB]
+
+h-12
+
+bg-white/40
+
 border
-border-[#C6A77D]
-rounded-md
-px-3
-py-2
+border-[#D6BE9C]
+
+rounded-lg
+
+pl-12
+pr-4
+
+outline-none
+
+focus:border-[#C66A12]
+
+transition
 "
 
 />
+
+
+</div>
+
 
 </div>
 

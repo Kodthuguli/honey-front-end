@@ -9,6 +9,15 @@ import {
  Truck,
  Search,
 } from "lucide-react";
+import { toast } from "sonner";
+import {
+ ShieldCheck,
+ Clock,
+ Headphones,
+ Box,
+ Phone,
+ Leaf,
+} from "lucide-react";
 
 
 
@@ -47,7 +56,7 @@ if(
 !phone
 ){
 
-alert(
+toast.info(
 "Enter order number and phone"
 );
 
@@ -138,31 +147,110 @@ setLoading(false);
 
 return (
 
-<div
+<section
 className="
+relative
 min-h-screen
-bg-[#FFF9F2]
+
 px-5
-py-16
+
+py-20
+
+overflow-hidden
 "
+style={{
+
+backgroundImage:
+"url('/cart-empty-bg.png')",
+
+backgroundSize:
+"cover",
+
+backgroundPosition:
+"center",
+
+backgroundRepeat:
+"no-repeat",
+
+}}
 >
+
+
 
 
 <div
 className="
-max-w-3xl
+max-w-[900px]
+
 mx-auto
+
+relative
+
+z-10
 "
 >
 
+
+
+
+
+{/* ICON */}
+
+
+<div
+className="
+mx-auto
+
+w-[110px]
+
+h-[110px]
+
+rounded-full
+
+bg-[#F5E8D4]
+
+flex
+
+items-center
+
+justify-center
+
+shadow-sm
+"
+>
+
+<Box
+size={55}
+className="
+text-[#C4622D]
+"
+/>
+
+</div>
+
+
+
+
+
+
+
+
+{/* HEADING */}
 
 
 <h1
 className="
-text-4xl
+mt-8
+
 font-serif
+
 text-center
-text-[#3A1F16]
+
+text-[42px]
+
+md:text-[60px]
+
+text-[#2B140A]
 "
 >
 
@@ -172,17 +260,77 @@ Track Your Order
 
 
 
-<p
+
+<div
 className="
-text-center
-text-[#6F4E37]
-mt-3
+mt-4
+
+flex
+
+items-center
+
+justify-center
+
+gap-5
 "
 >
 
-Check your Vanamrith order status
+
+<span
+className="
+w-24
+
+h-px
+
+bg-[#C6A77D]
+"
+/>
+
+
+<Leaf
+size={22}
+
+className="
+text-[#B8862D]
+"
+/>
+
+
+<span
+className="
+w-24
+
+h-px
+
+bg-[#C6A77D]
+"
+/>
+
+
+</div>
+
+
+
+
+
+
+<p
+className="
+mt-5
+
+text-center
+
+text-lg
+
+text-[#6F4E37]
+"
+>
+
+Check your Vanamrith order status in real time.
 
 </p>
+
+
 
 
 
@@ -194,17 +342,64 @@ Check your Vanamrith order status
 
 {/* SEARCH BOX */}
 
+
 <div
 className="
 mt-10
-bg-[#F4E6D5]
+
+bg-[#FFF8ED]/70
+
+backdrop-blur-sm
+
 border
-border-[#C6A77D]
-rounded-xl
+
+border-[#D9BE9A]
+
+rounded-[18px]
+
+shadow-[0_20px_45px_rgba(90,55,20,0.12)]
+
+
 p-6
-space-y-4
+
+md:p-10
+
+
+space-y-5
 "
 >
+
+
+
+
+
+
+{/* ORDER INPUT */}
+
+
+<div
+className="
+relative
+"
+>
+
+
+<Box
+size={20}
+
+className="
+absolute
+
+left-5
+
+top-1/2
+
+-translate-y-1/2
+
+text-[#9B7A52]
+"
+/>
+
 
 
 <input
@@ -212,19 +407,75 @@ space-y-4
 value={orderNumber}
 
 onChange={(e)=>
-setOrderNumber(
-e.target.value
-)
+setOrderNumber(e.target.value)
 }
 
 placeholder="Order Number (Example VAN10001)"
 
+
 className="
 w-full
-p-3
-rounded-md
-bg-white
+
+h-[58px]
+
+rounded-xl
+
 border
+
+border-[#D8C5AA]
+
+bg-white/80
+
+
+pl-14
+
+pr-5
+
+
+outline-none
+
+
+focus:border-[#C4622D]
+"
+
+/>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+{/* PHONE */}
+
+
+
+<div
+className="
+relative
+"
+>
+
+
+<Phone
+
+size={20}
+
+className="
+absolute
+
+left-5
+
+top-1/2
+
+-translate-y-1/2
+
+text-[#9B7A52]
 "
 
 />
@@ -235,23 +486,53 @@ border
 
 value={phone}
 
-onChange={(e)=>
-setPhone(
-e.target.value
-)
-}
+onChange={(e)=>{
+
+const value =
+e.target.value.replace(/\D/g,"");
+
+if(value.length<=10)
+setPhone(value);
+
+}}
 
 placeholder="Phone Number"
 
+
 className="
 w-full
-p-3
-rounded-md
-bg-white
+
+h-[58px]
+
+rounded-xl
+
 border
+
+border-[#D8C5AA]
+
+bg-white/80
+
+
+pl-14
+
+pr-5
+
+
+outline-none
+
+
+focus:border-[#C4622D]
 "
 
 />
+
+
+</div>
+
+
+
+
+
 
 
 
@@ -262,22 +543,42 @@ onClick={trackOrder}
 
 disabled={loading}
 
+
 className="
 w-full
-bg-[#C4622D]
-text-white
-py-3
-rounded-md
-flex
-items-center
-justify-center
-gap-2
-"
 
+h-[62px]
+
+rounded-xl
+
+
+bg-[#C4622D]
+
+text-white
+
+
+font-semibold
+
+text-lg
+
+
+flex
+
+items-center
+
+justify-center
+
+gap-3
+
+
+hover:bg-[#A94F1E]
+
+transition
+"
 >
 
 
-<Search size={18}/>
+<Search size={22}/>
 
 
 {
@@ -289,7 +590,9 @@ loading
 }
 
 
+
 </button>
+
 
 
 </div>
@@ -302,13 +605,18 @@ loading
 
 
 
+{/* ERROR */}
+
+
 {
 error && (
 
 <p
 className="
 text-red-600
+
 text-center
+
 mt-5
 "
 >
@@ -318,9 +626,7 @@ mt-5
 </p>
 
 )
-
 }
-
 
 
 
@@ -332,36 +638,53 @@ mt-5
 
 {/* RESULT */}
 
+
 {
 order && (
+
 
 <div
 className="
 mt-10
-bg-white
-rounded-xl
-shadow
+
+bg-[#FFF8ED]/80
+
+border
+
+border-[#D9BE9A]
+
+rounded-[20px]
+
 p-6
+
+shadow-lg
+
 space-y-6
 "
 >
 
 
 
+
+
 <div
 className="
 flex
+
 items-center
-gap-3
+
+gap-4
 "
 >
 
 
 <PackageCheck
+size={40}
 className="
 text-green-600
 "
 />
+
 
 
 <div>
@@ -370,7 +693,10 @@ text-green-600
 <h2
 className="
 font-bold
+
 text-xl
+
+text-[#2B140A]
 "
 >
 
@@ -379,27 +705,26 @@ text-xl
 </h2>
 
 
-<p>
+
+<p className="text-[#6F4E37]">
 
 Status:
+
 {" "}
+
 <b>
 
 {order.status}
 
 </b>
 
-
 </p>
 
 
-
 </div>
 
 
 </div>
-
-
 
 
 
@@ -411,7 +736,13 @@ Status:
 <div>
 
 
-<h3 className="font-semibold mb-3">
+<h3
+className="
+font-semibold
+
+mb-3
+"
+>
 
 Products
 
@@ -424,12 +755,19 @@ order.items.map(
 
 
 <div
+
 key={index}
+
 className="
 flex
+
 justify-between
+
 border-b
-py-2
+
+border-[#E4D0B5]
+
+py-3
 "
 >
 
@@ -438,9 +776,11 @@ py-2
 
 {item.name}
 
-(
-{item.variant}
-)
+{" "}
+
+({item.variant})
+
+{" "}
 
 x {item.quantity}
 
@@ -458,8 +798,7 @@ x {item.quantity}
 </div>
 
 
-)
-)
+))
 }
 
 
@@ -485,9 +824,7 @@ Payment
 
 <p>
 
-{
-order.payment?.status
-}
+{order.payment?.status}
 
 </p>
 
@@ -504,15 +841,17 @@ order.payment?.status
 
 
 {
-order.shipping?.trackingId
-&&
-(
+order.shipping?.trackingId && (
+
 
 <div
 className="
-bg-[#FFF9F2]
+bg-white/60
+
 border
-rounded-lg
+
+rounded-xl
+
 p-4
 "
 >
@@ -521,61 +860,47 @@ p-4
 <div
 className="
 flex
+
 gap-2
+
 items-center
+
 font-semibold
 "
 >
-
 
 <Truck size={18}/>
 
 Shipping
 
-
 </div>
 
 
-
 <p>
-
-Courier:
-{" "}
-{order.shipping.provider}
-
+Courier: {order.shipping.provider}
 </p>
 
 
-
 <p>
-
-Tracking:
-{" "}
-{order.shipping.trackingId}
-
+Tracking: {order.shipping.trackingId}
 </p>
-
 
 
 
 {
-order.shipping.trackingUrl
-&&
-(
+order.shipping.trackingUrl && (
 
 <a
 
-href={
-order.shipping.trackingUrl
-}
+href={order.shipping.trackingUrl}
 
 target="_blank"
 
 className="
 text-[#C4622D]
+
 underline
 "
-
 >
 
 Track Shipment
@@ -587,17 +912,8 @@ Track Shipment
 }
 
 
-
 </div>
 
-)
-
-}
-
-
-
-
-</div>
 
 )
 
@@ -608,7 +924,147 @@ Track Shipment
 </div>
 
 
+)
+
+}
+
+
+
+
+
+
+
+
+
+{/* TRUST STRIP */}
+
+
+
+<div
+className="
+mt-14
+
+grid
+
+grid-cols-1
+
+md:grid-cols-3
+
+gap-8
+
+
+text-center
+
+md:text-left
+"
+>
+
+
+{
+[
+
+{
+icon:<ShieldCheck/>,
+title:"Secure & Private",
+desc:"Your information is always protected"
+},
+
+
+{
+icon:<Clock/>,
+title:"Real-time Updates",
+desc:"Get the latest status of your order"
+},
+
+
+{
+icon:<Headphones/>,
+title:"Need Help?",
+desc:"Our support team is always here for you"
+}
+
+
+].map((item)=>(
+
+
+<div
+
+key={item.title}
+
+className="
+flex
+
+items-center
+
+justify-center
+
+md:justify-start
+
+gap-4
+"
+>
+
+
+<div
+className="
+text-[#C4622D]
+"
+>
+
+{item.icon}
+
 </div>
+
+
+<div>
+
+<p
+className="
+font-semibold
+text-[#2B140A]
+"
+>
+
+{item.title}
+
+</p>
+
+
+<p
+className="
+text-sm
+text-[#6F4E37]
+"
+>
+
+{item.desc}
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</section>
+
 
 );
 

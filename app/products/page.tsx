@@ -20,6 +20,7 @@ import {
   Truck,
   Leaf,
 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ProductsPage() {
 
@@ -105,10 +106,6 @@ product.variants?.[0];
 
 
 const stock =
-variant
-?
-variant.stock
-:
 product.stock;
 
 
@@ -117,7 +114,7 @@ if(
 stock <= 0
 ){
 
-alert(
+toast.info(
 "Product is out of stock"
 );
 
@@ -168,8 +165,7 @@ qty:1,
 
 
 
-
-alert(
+toast.success(
 "Product added to cart"
 );
 
@@ -463,7 +459,7 @@ opacity-70
             </div>
 
             {/* PRICE */}
-            <div className="mt-10">
+            {/* <div className="mt-10">
 
               <h3 className="font-semibold text-[#2E1B12] uppercase text-sm tracking-wide">
                 Price Range
@@ -489,7 +485,7 @@ opacity-70
 
               </div>
 
-            </div>
+            </div> */}
 
             {/* FEATURES */}
             <div className="mt-10 space-y-4">
@@ -624,27 +620,9 @@ p.variants?.[0];
 
 
 const stock =
-
-p.variants?.length > 0
-
-?
-
-p.variants.reduce(
-
-(
-total:number,
-v:any
-)=>
-
-total + (v.stock || 0),
-
-0
-
-)
-
-:
-
-p.stock;
+Number(
+p.stock || 0
+);
 
 
 
