@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import ProductDetailsClient from "./ProductDetailsClient";
+import {
+decryptServerData
+}
+from "@/lib/serverEncryption";
 
 
 
@@ -13,6 +17,7 @@ async function getProduct(id:string){
 
 try{
 
+
 const res =
 await fetch(
 `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
@@ -22,16 +27,44 @@ cache:"no-store",
 );
 
 
+
 if(!res.ok){
+
 return null;
+
 }
 
 
-return res.json();
+
+const result =
+await res.json();
+
+
+
+// encrypted API response
+
+if(
+result?.encrypted &&
+result?.payload
+){
+
+
+return decryptServerData(
+result.payload
+);
+
+
+}
+
+
+
+
+return result;
 
 
 }
 catch(error){
+
 
 console.log(
 "Product SEO fetch failed",
@@ -41,7 +74,9 @@ error
 
 return null;
 
+
 }
+
 
 }
 

@@ -21,7 +21,7 @@ export default function ContactPage() {
 
   const [email, setEmail] = useState("");
 
-  const [subject, setSubject] = useState("");
+  // const [subject, setSubject] = useState("");
 
   const [message, setMessage] = useState("");
 
@@ -33,7 +33,7 @@ export default function ContactPage() {
 
   const handleSubmit = async () => {
 
-    if (!name || !phone || !message || !subject) {
+    if (!name || !phone || !message) {
 
       setError("Please fill all required fields");
 
@@ -60,7 +60,6 @@ export default function ContactPage() {
         name,
         phone,
         email,
-        subject,
         message,
       });
 
@@ -72,7 +71,7 @@ export default function ContactPage() {
 
       setEmail("");
 
-      setSubject("");
+      // setSubject("");
 
       setMessage("");
 
@@ -620,7 +619,7 @@ height={120}
 
 
                   {/* SUBJECT */}
-                  <input
+                  {/* <input
                     type="text"
                     placeholder="Subject *"
                     value={subject}
@@ -637,7 +636,7 @@ height={120}
                       outline-none
                       focus:border-[#D06F1D]
                     "
-                  />
+                  /> */}
 
                 </div>
 

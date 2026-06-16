@@ -203,15 +203,13 @@ selectedVariant?.label ||
     selectedVariant?.price || product.price || 580;
 
   const productImages =
-    product.images?.length > 0
-      ? product.images
-      : [
-          "/products/honey1.png",
-          "/products/honey2.png",
-          "/products/honey3.png",
-          "/products/honey4.png",
-          "/products/honey5.png",
-        ];
+product?.images?.filter(Boolean)?.length > 0
+?
+product.images
+:
+[
+"/no-image.png"
+];
 
   return (
 

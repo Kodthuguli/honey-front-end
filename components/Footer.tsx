@@ -300,7 +300,11 @@ Blog
 
 <li>Recipes</li>
 
-<li>FAQs</li>
+<li>
+  <Link href="/faq">
+FAQs
+</Link>
+</li>
 
 </ul>
 
@@ -331,11 +335,25 @@ title="CUSTOMER CARE"
 
 <ul className="footer-list">
 
-<li>My Orders</li>
+<li>
+  <Link href="/my-orders">
+My Orders
+</Link>
+</li>
 
-<li>Shipping & Delivery</li>
+<li>
+  <Link href="/shipping-delivery">
+Shipping & Delivery
+</Link>
+</li>
 
-<li>Returns & Refunds</li>
+
+<li>
+  <Link href="/returns-refunds">
+Returns & Refunds
+</Link>
+</li>
+
 
 <li>
 <Link href="/track-order">
@@ -343,9 +361,18 @@ Track Order
 </Link>
 </li>
 
-<li>Terms & Conditions</li>
+<li>
+  <Link href="/terms-conditions">
+Terms & Conditions
+</Link>
+</li>
 
-<li>Privacy Policy</li>
+
+<li>
+  <Link href="/privacy-policy">
+Privacy Policy
+</Link>
+</li>
 
 </ul>
 

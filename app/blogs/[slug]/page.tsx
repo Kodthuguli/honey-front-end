@@ -3,12 +3,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import BlogDetailsClient from "./BlogDetailsClient";
+import {
+decryptServerData
+}
+from "@/lib/serverEncryption";
 
 
 
 
 
 async function getBlog(slug:string){
+
 
 try{
 
@@ -26,25 +31,75 @@ cache:"no-store",
 
 
 
+
 if(!res.ok){
 
-return null;
-
-}
-
-
-
-return res.json();
-
-
-}
-catch{
-
 
 return null;
 
 
 }
+
+
+
+
+const result =
+await res.json();
+
+
+
+
+// encrypted response
+
+if(
+
+result?.encrypted
+
+&&
+
+result?.payload
+
+){
+
+
+return decryptServerData(
+
+result.payload
+
+);
+
+
+}
+
+
+
+
+return result;
+
+
+
+
+}
+catch(error){
+
+
+
+console.log(
+
+"Blog SEO fetch failed",
+
+error
+
+);
+
+
+
+return null;
+
+
+
+}
+
 
 
 }
