@@ -18,7 +18,7 @@ import {
 
 
 
-export default function OrderFailedPage(){
+export default function OrderFailedClient(){
 
 
 const params =
