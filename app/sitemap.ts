@@ -104,7 +104,7 @@ export default async function sitemap()
 
 
 const baseUrl =
-"https://vanamrith.com";
+"https://www.vanamrith.com";
 
 
 
@@ -118,10 +118,9 @@ await getBlogs();
 
 
 
-
-
-
 const productUrls =
+Array.isArray(products)
+?
 products.map(
 (product:any)=>({
 
@@ -141,7 +140,11 @@ priority:
 0.9,
 
 })
-);
+)
+:
+[];
+
+
 
 
 
@@ -150,6 +153,8 @@ priority:
 
 
 const blogUrls =
+Array.isArray(blogs)
+?
 blogs.map(
 (blog:any)=>({
 
@@ -170,10 +175,9 @@ priority:
 
 
 })
-);
-
-
-
+)
+:
+[];
 
 
 

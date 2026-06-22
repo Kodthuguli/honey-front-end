@@ -101,17 +101,28 @@ response.data?.encrypted
 response.data?.payload
 
 ){
+ console.log(
+   "ENCRYPTED RESPONSE FOUND",
+   response.data.payload
+ );
 
 
-response.data =
-decryptData(
-response.data.payload
-);
+ const decrypted =
+ decryptData(
+   response.data.payload
+ );
+
+
+ console.log(
+   "AFTER DECRYPT",
+   decrypted
+ );
+
+
+ response.data = decrypted;
 
 
 }
-
-
 
 return response;
 

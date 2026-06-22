@@ -23,7 +23,7 @@ allow: "/",
 
 sitemap:
 
-"https://vanamrith.com/sitemap.xml",
+"https://www.vanamrith.com/sitemap.xml",
 
 
 };

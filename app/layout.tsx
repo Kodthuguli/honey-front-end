@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 
 import OrganizationSchema from "@/components/seo/OrganizationSchema";
 import HoneyLoader from '@/components/HoneyLoader';
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const inter =
 Inter({
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
 
 metadataBase:
 new URL(
-"https://vanamrith.com"
+"https://www.vanamrith.com"
 ),
 
 
@@ -397,6 +398,7 @@ backgroundColor:
 >
 
 <OrganizationSchema />
+<GoogleAnalytics />
 
 <Navbar />
 <HoneyLoader />
