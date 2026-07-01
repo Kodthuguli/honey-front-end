@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: "Ethically Sourced",
-    desc: "Responsibly collected from wild forests by trusted beekeepers.",
+    desc: "Responsibly harvested from our own bee hives with care for nature, quality, and purity.",
     icon: "/icons/farmer.png",
   },
   {
@@ -30,7 +30,7 @@ const features = [
 
 export default function OurStory() {
   return (
-    <section className="relative overflow-hidden pt-20 lg:pt-28">
+    <section className="relative overflow-hidden pt-16 lg:pt-24">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-0 hidden lg:block opacity-20">
         {/* <Image

@@ -30,8 +30,8 @@ const featureCards = [
   },
   {
     icon: <Flower2 className="w-6 h-6 text-[#D79B2E]" />,
-    title: "Trusted Village Beekeepers",
-    desc: "Supporting local communities and traditional harvesting methods.",
+    title: "Pure From Our Bee Hives",
+    desc: "Crafted with care from our own farm to deliver authentic natural honey.",
   },
 ];
 
@@ -60,7 +60,7 @@ const stripItems = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden pt-20 lg:pt-28">
+    <section className="relative overflow-hidden pt-16 lg:pt-24">
       {/* Decorations */}
       <div className="absolute left-0 top-0 opacity-20 hidden lg:block">
         {/* <Image
@@ -225,9 +225,7 @@ height={40}
                 lg:mx-0
               "
             >
-              Every jar of Vanamrith honey is carefully harvested from
-              untouched forests and ethically sourced from trusted local
-              beekeepers who care deeply for nature and purity.
+              At Vanamrith, our honey begins with the care of our own bee hives. Each jar is thoughtfully collected and packed with care to bring you pure, natural sweetness straight from nature.
             </p>
 
             {/* FEATURE CARDS */}
@@ -331,7 +329,7 @@ height={40}
             >
               <Image
 
-src="/why-choose-us.png"
+src="/home-why-choose-us.png"
 
 alt="Pure natural honey harvesting - Vanamrith"
 

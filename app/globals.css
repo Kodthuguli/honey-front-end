@@ -109,6 +109,28 @@
   --sidebar-ring: oklch(0.7 0.12 75);
 }
 
+/* =============================
+   GLOBAL CURSOR HANDLING
+============================= */
+
+button,
+a,
+select,
+option,
+input[type="checkbox"],
+input[type="radio"],
+[role="button"],
+.cursor-click {
+  cursor: pointer;
+}
+
+
+button:disabled,
+select:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 .dark {
   --background: oklch(0.25 0.04 40);
   --foreground: oklch(0.95 0.02 85);
@@ -216,4 +238,14 @@ rotate(360deg);
 
 .footer-list{
 @apply space-y-6 text-[#2B140A];
+}
+
+img {
+
+-webkit-user-drag: none;
+
+-webkit-touch-callout: none;
+
+user-select: none;
+
 }

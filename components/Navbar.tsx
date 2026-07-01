@@ -51,7 +51,6 @@ const cartCount =
         "
         style={{
           backgroundColor: "#F7F1E7",
-          // backgroundImage: "url('/textures/paper-texture.png')",
           backgroundRepeat: "repeat",
         }}
       >

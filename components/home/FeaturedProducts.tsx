@@ -37,7 +37,7 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden pt-20 lg:pt-28">
+    <section className="relative overflow-hidden pt-16 lg:pt-24">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-[140px] hidden lg:block opacity-20">
         {/* <Image
@@ -241,7 +241,8 @@ duration-700
                         min-h-[56px]
                       "
                     >
-                      Rich, natural and packed with authentic forest goodness.
+                      
+                     {p.description}
                     </p>
 
                     {/* PRICE */}

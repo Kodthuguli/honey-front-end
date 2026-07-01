@@ -213,7 +213,7 @@ product.images
 
   return (
 
-    <div className="bg-[#F8F2EA] min-h-screen overflow-hidden">
+    <div className=" min-h-screen overflow-hidden">
 
       <div className="max-w-[1360px] mx-auto px-3 md:px-5 xl:px-6 pt-7 pb-14">
 
@@ -918,10 +918,10 @@ isOutOfStock
           <div className="flex flex-wrap gap-6 px-5 md:px-7 pt-4 border-b border-[#E5D5C2]">
 
             {[
-              "Description",
-              "Benefits",
+              "About This Honey",
+              "Natural Benefits",
               "Ingredients",
-              "How to Use",
+              "Ways To Enjoy",
             ].map((tab) => (
 
               <button

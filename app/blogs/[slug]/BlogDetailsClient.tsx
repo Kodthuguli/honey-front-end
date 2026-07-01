@@ -90,7 +90,7 @@ error
 
   return (
 
-    <div className="bg-[#FBF7F2] min-h-screen overflow-hidden relative">
+    <div className=" min-h-screen overflow-hidden relative">
 
       {/* DECOR */}
       <div

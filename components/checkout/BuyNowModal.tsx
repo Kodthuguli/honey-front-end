@@ -479,16 +479,28 @@ return;
 
 
 
+// open immediately to avoid popup blocking
+
+const whatsappWindow =
+window.open(
+"",
+"_blank"
+);
+
+
+
 try{
 
 
 setLoading(true);
 
 
+
 const order =
 await createOrder(
 "WHATSAPP"
 );
+
 
 
 
@@ -555,7 +567,7 @@ ${pincode}
 
 Track Order:
 
-https://vanamrith.com/track-order
+https://www.vanamrith.com/track-order
 
 
 Use:
@@ -572,16 +584,25 @@ ${phone}
 
 
 
-
-window.open(
-
+const whatsappUrl =
 `https://wa.me/919483151437?text=${encodeURIComponent(
 message.trim()
-)}`,
+)}`;
 
-"_blank"
 
-);
+
+if(whatsappWindow){
+
+whatsappWindow.location.href =
+whatsappUrl;
+
+}
+else{
+
+window.location.href =
+whatsappUrl;
+
+}
 
 
 
@@ -599,16 +620,28 @@ onSuccess?.();
 }
 catch(err){
 
+
 console.error(err);
+
+
+if(whatsappWindow){
+
+whatsappWindow.close();
+
+}
+
 
 toast.error(
 "Order failed"
 );
 
+
 }
 finally{
 
+
 setLoading(false);
+
 
 }
 

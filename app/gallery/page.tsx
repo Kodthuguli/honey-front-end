@@ -110,7 +110,6 @@ return (
 <div
 className="
 min-h-screen
-bg-[#F8F1E6]
 overflow-hidden
 "
 >

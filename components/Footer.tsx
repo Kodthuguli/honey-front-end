@@ -2,825 +2,212 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaWhatsapp,
-  FaYoutube,
-} from "react-icons/fa";
-import {
-  ShoppingBag,
-  BookOpen,
-  Headphones,
-  Mail,
-} from "lucide-react";
+import { FaInstagram, FaFacebookF, FaWhatsapp, FaYoutube } from "react-icons/fa";
+import { ShoppingBag, BookOpen, Headphones, Mail, Truck, ShieldCheck, Leaf, Heart } from "lucide-react";
 
-const features = [
-  {
-    title: "100% Natural",
-    icon: "/icons/leaf.png",
-  },
-  {
-    title: "Unprocessed",
-    icon: "/icons/honey-stick.png",
-  },
-  {
-    title: "Sustainable",
-    icon: "/icons/earth.png",
-  },
+const socials = [
+  { icon: FaInstagram, href: "https://www.instagram.com/vanamrith?igsh=dDRsZ3Q2NnE4emxs" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/profile.php?id=61590468216226" },
+  { icon: FaYoutube,   href: "https://www.youtube.com/@vanamrith" },
+  { icon: FaWhatsapp,  href: "https://wa.me/918296054891" },
+];
+
+
+const trustStrip = [
+  { icon: <Truck size={22} />,       title: "Fast & Safe Delivery", sub: "Pan India Shipping" },
+  { icon: <ShieldCheck size={22} />, title: "Secure Payment",       sub: "100% Protected" },
+  { icon: <Leaf size={22} />,        title: "Natural & Pure",       sub: "No Additives" },
+  { icon: <Heart size={22} />,       title: "Made with Care",       sub: "From Forest to You" },
 ];
 
 export default function Footer() {
-return (
-
-<footer
-className="
-relative
-overflow-hidden
-bg-[#F8F1E6]
-pt-20
-"
->
-
-
-<div
-className="
-max-w-[1500px]
-mx-auto
-px-6
-lg:px-14
-"
->
-
-
-
-{/* ================= TOP FOOTER ================= */}
-
-
-<div
-className="
-grid
-grid-cols-1
-md:grid-cols-2
-xl:grid-cols-[1.3fr_1fr_1fr_1.2fr_1.2fr]
-gap-12
-"
->
-
-
-
-
-
-{/* BRAND */}
-
-
-<div
-className="
-xl:border-r
-border-[#E2C9A8]
-xl:pr-12
-"
->
-
-
-<Image
-
-src="/logo.png"
-
-alt="Vanamrith"
-
-width={230}
-
-height={120}
-
-className="
-w-[220px]
-h-auto
-"
-
-/>
-
-
-
-<p
-className="
-mt-8
-text-[#2B140A]
-leading-8
-max-w-[320px]
-"
->
-
-Vanamrith brings you 100%
-pure, raw and natural honey,
-sourced from wild forests
-with care and delivered
-with love.
-
-</p>
-
-
-
-
-<div
-className="
-mt-8
-h-px
-w-20
-bg-[#C87512]
-"
-/>
-
-
-
-
-{/* FEATURES */}
-
-
-<div
-className="
-mt-8
-space-y-5
-"
->
-
-
-{
-features.map((item)=>(
-
-
-<div
-
-key={item.title}
-
-className="
-flex
-items-center
-gap-4
-"
->
-
-
-<div
-className="
-w-11
-h-11
-rounded-full
-border
-border-[#C87512]
-
-flex
-items-center
-justify-center
-"
->
-
-
-<Image
-
-src={item.icon}
-
-alt=""
-
-width={22}
-
-height={22}
-
-/>
-
-
-</div>
-
-
-<p
-className="
-text-[#2B140A]
-"
->
-
-{item.title}
-
-</p>
-
-
-</div>
-
-
-))
-
+  return (
+    <footer className="relative overflow-hidden text-white" style={{ backgroundColor: "#1B0D08" }}>
+
+      {/* ── BG IMAGE ── */}
+      <Image
+        src="/footer-bg.png"
+        alt=""
+        fill
+        className="object-cover object-center opacity-100 pointer-events-none select-none"
+      />
+
+      {/* ── MAIN CONTENT ── */}
+      <div className="relative z-10 max-w-[1500px] mx-auto px-6 lg:px-14 pt-16 md:pt-20">
+
+        {/* TOP GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-[1.8fr_1fr_1fr_1fr_1.4fr] gap-10 md:gap-8 border-b border-[#C87512]/20">
+
+          {/* ── BRAND ── */}
+          <div className="col-span-2 md:col-span-3 xl:col-span-1">
+            <Image src="/logo.png" alt="Vanamrith" width={200} height={100} className="w-[160px] md:w-[100px] h-auto" />
+
+            <p className="mt-5 text-white/55 text-[13px] leading-[1.9] max-w-[260px]">
+              Pure forest honey, raw & unprocessed. Sourced from untouched forests and crafted by nature, perfected by care.
+            </p>
+
+            <div className="w-8 h-px bg-[#C87512] mt-6 mb-6" />
+
+          </div>
+
+          {/* ── SHOP ── */}
+          <div>
+            <FooterTitle icon={<ShoppingBag size={14} />} title="Shop" />
+            <ul className="space-y-3">
+              {[
+                { label: "All Products",    href: "/products" },
+                { label: "Raw Honey",       href: "/products" },
+              ].map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-white/50 text-[13px] hover:text-[#C87512] transition-colors duration-200">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── OUR STORY ── */}
+          <div>
+            <FooterTitle icon={<BookOpen size={14} />} title="Our Story" />
+            <ul className="space-y-3">
+              {[
+                { label: "About Us",       href: "/about" },
+                { label: "Why Vanamrith",  href: "/about" },
+                { label: "Blog",           href: "/blog" },
+                { label: "FAQs",           href: "/faq" },
+              ].map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-white/50 text-[13px] hover:text-[#C87512] transition-colors duration-200">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── HELP & SUPPORT ── */}
+          <div>
+            <FooterTitle icon={<Headphones size={14} />} title="Help & Support" />
+            <ul className="space-y-3">
+              {[
+                { label: "Shipping & Delivery",   href: "/shipping-delivery" },
+                { label: "Returns & Refunds",     href: "/returns-refunds" },
+                { label: "Track Your Order",      href: "/track-order" },
+                { label: "Terms & Conditions",    href: "/terms-conditions" },
+                { label: "Privacy Policy",        href: "/privacy-policy" },
+              ].map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className="text-white/50 text-[13px] hover:text-[#C87512] transition-colors duration-200">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* ── STAY CONNECTED ── */}
+          <div>
+            <FooterTitle icon={<Mail size={14} />} title="Stay Connected" />
+            {/* <p className="text-white/50 text-[13px] leading-[1.8] mb-5 max-w-[220px]">
+              Subscribe to get special offers, health tips, and updates.
+            </p> */}
+
+            {/* email bar */}
+            {/* <div className="flex rounded-[10px] overflow-hidden border border-[#C87512]/30 bg-white/5 mb-7">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="flex-1 bg-transparent px-4 py-3 text-[12px] text-white placeholder:text-white/30 outline-none min-w-0"
+              />
+              <button className="px-3 bg-[#C87512] hover:bg-[#A85F0D] transition-colors flex items-center justify-center shrink-0">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div> */}
+
+            {/* follow us label */}
+            <p className="text-white/70 text-[11px] font-semibold uppercase tracking-[3px] mb-3">Follow Us</p>
+            <div className="w-8 h-px bg-[#C87512]/50 mb-4" />
+
+            {/* social icons */}
+            <div className="flex flex-wrap gap-3">
+              {socials.map(({ icon: Icon, href }, i) => (
+                <Link
+                  key={i}
+                  href={href}
+                  target="_blank"
+                  className="w-10 h-10 rounded-full border border-[#C87512]/30 bg-white/5 flex items-center justify-center text-white/55 hover:border-[#C87512] hover:text-[#C87512] hover:bg-[#C87512]/10 transition-all duration-200"
+                >
+                  <Icon size={15} />
+                </Link>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* ── TRUST STRIP ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 border border-[#C87512]/15 rounded-[18px] overflow-hidden my-10">
+          {trustStrip.map((item, i) => (
+            <div
+              key={i}
+              className={`flex items-center gap-4 px-5 md:px-7 py-5 md:py-6
+                ${i !== trustStrip.length - 1 ? "border-b md:border-b-0 md:border-r border-[#C87512]/15" : ""}
+                ${i === 1 ? "border-b md:border-b-0" : ""}
+              `}
+            >
+              <div className="text-[#C87512] shrink-0">{item.icon}</div>
+              <div>
+                <p className="text-[#C87512] text-[11px] md:text-[12px] font-bold uppercase tracking-wider leading-tight">{item.title}</p>
+                <p className="text-white/40 text-[11px] mt-0.5">{item.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── BOTTOM BAR ── */}
+        <div className="py-5 border-t border-[#C87512]/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/35">
+
+          <p>© {new Date().getFullYear()} Vanamrith. All rights reserved.</p>
+
+          <p className="flex items-center gap-1.5">
+            Crafted with <Heart size={11} className="text-[#C87512] fill-[#C87512]" /> by nature
+          </p>
+
+          {/* We Accept + payment icons */}
+          <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end">
+            <span className="text-white/40 text-[11px]">We Accept</span>
+            <div className="flex items-center gap-2">
+              {["/visa.png", "/mastercard.png", "/upi.png", "/razorpay.png"].map((src) => (
+                <div key={src} className="bg-white rounded-[5px] w-[48px] h-[26px] flex items-center justify-center">
+                  <Image src={src} alt="payment" width={36} height={18} className="object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </footer>
+  );
 }
 
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* SHOP */}
-
-
-<div>
-
-
-<FooterTitle
-icon={<ShoppingBag/>}
-title="SHOP"
-/>
-
-
-<ul className="footer-list">
-
-<li>
-<Link href="/products">
-All Products
-</Link>
-</li>
-
-<li>Raw Honey</li>
-
-<li>Wild Forest Honey</li>
-
-<li>Honey Comb</li>
-
-<li>Gift Packs</li>
-
-<li>Offers</li>
-
-</ul>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* STORY */}
-
-
-<div>
-
-
-<FooterTitle
-icon={<BookOpen/>}
-title="OUR STORY"
-/>
-
-
-
-<ul className="footer-list">
-
-<li>
-<Link href="/about">
-Our Story
-</Link>
-</li>
-
-<li>Why Vanamrith</li>
-
-<li>Our Beekeepers</li>
-
-<li>
-<Link href="/blog">
-Blog
-</Link>
-</li>
-
-<li>Recipes</li>
-
-<li>
-  <Link href="/faq">
-FAQs
-</Link>
-</li>
-
-</ul>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-{/* CUSTOMER CARE */}
-
-
-<div>
-
-
-<FooterTitle
-icon={<Headphones/>}
-title="CUSTOMER CARE"
-/>
-
-
-
-<ul className="footer-list">
-
-<li>
-  <Link href="/my-orders">
-My Orders
-</Link>
-</li>
-
-<li>
-  <Link href="/shipping-delivery">
-Shipping & Delivery
-</Link>
-</li>
-
-
-<li>
-  <Link href="/returns-refunds">
-Returns & Refunds
-</Link>
-</li>
-
-
-<li>
-<Link href="/track-order">
-Track Order
-</Link>
-</li>
-
-<li>
-  <Link href="/terms-conditions">
-Terms & Conditions
-</Link>
-</li>
-
-
-<li>
-  <Link href="/privacy-policy">
-Privacy Policy
-</Link>
-</li>
-
-</ul>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-{/* CONNECT */}
-
-
-<div>
-
-
-<FooterTitle
-icon={<Mail/>}
-title="STAY CONNECTED"
-/>
-
-
-
-<p
-className="
-text-[#2B140A]
-leading-8
-"
->
-
-Follow us for updates, offers
-and honey goodness.
-
-</p>
-
-
-
-
-<div
-className="
-flex
-gap-4
-mt-8
-"
->
-
-
-{
-[
-FaInstagram,
-FaFacebookF,
-FaYoutube,
-FaWhatsapp
-
-].map((Icon,i)=>(
-
-
-
-<Link
-
-href="#"
-
-key={i}
-
-className="
-w-12
-h-12
-
-rounded-full
-
-border
-border-[#C87512]
-
-
-flex
-items-center
-justify-center
-
-
-text-[#2B140A]
-
-
-hover:bg-[#C87512]
-hover:text-white
-
-transition
-"
->
-
-
-<Icon size={20}/>
-
-
-</Link>
-
-
-))
-
-}
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* ================= BOTTOM STRIP ================= */}
-
-
-<div
-className="
-relative
-mt-24
-
-bg-[#1B0D08]
-"
->
-
-
-
-{/* CURVE */}
-
-
-<div
-className="
-absolute
--top-12
-left-0
-w-full
-overflow-hidden
-"
->
-
-
-<svg
-viewBox="0 0 1440 100"
-preserveAspectRatio="none"
-className="
-w-full
-h-14
-"
->
-
-
-<path
-
-fill="#1B0D08"
-
-d="
-M0,70
-C350,120
-1000,10
-1440,70
-L1440,100
-L0,100
-Z
-"
-
-/>
-
-
-</svg>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div
-className="
-relative
-
-max-w-[1500px]
-
-mx-auto
-
-px-6
-lg:px-14
-
-py-10
-
-
-flex
-flex-col
-lg:flex-row
-
-items-center
-justify-between
-
-gap-8
-"
->
-
-
-
-
-{/* THANK YOU */}
-
-
-<div>
-
-
-<p
-className="
-text-white
-"
->
-
-Thank you for choosing purity.
-
-</p>
-
-
-<p
-className="
-text-[#D9A63A]
-font-serif
-italic
-text-2xl
-mt-2
-"
->
-
-We&apos;re grateful for your trust.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* COPYRIGHT */}
-
-
-<p
-className="
-text-white/90
-text-center
-"
->
-
-© {new Date().getFullYear()} Vanamrith.
-All Rights Reserved.
-
-</p>
-
-
-
-
-
-
-
-
-
-{/* PAYMENTS */}
-
-
-{/* PAYMENTS */}
-
-
-<div
-className="
-flex
-
-items-center
-
-justify-center
-
-gap-3
-
-flex-wrap
-"
->
-
-
-{
-[
-"/visa.png",
-"/mastercard.png",
-"/upi.png",
-"/razorpay.png"
-
-].map((src)=>(
-
-
-
-<div
-
-key={src}
-
-className="
-bg-white
-
-w-[82px]
-h-10
-
-md:w-[90px]
-md:h-11
-
-rounded-lg
-
-flex
-items-center
-justify-center
-
-shadow-sm
-"
->
-
-
-<Image
-
-src={src}
-
-alt="payment"
-
-width={60}
-
-height={25}
-
-className="
-object-contain
-"
-
-/>
-
-
-</div>
-
-
-))
-
-}
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-</footer>
-
-)
-}
-
-function FooterTitle({
-icon,
-title
-}:any){
-
-return (
-
-<>
-
-<div
-className="
-flex
-items-center
-gap-4
-"
->
-
-<div
-className="
-text-[#C87512]
-"
->
-
-{icon}
-
-</div>
-
-
-<h3
-className="
-uppercase
-tracking-[4px]
-font-bold
-text-sm
-text-[#2B140A]
-"
->
-
-{title}
-
-</h3>
-
-
-</div>
-
-
-<div
-className="
-w-10
-h-px
-bg-[#C87512]
-mt-4
-mb-8
-"
-/>
-
-</>
-
-)
-
+function FooterTitle({ icon, title }: { icon: React.ReactNode; title: string }) {
+  return (
+    <div className="mb-5">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-[#C87512]">{icon}</span>
+        <h3 className="uppercase tracking-[3px] font-bold text-[11px] text-[#C87512]">{title}</h3>
+      </div>
+      {/* ornament */}
+      <div className="flex items-center gap-1.5 mb-5">
+        <div className="w-5 h-px bg-[#C87512]/50" />
+        <span className="text-[#C87512]/60 text-[8px]">✦</span>
+        <div className="w-5 h-px bg-[#C87512]/50" />
+      </div>
+    </div>
+  );
 }

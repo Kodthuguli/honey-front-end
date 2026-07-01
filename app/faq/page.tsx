@@ -5,14 +5,16 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import Image from "next/image";
 import { toast } from "sonner";
+import { ShieldCheck, Leaf, Heart } from "lucide-react";
+
+// Small icons per FAQ index — cycles through 4 variants
+const faqIcons = ["🐝", "👶", "🍯", "🌿", "🔬", "📦", "✨", "💧"];
 
 export default function FAQPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-
   const [question, setQuestion] = useState("");
   const [askedBy, setAskedBy] = useState("");
-
   const [loadingFaqs, setLoadingFaqs] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -20,9 +22,7 @@ export default function FAQPage() {
   const fetchFaqs = async () => {
     try {
       setLoadingFaqs(true);
-
       const res = await api.get("/faqs");
-
       setFaqs(Array.isArray(res.data) ? res.data : []);
     } catch {
       setFaqs([]);
@@ -31,27 +31,17 @@ export default function FAQPage() {
     }
   };
 
-  useEffect(() => {
-    fetchFaqs();
-  }, []);
+  useEffect(() => { fetchFaqs(); }, []);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   const handleSubmit = async () => {
-    if (!question.trim()) {
-      return toast.error("Please enter your question");
-    }
-
+    if (!question.trim()) return toast.error("Please enter your question");
     try {
       setSubmitting(true);
-
-      await api.post("/faqs/ask", {
-        question,
-        askedBy,
-      });
-
+      await api.post("/faqs/ask", { question, askedBy });
       setSubmitted(true);
       setQuestion("");
       setAskedBy("");
@@ -63,481 +53,228 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="text-[#2E1B12] font-sans antialiased overflow-hidden">
 
-      {/* LEFT FLOWERS */}
-     {/* <Image
+      {/* ══════════════════════════════════════
+          HERO
+      ══════════════════════════════════════ */}
+      <section className="relative overflow-hidden border-b border-[#EDD9BE]">
 
-src="/patterns/leaves-left.svg"
+        {/* full-bleed background */}
+        <Image
+          src="/faq-hero.png"
+          alt=""
+          fill priority
+          className="object-cover object-center"
+        />
+        {/* strong left overlay so text pops; right stays visible for product */}
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-[#FBF5E4]/98 via-[#FBF5E4]/80 to-[#FBF5E4]/10" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#FBF5EC] to-transparent" /> */}
 
-alt=""
+        <div className="relative z-10 max-w-[1400px] mx-auto px-5 md:px-8 lg:px-10 pt-10 md:pt-14">
+          <div className="grid grid-cols-[54%_46%] md:grid-cols-2 gap-4 md:gap-10 items-end">
 
-width={180}
+            {/* LEFT — text */}
+            <div className="pb-10 md:pb-16">
 
-height={180}
+              <div className="flex items-center gap-2 mb-3 md:mb-4">
+                <span className="text-[#D8891C]">✿</span>
+                <p className="uppercase tracking-[4px] text-[#D8891C] text-[10px] md:text-[12px] font-semibold">
+                  Pure Honey. Pure Trust.
+                </p>
+              </div>
 
-className="
-hidden lg:block
-absolute
-left-0
-top-[180px]
-opacity-[0.12]
-pointer-events-none
-"
-
-/> */}
-
-      {/* RIGHT HONEYCOMB */}
-      {/* <Image
-
-src="/patterns/honeycomb.svg"
-
-alt=""
-
-width={180}
-
-height={180}
-
-className="
-hidden lg:block
-absolute
-right-0
-top-[120px]
-opacity-[0.10]
-pointer-events-none
-"
-
-/> */}
-
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-
-        <div className="max-w-[1400px] mx-auto px-5 md:px-8 lg:px-10 pt-10 md:pt-14">
-
-          <div
-            className="
-              grid
-              grid-cols-[52%_48%]
-              lg:grid-cols-2
-              gap-5
-              lg:gap-12
-              items-center
-            "
-          >
-
-            {/* LEFT */}
-            <div>
-
-              <p
-                className="
-                  uppercase
-                  tracking-[3px]
-                  md:tracking-[4px]
-                  text-[#D8891C]
-                  text-[10px]
-                  md:text-sm
-                  font-semibold
-                "
-              >
-                ✿ Pure Honey. Pure Trust.
-              </p>
-
-              <h1
-                className="
-                  mt-4 md:mt-6
-                  font-serif
-                  leading-[1]
-                  text-[52px]
-                  sm:text-[72px]
-                  md:text-[95px]
-                  lg:text-[110px]
-                  text-[#2E1B12]
-                "
-              >
-                Frequently
-                <br />
-                Asked Questions
+              {/* giant FAQ */}
+              <h1 className="font-serif leading-[0.86] tracking-[-2px] text-[#2E1B12]
+                text-[96px] sm:text-[140px] md:text-[180px] lg:text-[220px]">
+                FAQ
               </h1>
 
-              {/* Divider */}
-              <div className="flex items-center gap-3 md:gap-4 mt-5 md:mt-6">
-                <div className="w-10 md:w-20 h-[1px] bg-[#D7B98E]" />
-                <div className="text-[#D8891C] text-xs md:text-base">
-                  ✿
-                </div>
-                <div className="w-10 md:w-20 h-[1px] bg-[#D7B98E]" />
+              <div className="mt-3 md:mt-5">
+                <p className="uppercase tracking-[3px] text-[#2E1B12] text-[11px] md:text-[13px] font-semibold">
+                  Find Answers to Your
+                </p>
+                <p className="uppercase tracking-[2px] text-[#D8891C] text-[15px] md:text-[22px] font-bold font-serif mt-1">
+                  Questions
+                </p>
               </div>
 
-              <p
-                className="
-                  mt-6 md:mt-8
-                  text-[#5F4637]
-                  text-[14px]
-                  sm:text-[16px]
-                  md:text-lg
-                  leading-[2]
-                  max-w-xl
-                "
-              >
-                Everything you need to know about our honey,
-                sourcing, purity, and delivery.
+              <div className="flex items-center gap-3 mt-4 md:mt-5">
+                <div className="w-10 md:w-14 h-px bg-[#D7B98E]" />
+                <span className="text-[#D8891C] text-sm">✿</span>
+                <div className="w-10 md:w-14 h-px bg-[#D7B98E]" />
+              </div>
+
+              <p className="mt-4 text-[#5F4637] text-[12px] sm:text-[13px] md:text-[15px] leading-[1.85] max-w-[340px]">
+                Everything you want to know about Vanamrith Honey, our process, and how we bring nature's purity to you.
               </p>
-
-            </div>
-
-            {/* RIGHT */}
-            <div className="relative flex justify-center">
-
-              {/* Bee */}
-             {/* <Image
-
-src="/bee.png"
-
-alt=""
-
-width={40}
-
-height={40}
-
-className="
-absolute
-top-2 md:top-8
-left-2 md:left-10
-w-5 md:w-10
-animate-float
-z-20
-"
-
-/> */}
-
-              {/* Product */}
-              <div
-className="
-relative
-w-full
-max-w-[250px]
-sm:max-w-[360px]
-md:max-w-[520px]
-lg:max-w-[650px]
-h-[300px]
-md:h-[560px]
-"
->
-
-
-<Image
-
-src="/about-hero.png"
-
-alt="Vanamrith honey FAQ"
-
-fill
-
-priority
-
-sizes="
-(max-width:768px) 48vw,
-50vw
-"
-
-className="
-object-contain
-"
-
-/>
-
-
-</div>
-
             </div>
 
           </div>
-
         </div>
-
       </section>
 
-      {/* FAQ LIST */}
-      <section className="relative pb-10 md:pb-16">
+      {/* ══════════════════════════════════════
+          FAQ SECTION LABEL
+      ══════════════════════════════════════ */}
+      <div className="text-center py-8 md:py-12">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <div className="w-12 md:w-20 h-px bg-[#D7B98E]" />
+          <h2 className="font-serif text-[20px] md:text-[26px] uppercase tracking-[3px]">
+            Frequently Asked Questions
+          </h2>
+          <div className="w-12 md:w-20 h-px bg-[#D7B98E]" />
+        </div>
+        <span className="text-[#D8891C] text-lg">✿</span>
+        <p className="mt-3 text-[#6F4E37] text-[13px] md:text-[15px] leading-[1.8]">
+          Find clear answers to the most common questions about our honey,<br className="hidden sm:block" />
+          our process, and everything in between.
+        </p>
+      </div>
 
-        <div className="max-w-[1200px] mx-auto px-5 md:px-8 lg:px-10">
+      {/* ══════════════════════════════════════
+          FAQ ACCORDION
+      ══════════════════════════════════════ */}
+      <section className="pb-12 md:pb-16">
+        <div className="max-w-[860px] mx-auto px-5 md:px-8">
 
-          <div className="mt-6 md:mt-10 space-y-4">
-
-            {loadingFaqs ? (
-              <div className="text-center py-10 text-[#6F4E37]">
-                Loading FAQs...
-              </div>
-            ) : faqs.length === 0 ? (
-              <div className="text-center py-10 text-[#6F4E37]">
-                No FAQs available right now.
-              </div>
-            ) : (
-              faqs.map((faq, index) => (
-                <div
-                  key={faq._id}
-                  className="
-                    bg-[#FBF7F1]
-                    border
-                    border-[#E7D7BD]
-                    rounded-[18px]
-                    overflow-hidden
-                    shadow-[0_4px_12px_rgba(0,0,0,0.03)]
-                  "
-                >
-
-                  {/* QUESTION */}
-                  <button
-                    onClick={() => toggleFAQ(index)}
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      justify-between
-                      gap-5
-                      px-5 md:px-8
-                      py-5
-                      text-left
-                    "
+          {loadingFaqs ? (
+            <div className="text-center py-6 text-[#6F4E37] text-[15px]">Loading FAQs…</div>
+          ) : faqs.length === 0 ? (
+            <div className="text-center py-6 text-[#6F4E37] text-[15px]">No FAQs available right now.</div>
+          ) : (
+            <div className="space-y-3">
+              {faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+                return (
+                  <div
+                    key={faq._id}
+                    className={`rounded-[16px] border transition-all duration-200 overflow-hidden
+                      ${isOpen
+                        ? "border-[#D8891C] shadow-[0_4px_20px_rgba(216,137,28,0.12)]"
+                        : "border-[#E7D7BD] shadow-[0_2px_8px_rgba(0,0,0,0.03)]"
+                      } bg-[#FFFDF9]`}
                   >
-
-                    <div
-                      className="
-                        flex
-                        items-start
-                        gap-3
-                        text-[#2E1B12]
-                        font-medium
-                        text-[15px]
-                        md:text-[18px]
-                      "
+                    {/* question row */}
+                    <button
+                      onClick={() => toggleFAQ(index)}
+                      className="w-full flex items-center gap-4 px-4 md:px-6 py-4 md:py-5 text-left"
                     >
-                      <span>{index + 1}.</span>
-
-                      <span>{faq.question}</span>
-                    </div>
-
-                    <span
-                      className="
-                        text-[#D8891C]
-                        text-3xl
-                        leading-none
-                        shrink-0
-                      "
-                    >
-                      {openIndex === index ? "−" : "+"}
-                    </span>
-
-                  </button>
-
-                  {/* ANSWER */}
-                  {openIndex === index && (
-                    <div className="px-5 md:px-8 pb-6">
-
-                      <div
-                        className="
-                          bg-[#F8F2E9]
-                          rounded-[14px]
-                          px-5 md:px-7
-                          py-5
-                          text-[#5F4637]
-                          text-[14px]
-                          md:text-[17px]
-                          leading-[2]
-                        "
-                      >
-                        {faq.answer || "Pending response..."}
+                      {/* icon circle */}
+                      <div className={`shrink-0 w-10 h-10 md:w-11 md:h-11 rounded-full border flex items-center justify-center text-[18px] transition-colors
+                        ${isOpen ? "border-[#D8891C] bg-[#FFF3DC]" : "border-[#E7D7BD] bg-[#FBF7F1]"}`}>
+                        {faqIcons[index % faqIcons.length]}
                       </div>
 
-                    </div>
-                  )}
+                      {/* question text */}
+                      <span className="flex-1 text-[#2E1B12] font-medium text-[14px] md:text-[17px] leading-[1.5]">
+                        {index + 1}. {faq.question}
+                      </span>
 
-                </div>
-              ))
-            )}
+                      {/* toggle */}
+                      <div className={`shrink-0 w-8 h-8 rounded-full border flex items-center justify-center text-[20px] font-light transition-colors
+                        ${isOpen ? "border-[#D8891C] bg-[#D8891C] text-white" : "border-[#E7D7BD] bg-transparent text-[#D8891C]"}`}>
+                        {isOpen ? "−" : "+"}
+                      </div>
+                    </button>
 
-          </div>
-
+                    {/* answer */}
+                    {isOpen && (
+                      <div className="px-4 md:px-6 pb-5">
+                        <div className="ml-[56px] md:ml-[60px] bg-[#F8F2E9] rounded-[12px] px-5 py-4 text-[#5F4637] text-[13px] md:text-[16px] leading-[1.9]">
+                          {faq.answer || "Pending response…"}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
-
       </section>
 
-      {/* ASK QUESTION */}
+      {/* ══════════════════════════════════════
+          BOTTOM — ASK A QUESTION
+      ══════════════════════════════════════ */}
       <section className="pb-14 md:pb-20">
-
         <div className="max-w-[1200px] mx-auto px-5 md:px-8 lg:px-10">
+          <div className="relative rounded-[24px] md:rounded-[32px] border border-[#E7D7BD] bg-gradient-to-br from-[#F8F2E7] to-[#F0E0C8] overflow-hidden">
 
-          <div
-            className="
-              relative
-              overflow-hidden
-              rounded-[28px]
-              border border-[#E7D7BD]
-              bg-gradient-to-br
-              from-[#F8F2E7]
-              to-[#F2E5D2]
-              p-5
-              md:p-10
-            "
-          >
+            {/* honey image right */}
+            <div className="absolute right-0 bottom-0 w-[180px] md:w-[260px] h-full pointer-events-none select-none">
+              <Image src="/doubt.png" alt="" fill className="object-contain object-right-bottom" />
+            </div>
 
-            {/* Decorative Leaves */}
-           {/* <Image
+            <div className="relative grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-start px-7 md:px-12 py-10 md:py-12">
 
-src="/patterns/leaves-right.svg"
-
-alt=""
-
-width={180}
-
-height={180}
-
-className="
-hidden lg:block
-absolute
-top-0
-right-0
-opacity-[0.12]
-"
-
-/> */}
-
-            <div
-              className="
-                grid
-                grid-cols-1
-                md:grid-cols-[230px_1fr]
-                gap-8
-                items-end
-              "
-            >
-
-              {/* LEFT IMAGE */}
-              <div className="flex items-end justify-center md:justify-start">
-
-                <Image
-
-src="/doubt.png"
-
-alt="Ask Vanamrith question"
-
-width={220}
-
-height={220}
-
-className="
-w-[180px]
-md:w-[220px]
-object-contain
-"
-
-/>
-
-              </div>
-
-              {/* FORM */}
-              <div>
-
-                <h2
-                  className="
-                    font-serif
-                    text-[36px]
-                    md:text-[52px]
-                    leading-none
-                    text-[#2E1B12]
-                  "
-                >
-                  Still have a question?
+              {/* LEFT — form */}
+              <div className="max-w-[520px]">
+                <h2 className="font-serif text-[28px] sm:text-[36px] md:text-[44px] leading-[1.1] text-[#2E1B12] uppercase">
+                  Still Have <span className="text-[#D8891C]">Questions?</span>
                 </h2>
-
-                <p
-                  className="
-                    mt-3
-                    text-[#5F4637]
-                    text-[16px]
-                    md:text-[20px]
-                  "
-                >
-                  Ask us anything — we’ll reply soon!
+                <div className="flex items-center gap-2 mt-3 mb-2">
+                  <div className="w-8 h-px bg-[#D7B98E]" />
+                  <span className="text-[#D8891C] text-sm">✿</span>
+                </div>
+                <p className="text-[#5F4637] text-[13px] md:text-[15px] leading-[1.8] mb-6">
+                  Ask us anything — we'll reply soon!
                 </p>
 
                 {!submitted ? (
-                  <div className="mt-6 space-y-4">
-
+                  <div className="space-y-3">
                     <input
                       type="text"
                       placeholder="Your name (optional)"
                       value={askedBy}
                       onChange={(e) => setAskedBy(e.target.value)}
-                      className="
-                        w-full
-                        h-[54px]
-                        px-5
-                        rounded-[10px]
-                        border border-[#D9C6A8]
-                        bg-[#FFFDF9]
-                        text-[#3A1F16]
-                        outline-none
-                        focus:border-[#D8891C]
-                      "
+                      className="w-full h-[50px] px-4 rounded-[10px] border border-[#D9C6A8] bg-[#FFFDF9] text-[#3A1F16] text-[14px] outline-none focus:border-[#D8891C] transition-colors"
                     />
-
                     <textarea
                       placeholder="Type your question here..."
                       value={question}
                       onChange={(e) => setQuestion(e.target.value)}
-                      className="
-                        w-full
-                        h-[140px]
-                        px-5
-                        py-4
-                        rounded-[10px]
-                        border border-[#D9C6A8]
-                        bg-[#FFFDF9]
-                        text-[#3A1F16]
-                        outline-none
-                        resize-none
-                        focus:border-[#D8891C]
-                      "
+                      className="w-full h-[120px] md:h-[140px] px-4 py-3 rounded-[10px] border border-[#D9C6A8] bg-[#FFFDF9] text-[#3A1F16] text-[14px] outline-none resize-none focus:border-[#D8891C] transition-colors"
                     />
-
                     <button
                       onClick={handleSubmit}
                       disabled={submitting}
-                      className="
-                        w-full
-                        h-[54px]
-                        rounded-[10px]
-                        bg-gradient-to-r
-                        from-[#C96E2A]
-                        to-[#D9782E]
-                        text-white
-                        font-semibold
-                        text-[16px]
-                        hover:opacity-95
-                        transition
-                      "
+                      className="w-full h-[50px] rounded-[10px] bg-[#2C1400] hover:bg-[#D8891C] text-white font-semibold text-[14px] uppercase tracking-widest transition-colors duration-200 disabled:opacity-50"
                     >
-                      {submitting
-                        ? "Submitting..."
-                        : "Submit Question"}
+                      {submitting ? "Submitting…" : "Submit Question"}
                     </button>
-
                   </div>
                 ) : (
-                  <div className="mt-8 text-[#C96E2A] font-medium">
-                    ✅ Thank you! Your question has been submitted.
+                  <div className="py-6 text-center">
+                    <div className="text-[36px] mb-2">✅</div>
+                    <p className="text-[#D8891C] font-semibold text-[15px]">Thank you!</p>
+                    <p className="text-[#6F4E37] text-[13px] mt-1">Your question has been submitted.</p>
                   </div>
                 )}
+              </div>
 
+              {/* RIGHT — 3 trust points */}
+              <div className="flex flex-col gap-5 md:pr-[200px] lg:pr-[240px]">
+                {[
+                  { icon: <ShieldCheck size={20} />, title: "Trusted Quality", sub: "Purity you can rely on" },
+                  { icon: <Leaf size={20} />,        title: "Pure & Natural",   sub: "Always unprocessed" },
+                  { icon: <Heart size={20} />,       title: "Made With Care",   sub: "From our forest to your home" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full border border-[#E7D7BD] bg-[#FFFDF9] flex items-center justify-center text-[#D8891C] shrink-0">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[13px] md:text-[14px] text-[#2E1B12]">{item.title}</p>
+                      <p className="text-[#6F4E37] text-[11px] md:text-[12px]">{item.sub}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
             </div>
-
           </div>
-
         </div>
-
       </section>
 
     </div>

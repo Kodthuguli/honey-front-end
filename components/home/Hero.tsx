@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 export default function Hero() {
-  const sellerNumber = "91XXXXXXXXXX";
+  const sellerNumber = "918296054891";
 
   const waText = encodeURIComponent(
     `Hi, I'm interested in your products. Please share more details.`
@@ -40,7 +40,7 @@ export default function Hero() {
 
   <Image
 
-    src="/hero-bg.png"
+    src="/home-hero-bg.png"
 
     alt="Vanamrith pure forest honey"
 

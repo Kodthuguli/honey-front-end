@@ -182,117 +182,195 @@ toast.success(
 
   return (
 
-    <div className="bg-[#FDF8F2]">
+    <div>
 
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-[#EFE1CF]">
-
-        <div className="absolute top-0 left-0 w-[220px] opacity-20">
-          {/* <Image
-
-src="/hex-pattern.png"
-
-alt=""
-
-width={220}
-
-height={220}
-
-/> */}
-        </div>
-
-        <div className="absolute top-0 right-0 w-[220px] opacity-20">
-          {/* <Image
-
-src="/leaf-border.png"
-
-alt=""
-
-width={220}
-
-height={220}
-
-/> */}
-        </div>
-
-        <div className="mx-auto max-w-7xl px-5 lg:px-8 pt-10 lg:pt-16 pb-8">
-
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-
-            {/* LEFT */}
-            <div>
-
-              <div className="flex items-center gap-2 text-sm text-[#7A5C46]">
-                <span>Home</span>
-                <span>›</span>
-                <span className="text-[#D06F1D]">Shop</span>
-              </div>
-
-              <h1
-                className="
-                  mt-5
-                  text-[48px]
-                  leading-[1]
-                  lg:text-[76px]
-                  font-serif
-                  text-[#2E1B12]
-                "
-              >
-                Our Products
-              </h1>
-
-              <p
-                className="
-                  mt-5
-                  text-[#6B5245]
-                  text-lg
-                  leading-8
-                  max-w-xl
-                "
-              >
-                Discover our natural, chemical-free,
-                farm-sourced products.
-              </p>
-
-            </div>
-
-            {/* RIGHT */}
-            <div className="relative flex justify-center lg:justify-end">
-
-              <div
-className="
-relative
-w-full
-max-w-[620px]
-h-[420px]
-"
+      {/* HERO */}
+<section
+  className="
+    relative
+    overflow-hidden
+    min-h-[520px]
+    lg:min-h-[620px]
+    flex
+    items-center
+    border-b
+    border-[#E8D8BF]
+  "
 >
 
-<Image
+  {/* BG IMAGE */}
+  <Image
+    src="/shop-hero-bg.png"
+    alt="Vanamrith Honey"
+    fill
+    priority
+    className="
+      object-cover
+      object-center
+      -z-10
+    "
+  />
 
-src="/shop-hero.png"
 
-alt="Vanamrith Honey Products"
+  {/* SOFT OVERLAY */}
+  <div
+    className="
+      absolute
+      inset-0
+      bg-gradient-to-r
+      from-[#FFF8EA]/90
+      via-[#FFF8EA]/50
+      to-transparent
+      -z-10
+    "
+  />
 
-fill
 
-priority
+  <div
+    className="
+      max-w-7xl
+      mx-auto
+      px-5
+      lg:px-8
+      w-full
+    "
+  >
 
-className="
-object-contain
-"
+    <div
+      className="
+        max-w-[650px]
+        pt-10
+      "
+    >
 
-/>
+      {/* BREADCRUMB */}
+      <div
+        className="
+          flex
+          items-center
+          gap-2
+          text-sm
+          tracking-wide
+          text-[#806048]
+        "
+      >
+        <span>Home</span>
+        <span>›</span>
+        <span className="text-[#C87418]">
+          Shop
+        </span>
+      </div>
 
-</div>
 
-            </div>
+      {/* SMALL TITLE */}
+      <div
+        className="
+          mt-16
+          flex
+          items-center
+          gap-4
+        "
+      >
 
-          </div>
+        <span
+          className="
+            h-px
+            w-14
+            bg-[#C87418]
+          "
+        />
 
-        </div>
+        <p
+          className="
+            uppercase
+            tracking-[0.35em]
+            text-[#B87518]
+            text-sm
+            font-semibold
+          "
+        >
+          Nature's Finest Honey
+        </p>
 
-      </section>
+      </div>
+
+
+      {/* MAIN TITLE */}
+      <h1
+        className="
+          mt-8
+          font-serif
+          text-[#2B160D]
+          text-[48px]
+          leading-[1.1]
+          lg:text-[78px]
+        "
+      >
+
+        Pure By{" "}
+        <span className="text-[#B87518]">
+          Nature.
+        </span>
+
+        <br />
+
+        Perfected By{" "}
+        <span className="text-[#B87518]">
+          Care.
+        </span>
+
+      </h1>
+
+
+      {/* DECOR LINE */}
+      <div
+        className="
+          flex
+          items-center
+          gap-4
+          mt-8
+        "
+      >
+
+        <span className="h-px w-20 bg-[#D4A45F]" />
+
+        <Image
+          src="/bee.png"
+          alt=""
+          width={26}
+          height={26}
+        />
+
+        <span className="h-px w-20 bg-[#D4A45F]" />
+
+      </div>
+
+
+      {/* DESCRIPTION */}
+      <p
+        className="
+          mt-8
+          max-w-md
+          text-lg
+          leading-8
+          text-[#5E4635]
+        "
+      >
+
+        Farm harvested pure honey,
+        carefully collected from our
+        bee hives and packed with
+        natural goodness.
+
+      </p>
+
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* MAIN */}
       <section className="mx-auto max-w-7xl px-5 lg:px-8 py-10 lg:py-14">
@@ -322,6 +400,7 @@ object-contain
               value={sort}
               onChange={(e) => setSort(e.target.value)}
               className="
+              !cursor-pointer
                 appearance-none
                 w-full
                 h-[56px]
@@ -568,6 +647,7 @@ opacity-70
                   value={sort}
                   onChange={(e) => setSort(e.target.value)}
                   className="
+                  cursor-pointer
                     appearance-none
                     h-[52px]
                     rounded-[14px]

@@ -13,7 +13,11 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Sprout,
+  Book,
+  Flower
 } from "lucide-react";
+import { title } from "process";
 
 export default function BlogsPage() {
 
@@ -156,113 +160,254 @@ return [
 
   return (
 
-    <div className="bg-[#FAF6F0] min-h-screen overflow-hidden">
+    <div className=" min-h-screen overflow-hidden">
 
       {/* HERO */}
-      <section
+      {/* HERO */}
+<section
+  className="
+    relative
+    overflow-hidden
+    min-h-[560px]
+    flex
+    items-center
+    border-b
+    border-[#E8D9C7]
+    py-16
+  "
+>
+
+  {/* BACKGROUND IMAGE */}
+  <Image
+    src="/blog-hero-bg.png"
+    alt="Vanamrith Blog"
+    fill
+    priority
+    sizes="100vw"
+    className="
+      object-cover
+      object-center
+      -z-10
+    "
+  />
+
+
+  {/* LEFT SOFT GRADIENT */}
+  <div
+    className="
+      absolute
+      inset-0
+      bg-gradient-to-r
+      from-[#FFF8EA]/95
+      via-[#FFF8EA]/60
+      to-transparent
+      -z-10
+    "
+  />
+
+
+  {/* CONTENT */}
+  <div
+    className="
+      max-w-[1400px]
+      mx-auto
+      w-full
+      px-5
+      lg:px-10
+    "
+  >
+
+    <div
+      className="
+        max-w-[650px]
+      "
+    >
+
+      {/* TAG */}
+      <div
         className="
-          relative
-          border-b border-[#E8D9C7]
-          overflow-hidden
+          flex
+          items-center
+          gap-4
         "
       >
 
-        <div
+        <span
           className="
-            max-w-[1400px]
-            mx-auto
-            px-4 md:px-6 xl:px-10
-            pt-10 md:pt-16
-            pb-10 md:pb-12
+            text-[#B87518]
+            text-xl
           "
         >
+          ✦
+        </span>
+
+
+        <p
+          className="
+            uppercase
+            tracking-[0.35em]
+            text-[#B87518]
+            text-sm
+            font-semibold
+          "
+        >
+          Stories From Nature
+        </p>
+
+
+        <span
+          className="
+            h-px
+            w-16
+            bg-[#B87518]
+          "
+        />
+
+      </div>
+
+
+
+      {/* TITLE */}
+      <h1
+        className="
+          mt-8
+          font-serif
+          text-[#2B160D]
+          text-[48px]
+          md:text-[72px]
+          leading-[1.1]
+        "
+      >
+
+        Insights, Stories &
+        <br />
+
+        Natural{" "}
+        <span className="text-[#B87518]">
+          Inspirations
+        </span>
+
+      </h1>
+
+
+
+      {/* DECOR LINE */}
+      <div
+        className="
+          mt-8
+          flex
+          items-center
+          gap-4
+        "
+      >
+
+        <span className="h-px w-24 bg-[#D4A45F]" />
+
+        <Image
+          src="/bee.png"
+          alt=""
+          width={28}
+          height={28}
+        />
+
+        <span className="h-px w-24 bg-[#D4A45F]" />
+
+      </div>
+
+
+
+
+      {/* DESCRIPTION */}
+      <p
+        className="
+          mt-8
+          max-w-[480px]
+          text-[18px]
+          leading-9
+          text-[#5D4637]
+        "
+      >
+
+        Explore stories about honey,
+        bee keeping, natural living
+        and our journey from hive
+        to bottle.
+
+      </p>
+
+
+
+      {/* FEATURE POINTS */}
+      <div
+        className="
+          hidden
+          md:grid
+          grid-cols-3
+          gap-8
+          mt-14
+          max-w-[650px]
+        "
+      >
+
+        {[
+          {title:"Natural Living",icon:<Sprout className="w-6 h-6 text-[#D79B2E]" />},
+          {title:"Bee Knowledge",icon:<Book className="w-6 h-6 text-[#D79B2E]" />},
+          {title:"Honey Guide",icon:<Flower className="w-6 h-6 text-[#D79B2E]" />}
+        ].map((item)=>(
 
           <div
+            key={item.title}
             className="
-              grid
-              grid-cols-1 md:grid-cols-2
-              gap-8
-              items-center
+              text-center
+              border-r
+              last:border-none
+              border-[#D8B887]
             "
           >
 
-            {/* LEFT */}
-            <div>
-
-              <h1
-                className="
-                  text-[52px]
-                  md:text-[70px]
-                  leading-[0.95]
-                  font-serif
-                  text-[#24130D]
-                "
-              >
-                Our Blog
-              </h1>
-
-              <div className="mt-5 w-16 h-[2px] bg-[#D06F1D]" />
-
-              <p
-                className="
-                  mt-6
-                  text-[#5D4637]
-                  text-[18px]
-                  leading-9
-                  max-w-[500px]
-                "
-              >
-                Explore tips, stories, and insights
-                about honey, beekeeping and
-                healthy living.
-              </p>
-
+            <div
+              className="
+                mx-auto
+                w-14
+                h-14
+                rounded-full
+                bg-[#FFF3DD]
+                flex
+                items-center
+                justify-center
+                text-[#B87518]
+                mb-4
+              "
+            >
+              {item.icon}
             </div>
 
 
-            {/* RIGHT */}
-            <div className="relative">
+            <h4
+              className="
+                text-[#2B160D]
+                font-semibold
+              "
+            >
+              {item.title}
+            </h4>
 
-              <div
-className="
-relative
-w-full
-max-w-[720px]
-h-[420px]
-mx-auto
-"
->
-
-<Image
-
-src="/blog-hero.png"
-
-alt="Vanamrith honey blog"
-
-fill
-
-priority
-
-sizes="
-(max-width:768px) 100vw,
-50vw
-"
-
-className="
-object-contain
-"
-
-/>
-
-</div>
-
-            </div>
 
           </div>
 
-        </div>
 
-      </section>
+        ))}
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+</section>
 
 
       {/* CONTENT */}

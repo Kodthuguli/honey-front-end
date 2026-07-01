@@ -59,7 +59,7 @@ export default function GalleryPreview() {
   if (images.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden pt-20 lg:pt-28">
+    <section className="relative overflow-hidden pt-16 lg:pt-24">
       {/* DECORATIONS */}
       <div className="absolute left-0 top-[240px] hidden lg:block opacity-20">
         {/* <Image

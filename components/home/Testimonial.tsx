@@ -3,15 +3,14 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import { Star } from "lucide-react";
 import { api } from "@/lib/api";
 
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
-
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const googleReviewUrl = "https://g.page/r/CS7XoRjJlVvTECE/review"
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [testimonials,setTestimonials] = useState<any[]>([]);
 
   useEffect(()=>{
@@ -97,7 +96,7 @@ return null;
 }
 
   return (
-    <section className="relative overflow-hidden py-20 lg:py-28">
+    <section className="relative overflow-hidden py-16 lg:py-24">
       {/* SIDE DECOR */}
       <div className="absolute left-0 top-[220px] hidden lg:block opacity-20">
         {/* <Image
@@ -241,6 +240,83 @@ className="opacity-90"
             Trusted by thousands of families who believe in nature,
             purity and the power of honey.
           </p>
+          {/* GOOGLE REVIEW BUTTON */}
+
+<motion.a
+
+href={googleReviewUrl}
+
+target="_blank"
+
+rel="noopener noreferrer"
+
+initial={{
+ opacity:0,
+ y:20,
+}}
+
+whileInView={{
+ opacity:1,
+ y:0,
+}}
+
+viewport={{
+ once:true
+}}
+
+transition={{
+ delay:0.2,
+ duration:0.5,
+}}
+
+className="
+inline-flex
+items-center
+justify-center
+gap-3
+
+mt-9
+
+px-7
+lg:px-9
+
+h-[54px]
+lg:h-[60px]
+
+rounded-full
+
+bg-[#2B140A]
+text-white
+
+font-semibold
+tracking-wide
+
+shadow-[0_18px_40px_rgba(43,20,10,0.25)]
+
+hover:bg-[#D18A12]
+hover:-translate-y-1
+
+transition-all
+duration-300
+"
+>
+
+
+<Star
+size={22}
+fill="#F5C042"
+className="
+text-[#F5C042]
+"
+/>
+
+
+<span>
+View & Write Google Review
+</span>
+
+
+</motion.a>
         </motion.div>
 
         {/* MOBILE */}
